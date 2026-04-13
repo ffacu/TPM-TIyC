@@ -1,0 +1,34 @@
+FUNCTION HammingEncode(dataBits):
+    // 1. Calculate number of parity bits needed (p)
+    m = length(dataBits)
+    p = 0
+    WHILE (2^p < m + p + 1):
+        p = p + 1
+    
+    // 2. Initialize codeword with empty parity positions
+    // Total bits = m + p
+    codeword = array of size (m + p)
+    
+    // 3. Place parity bits at positions 2^i (1, 2, 4, ...)
+    // 4. Place data bits in remaining positions
+    j = 0 // dataBits index
+    k = 0 // parityBits counter
+    FOR i FROM 1 TO (m + p):
+        IF i == 2^k:
+            codeword[i] = 0 // Parity placeholder
+            k = k + 1
+        ELSE:
+            codeword[i] = dataBits[j]
+            j = j + 1
+            
+    // 5. Calculate parity bit values (Even Parity)
+    FOR i FROM 0 TO p-1:
+        parityPosition = 2^i
+        parityValue = 0
+        FOR bitPosition FROM 1 TO (m + p):
+            // Check if bitPosition is covered by parityPosition
+            IF (bitPosition AND parityPosition) != 0:
+                parityValue = parityValue XOR codeword[bitPosition]
+        codeword[parityPosition] = parityValue
+        
+    RETURN codeword
