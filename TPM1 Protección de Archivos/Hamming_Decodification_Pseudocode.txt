@@ -1,6 +1,7 @@
 FUNCTION HammingDecode(receivedCodeword):
     n = length(receivedCodeword)
     p = log2(n) // Roughly
+    overallParity = 0
     
     // 1. Calculate syndrome (detect error location)
     syndrome = 0
@@ -10,15 +11,20 @@ FUNCTION HammingDecode(receivedCodeword):
         FOR bitPosition FROM 1 TO n:
             IF (bitPosition AND parityPosition) != 0:
                 parityValue = parityValue XOR receivedCodeword[bitPosition]
-        
+            overallParity = overallParity XOR receivedCodeword[bitPosition]
         // If parity check fails, add to syndrome
         IF parityValue != 0:
             syndrome = syndrome + parityPosition
             
     // 2. Correct error
     IF syndrome == 0:
+        IF (overallParity == 1)
+            receivedCodeword[n] = NOT receivedCodeword[n]
+            RETURN "Error corrected at position: " + n
         RETURN "No Error"
     ELSE:
         // Flip the bit at the syndrome position
         receivedCodeword[syndrome] = NOT receivedCodeword[syndrome]
         RETURN "Error corrected at position: " + syndrome
+
+
