@@ -39,46 +39,45 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         let mut step_buffer = i;    
 
         // Initialize the control bits and add the info bits
-        for j in 0..(info_bits_quantity - 1) as usize {
+        for j in 1..(block_size_bits + 1) as usize {
 
             
-            if j == 1 << parity_bits{
+            if j == (1 << parity_bits) {
                 
-                internal_codeword[j] = 0; // Parity placeholder
+                internal_codeword[j - 1] = 0; // Parity placeholder
                 parity_bits += 1;
 
             }
-            else{
+            else {
 
-                internal_codeword[j] = bits_info[step_buffer]; // Information bit placeholder
+                internal_codeword[j - 1] = bits_info[step_buffer]; // Information bit placeholder
                 step_buffer += 1;
-                overall_parity = overall_parity ^ internal_codeword[j];
+                overall_parity = overall_parity ^ internal_codeword[j - 1];
             
             }
         }
 
         // Calculate Hamming control bits
-        for j in 0..(control_bits_quantity-1){
+        for j in 0..(control_bits_quantity) {
             let parity_position: usize = 1 << j;
             let mut parity_value = 0;
 
-            for bit_position in 1..(block_size_bits as usize - 1){
+            for bit_position in 1..(block_size_bits){
                 
                 if (bit_position & parity_position) != 0 {
     
-                    parity_value = parity_value ^ internal_codeword[bit_position];
+                    parity_value = parity_value ^ internal_codeword[bit_position - 1];
                     
                 }
                 
             }
 
-            internal_codeword[parity_position] = parity_value;
+            internal_codeword[parity_position - 1] = parity_value;
             overall_parity = overall_parity ^ parity_value;
         }
 
-        internal_codeword[block_size_bits - 1] = overall_parity;
+        internal_codeword[block_size_bits - 1] = overall_parity; // Overall parity check bit
 
-        // The last parity bit check has not been calculated <<<<<-------------------------------------------------------------------------------------------------
 
         // Append the currently block to the output file
         codeword.append(&mut internal_codeword);
@@ -125,15 +124,15 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         }
     }
 
-    let control_bits_quantity = bits_info.len().trailing_zeros() as usize;
-    let mut bits_info_internal = Vec::new();
+    let control_bits_quantity = block_size_bits.trailing_zeros() as usize;
+    let mut bits_info_internal = vec![0; (block_size_bits).try_into().unwrap()];  
     
     // The loop takes from the buffer the amount of the block
     for i in (0..(bits_info.len())).step_by(block_size_bits){   //- >> for 
 
         let mut step_buffer = i;
 
-        for j in 0..(block_size_bits - 1) as usize {
+        for j in 0..(block_size_bits) as usize {
 
             bits_info_internal[j] = bits_info[step_buffer];
             step_buffer += 1; 
@@ -143,19 +142,18 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         let mut overall_parity = 0;
         let mut syndrome = 0;
         let mut parity_position;
-        let mut parity_value = 0;
 
         // Calculate the syndrome of hamming block (n - 1 bits)
-        for j in 0..control_bits_quantity - 1 {
+        for j in 0..(control_bits_quantity) {
             parity_position = 1 << j;
-            parity_value = 0;
+            let mut parity_value = 0;
 
             for bit_position in 1..(bits_info.len()) {
 
                 if (bit_position & parity_position) != 0 {
-                    parity_value = parity_value ^ bits_info_internal[bit_position]; 
+                    parity_value = parity_value ^ bits_info_internal[bit_position - 1]; 
                 } 
-                overall_parity = overall_parity ^ bits_info_internal[bit_position];
+                overall_parity = overall_parity ^ bits_info_internal[bit_position - 1];
             
             }
 
@@ -174,22 +172,22 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
             }
 
         }
-        else{
+        else {
 
-            bits_info_internal[syndrome] = !bits_info_internal[syndrome];
+            bits_info_internal[syndrome - 1] = !bits_info_internal[syndrome - 1];
         
         }
 
         // Append currently hamming block into vector (Forma pedorra)
-        for i in 0..control_bits_quantity {
+        for i in 0..(control_bits_quantity + 1) {
             
             let parity_position = 1 << i;
 
-            bits_info_internal[parity_position] = 4;
+            bits_info_internal[parity_position - 1] = 4;
 
         }
 
-        for i in 0..block_size_bits - 1{
+        for i in 0..block_size_bits {
 
             if bits_info_internal[i] != 4 {
                 word.push(bits_info_internal[i]);
