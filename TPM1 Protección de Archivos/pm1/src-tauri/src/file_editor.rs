@@ -4,7 +4,7 @@ use std::io::{self, Read, Write};
  * The vector is indexed from 0 to 7, and we implemented the logic to fill from 1 to 8 (cast is needed).
  * Parity value is not implemented
  */
-pub fn hamming(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
+pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
     
     // Read the entire file into a byte vector
     let mut buffer =  Vec::new();
@@ -109,7 +109,7 @@ pub fn hamming(block_size_bits: usize, input: &mut std::fs::File, output: &mut s
  * The vector is indexed from 0 to 7, and we implemented the logic to fill from 1 to 8 (cast is needed)
  * Gemini's advice is not implemented
  */
-pub fn hamming_decode(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()>  {
+pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()>  {
    
     let mut buffer =  Vec::new();
     let mut word = Vec::new();

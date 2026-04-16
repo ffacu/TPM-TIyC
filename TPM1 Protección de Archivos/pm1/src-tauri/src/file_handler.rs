@@ -11,7 +11,7 @@ pub fn call_hamming(opt: isize,path: &str) -> io::Result<()> {
             // Create the destination files for the protected outputs
             let mut out_ha1 = File::create(format!("{}.HA1", path))?;
             // Process 8-bit blocks
-            file_editor::hamming(8, &mut input_file, &mut out_ha1)?;
+            file_editor::hamming_encoding(8, &mut input_file, &mut out_ha1)?;
             // Rewind the input file cursor back to the beginning for the next module
             input_file.seek(SeekFrom::Start(0))?;
         }
@@ -19,7 +19,7 @@ pub fn call_hamming(opt: isize,path: &str) -> io::Result<()> {
             // Create the destination files for the protected outputs
             let mut out_ha2 = File::create(format!("{}.HA2", path))?;
             // Process 1024-bit blocks
-            file_editor::hamming(1024, &mut input_file, &mut out_ha2)?;
+            file_editor::hamming_encoding(1024, &mut input_file, &mut out_ha2)?;
             // Rewind the input file cursor back to the beginning for the next module
             input_file.seek(SeekFrom::Start(0))?;
         }
@@ -27,7 +27,7 @@ pub fn call_hamming(opt: isize,path: &str) -> io::Result<()> {
             // Create the destination files for the protected outputs
             let mut out_ha3 = File::create(format!("{}.HA3", path))?;
             // Process 16384-bit blocks
-            file_editor::hamming(16384, &mut input_file, &mut out_ha3)?;
+            file_editor::hamming_encoding(16384, &mut input_file, &mut out_ha3)?;
             // Rewind the input file cursor back to the beginning for the next module
             input_file.seek(SeekFrom::Start(0))?;
             
