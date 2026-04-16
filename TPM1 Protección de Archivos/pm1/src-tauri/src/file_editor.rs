@@ -141,14 +141,14 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
         let mut overall_parity = 0;
         let mut syndrome = 0;
-        let mut parity_position;
+        let mut parity_value = 0;
 
         // Calculate the syndrome of hamming block (n - 1 bits)
         for j in 0..(control_bits_quantity) {
-            parity_position = 1 << j;
-            let mut parity_value = 0;
+            let parity_position = 1 << j;
+            parity_value = 0;
 
-            for bit_position in 1..(bits_info.len()) {
+            for bit_position in 1..(block_size_bits + 1) {
 
                 if (bit_position & parity_position) != 0 {
                     parity_value = parity_value ^ bits_info_internal[bit_position - 1]; 
@@ -214,9 +214,5 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 }
 
 pub fn error_injection(data: &mut [u8]) {
-    // Example of bitwise masking to inject an error
-    // Using XOR (^) to flip the 3rd bit (00000100 in binary, which is 4 in decimal) of the first byte
-    if !data.is_empty() {
-        data[0] ^= 4; 
-    }
+    
 }
