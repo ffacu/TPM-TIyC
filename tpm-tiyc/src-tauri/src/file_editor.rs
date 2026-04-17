@@ -1,5 +1,5 @@
-use std::io::{self, Read, Write};
-
+use std::{io::{self, Read, Write}, process::exit};
+use rand::Rng;
 
 pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
     
@@ -28,12 +28,20 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
     
     let mut internal_codeword = vec![0; (block_size_bits).try_into().unwrap()];    
 
+    let missed_bits = bits_info.len() % info_bits_quantity;
+    
+    if missed_bits != 0 {
+        let padding_needed = info_bits_quantity - missed_bits; 
+        for _i in 0..padding_needed {
+            bits_info.push(0);
+        }
+    }
     
     // One iteration is for hamminizing each file block
     for i in (0..(bits_info.len())).step_by(info_bits_quantity) {
 
-        let mut parity_bits = 0; 
-        let mut step_buffer = i;    
+        let mut parity_bits = 0;
+        let mut step_buffer = i;
 
         // Initialize the control bits and add the info bits
         for j in 1..(block_size_bits + 1) as usize {
@@ -59,7 +67,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
             let parity_position: usize = 1 << j;
             let mut parity_value = 0;
 
-            for bit_position in 1..(block_size_bits){
+            for bit_position in 1..(block_size_bits) {
                 
                 if (bit_position & parity_position) != 0 {
     
@@ -98,6 +106,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
     output.write_all(&output_bytes)?;    
 
     Ok(())
+
 }
 
 
@@ -160,14 +169,19 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
             if overall_parity == 1 {
             
-                bits_info_internal[block_size_bits - 1] = !bits_info_internal[block_size_bits - 1]
-            
+                bits_info_internal[block_size_bits - 1] ^= 1;
+                
             }
-
+            
         }
         else {
-
-            bits_info_internal[syndrome - 1] = !bits_info_internal[syndrome - 1];
+            
+            if overall_parity == 0 {
+                println!("Se detectaron 2 (o mas) errores. El programa termina...");
+                exit(0);
+            }
+            
+            bits_info_internal[syndrome - 1] ^= 1;
         
         }
 
@@ -201,11 +215,51 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         output_bytes.push(byte);
     }
     
-    output.write_all(&output_bytes)?;    
+    output.write_all(&output_bytes)?;
 
     Ok(())
+
 }
 
-pub fn error_injection(data: &mut [u8]) {
+pub fn inject_error(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
     
+    // File open procedure
+    let mut buffer =  Vec::new();
+    input.read_to_end(&mut buffer)?; //read the file input into the buffer vector
+    let mut bits_info: Vec<u8> = Vec::new();
+    for byte in &buffer { // Cast byte to bits 
+        for b in 0..8 {
+            bits_info.push((byte >> b) & 1);
+        }
+    }
+
+    // Index position selected by a random value
+    
+    // Introuce error
+    let blocks_quantity = bits_info.len() / block_size_bits;
+    for i in 0..blocks_quantity {
+        if rand::thread_rng().gen_range(0.0..1.0) < 0.5 {
+            
+            let index = rand::thread_rng().gen_range(0..block_size_bits);
+            bits_info[index + i*block_size_bits] ^= 1;
+
+        }
+    }
+
+    // Edit output file
+    let mut output_bytes: Vec<u8> = Vec::new();
+    
+    // Bits packaged into byte
+    for chunk in bits_info.chunks(8) {
+        let mut byte = 0u8;
+        for (i, &bit) in chunk.iter().enumerate() {
+            byte |= bit << i; // Rebuild byte
+        }
+        output_bytes.push(byte);
+    }
+    
+    output.write_all(&output_bytes)?;
+
+    Ok(())
+
 }

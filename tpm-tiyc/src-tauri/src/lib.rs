@@ -1,7 +1,7 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
 mod file_handler;
-mod file_editor;
+pub mod file_editor;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
