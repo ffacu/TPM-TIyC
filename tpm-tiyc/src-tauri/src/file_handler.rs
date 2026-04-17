@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::{self, Seek, SeekFrom};
 use crate::file_editor;
 
+#[allow(dead_code)]
 pub fn call_hamming(opt: isize,path: &str) -> io::Result<()> {
     // Open the target text file in read-only binary mode
     let mut input_file = File::open(path)?;
