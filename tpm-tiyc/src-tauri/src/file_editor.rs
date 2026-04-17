@@ -1,9 +1,6 @@
 use std::io::{self, Read, Write};
 
-/**
- * The vector is indexed from 0 to 7, and we implemented the logic to fill from 1 to 8 (cast is needed).
- * Parity value is not implemented
- */
+
 pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
     
     // Read the entire file into a byte vector
@@ -12,7 +9,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
     let mut overall_parity = 0;
 
-    input.read_to_end(&mut buffer)?; //read the file input into the buffer vector (read bytes not bits, miss the conversion)
+    input.read_to_end(&mut buffer)?; //read the file input into the buffer vector
 
     let mut bits_info: Vec<u8> = Vec::new();
    
@@ -32,7 +29,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
     let mut internal_codeword = vec![0; (block_size_bits).try_into().unwrap()];    
 
     
-    // One iteration is for hamminizing each file block (the amount of bits of information is taken)
+    // One iteration is for hamminizing each file block
     for i in (0..(bits_info.len())).step_by(info_bits_quantity) {
 
         let mut parity_bits = 0; 
@@ -104,23 +101,19 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 }
 
 
-/**
- * The vector is indexed from 0 to 7, and we implemented the logic to fill from 1 to 8 (cast is needed)
- * Gemini's advice is not implemented
- */
 pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()>  {
    
     let mut buffer =  Vec::new();
     let mut word = Vec::new();
 
-    input.read_to_end(&mut buffer)?; // Read the file input into the buffer vector (read bytes not bits, miss the conversion)
+    input.read_to_end(&mut buffer)?; // Read the file input into the buffer vector
 
     let mut bits_info: Vec<u8> = Vec::new();
     
     // Cast byte to bits 
     for byte in &buffer {
         for b in 0..8 {
-            bits_info.push((byte >> b) & 1); //drop bits into buffer aux
+            bits_info.push((byte >> b) & 1); // Put bits into buffer aux
         }
     }
 
@@ -128,7 +121,7 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
     let mut bits_info_internal = vec![0; (block_size_bits).try_into().unwrap()];  
     
     // The loop takes from the buffer the amount of the block
-    for i in (0..(bits_info.len())).step_by(block_size_bits){   //- >> for 
+    for i in (0..(bits_info.len())).step_by(block_size_bits) {
 
         let mut step_buffer = i;
 
@@ -141,7 +134,7 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
         let mut overall_parity = 0;
         let mut syndrome = 0;
-        let mut parity_value = 0;
+        let mut parity_value;
 
         // Calculate the syndrome of hamming block (n - 1 bits)
         for j in 0..(control_bits_quantity) {

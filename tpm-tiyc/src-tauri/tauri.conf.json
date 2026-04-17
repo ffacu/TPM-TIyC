@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "pm1",
+  "productName": "tpm-tiyc",
   "version": "0.1.0",
-  "identifier": "com.tpm1.app",
+  "identifier": "tpm",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "pm1",
+        "title": "tpm-tiyc",
         "width": 800,
         "height": 600
       }
