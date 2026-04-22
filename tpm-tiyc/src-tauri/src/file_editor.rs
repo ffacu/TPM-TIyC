@@ -2,7 +2,7 @@ use std::{io::{self, Read, Write}, process::exit};
 use rand::Rng;
 
 pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
-    
+      
     // Read the entire file into a byte vector
     let mut buffer =  Vec::new();
     let mut codeword = Vec::new();
@@ -10,6 +10,10 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
     let mut overall_parity = 0;
 
     input.read_to_end(&mut buffer)?; //read the file input into the buffer vector
+
+    // WRITE HEADER: Store original byte length to safely remove padding later
+    let original_byte_len = buffer.len() as u64;
+    output.write_all(&original_byte_len.to_le_bytes())?;
 
     let mut bits_info: Vec<u8> = Vec::new();
    
@@ -28,6 +32,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
     
     let mut internal_codeword = vec![0; (block_size_bits).try_into().unwrap()];    
 
+    // Add padding bits and file size    
     let missed_bits = bits_info.len() % info_bits_quantity;
     
     if missed_bits != 0 {
@@ -57,8 +62,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
                 internal_codeword[j - 1] = bits_info[step_buffer]; // Information bit placeholder
                 step_buffer += 1;
-                overall_parity = overall_parity ^ internal_codeword[j - 1];
-            
+                overall_parity ^= internal_codeword[j - 1]; // Accumulate info bits            
             }
         }
 
@@ -71,7 +75,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
                 
                 if (bit_position & parity_position) != 0 {
     
-                    parity_value = parity_value ^ internal_codeword[bit_position - 1];
+                    parity_value ^= internal_codeword[bit_position - 1];
                     
                 }
                 
@@ -88,7 +92,8 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         codeword.append(&mut internal_codeword);
 
         // The vector needs to be reinitialized.
-        internal_codeword = vec![0; (block_size_bits).try_into().unwrap()]; 
+        internal_codeword = vec![0; (block_size_bits).try_into().unwrap()];
+        overall_parity = 0; // Reset overall parity per block
     }
 
     let mut output_bytes: Vec<u8> = Vec::new();
@@ -112,6 +117,11 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
 pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()>  {
    
+    // READ HEADER: Retrieve the original file size
+    let mut header = [0u8; 8];
+    input.read_exact(&mut header)?;
+    let original_byte_len = u64::from_le_bytes(header) as usize;
+
     let mut buffer =  Vec::new();
     let mut word = Vec::new();
 
@@ -141,65 +151,56 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
         }
 
+        // Calculate overall parity robustly decoupled from syndrome loops
         let mut overall_parity = 0;
+        for bit in &bits_info_internal {
+            overall_parity ^= bit;
+        }
+
         let mut syndrome = 0;
-        let mut parity_value;
 
         // Calculate the syndrome of hamming block (n - 1 bits)
         for j in 0..(control_bits_quantity) {
             let parity_position = 1 << j;
-            parity_value = 0;
+            let mut parity_value = 0;
 
-            for bit_position in 1..(block_size_bits + 1) {
+            for bit_position in 1..=block_size_bits {
 
                 if (bit_position & parity_position) != 0 {
-                    parity_value = parity_value ^ bits_info_internal[bit_position - 1]; 
-                } 
-                overall_parity = overall_parity ^ bits_info_internal[bit_position - 1];
-            
+                    parity_value ^= bits_info_internal[bit_position - 1];
+                }
             }
 
             if parity_value != 0 {
-                syndrome = syndrome + parity_position;
+                syndrome += parity_position;
             }
         }
 
-        // Correct the error if there is one.
-        if syndrome == 0 {
-
-            if overall_parity == 1 {
-            
-                bits_info_internal[block_size_bits - 1] ^= 1;
-                
-            }
-            
-        }
-        else {
-            
+        // SECDED LOGIC
+        if syndrome != 0 {
             if overall_parity == 0 {
-                panic!("Se detectaron 2 (o mas) errores. El programa termina...")
+                return Err(io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "Se detectaron 2 (o mas) errores. Imposible corregir. El programa termina..."
+                ));
+            } else {
+                bits_info_internal[syndrome - 1] ^= 1; // Correct single error
             }
-            else{
-                bits_info_internal[syndrome - 1] ^= 1;
+        } else {
+            if overall_parity == 1 {
+                bits_info_internal[block_size_bits - 1] ^= 1; // Parity bit itself is wrong
             }
-        
         }
 
-        // Append currently hamming block into vector (Forma pedorra)
-        for i in 0..(control_bits_quantity + 1) {
-            
-            let parity_position = 1 << i;
+        // CLEAN BIT EXTRACTION
+        for idx in 0..block_size_bits {
+            let pos = idx + 1;
+            let is_standard_parity = pos.is_power_of_two();
+            let is_overall_parity = idx == block_size_bits - 1;
 
-            bits_info_internal[parity_position - 1] = 4;
-
-        }
-
-        for i in 0..block_size_bits {
-
-            if bits_info_internal[i] != 4 {
-                word.push(bits_info_internal[i]);
+            if !is_standard_parity && !is_overall_parity {
+                word.push(bits_info_internal[idx]);
             }
-
         }
 
     }
@@ -215,6 +216,8 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         output_bytes.push(byte);
     }
     
+    // TRUNCATE PADDING: Drop the extra zero-bytes added during encoding
+    output_bytes.truncate(original_byte_len);
     output.write_all(&output_bytes)?;
 
     Ok(())
@@ -223,10 +226,16 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 
 pub fn inject_error(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
     
+    // Pass the header through untouched so we don't corrupt the padding tracker
+    let mut header = [0u8; 8];
+    input.read_exact(&mut header)?;
+    output.write_all(&header)?;
+
     // File open procedure
     let mut buffer =  Vec::new();
     input.read_to_end(&mut buffer)?; //read the file input into the buffer vector
     let mut bits_info: Vec<u8> = Vec::new();
+
     for byte in &buffer { // Cast byte to bits 
         for b in 0..8 {
             bits_info.push((byte >> b) & 1);
