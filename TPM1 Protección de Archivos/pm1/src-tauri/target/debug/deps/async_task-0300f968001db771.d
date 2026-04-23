@@ -1,0 +1,11 @@
+/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/async_task-0300f968001db771.d: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/header.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/raw.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/runnable.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/state.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/task.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/utils.rs
+
+/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/libasync_task-0300f968001db771.rmeta: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/header.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/raw.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/runnable.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/state.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/task.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/utils.rs
+
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/lib.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/header.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/raw.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/runnable.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/state.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/task.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-task-4.7.1/src/utils.rs:

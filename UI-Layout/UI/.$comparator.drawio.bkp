@@ -1,0 +1,43 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram name="Page-1" id="1DA-k1_bEpJ4UHlNDFSf">
+    <mxGraphModel dx="1665" dy="874" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2zODhl5bdAHJW8f7-7X--5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="130" width="650" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="220" width="490" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--3" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="2zODhl5bdAHJW8f7-7X--1" target="2zODhl5bdAHJW8f7-7X--1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="550" y="550" as="sourcePoint" />
+            <mxPoint x="600" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--6" value="(Combo box) archivos generados" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="170" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--8" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="180" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--9" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="530" width="90" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--10" value="Comparar archivos" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="90" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--11" value="(Combo box) archivos generados" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="170" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--12" value="Text Archivo" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="285" y="340" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2zODhl5bdAHJW8f7-7X--14" value="Text&lt;div&gt;Archivo&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="540" y="340" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

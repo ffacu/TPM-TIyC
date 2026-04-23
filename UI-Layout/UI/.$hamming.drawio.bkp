@@ -1,0 +1,52 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram name="Page-1" id="g5pDI98ouvVly6ZA277Q">
+    <mxGraphModel dx="705" dy="874" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qUQs6u0oc8N_987wkdse-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="80" width="570" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-2" value="Hamming" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="110" y="50" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-3" value="Elija tamaño del bloque&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="120" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-4" value="(Combo box)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="150" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-5" value="SI o No (opt)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="195" y="270" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-6" value="Introducir errores?" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="240" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="140" width="170" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-8" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="qUQs6u0oc8N_987wkdse-1" target="qUQs6u0oc8N_987wkdse-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="330" as="sourcePoint" />
+            <mxPoint x="430" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-9" value="Desproteger" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="495" y="340" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-10" value="Archivos encriptados" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="110" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-13" value="Comparar archivos" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="390" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-17" value="Desproteger" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="195" y="340" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qUQs6u0oc8N_987wkdse-18" value="Volver" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="410" width="90" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

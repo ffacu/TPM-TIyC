@@ -1,0 +1,10 @@
+/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/zbus_macros-38b6b11b878eb349.d: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/error.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/iface.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/proxy.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/utils.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/../README.md
+
+/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/libzbus_macros-38b6b11b878eb349.so: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/error.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/iface.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/proxy.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/utils.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/../README.md
+
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/lib.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/error.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/iface.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/proxy.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/utils.rs:
+/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.14.0/src/../README.md:

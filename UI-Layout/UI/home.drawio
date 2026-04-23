@@ -1,0 +1,43 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram name="Page-1" id="_wo3hL5c-8UxFiAM4ZE8">
+    <mxGraphModel dx="1959" dy="1028" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="540" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-3" value="Trabajo practico de maquina TIyC&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="100" width="215" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-4" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.048;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="Jwwj_m5XM5rFV_ZY05As-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="119.5" as="sourcePoint" />
+            <mxPoint x="220" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="102.5" y="230" width="150" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-6" value="Seleccione una opción" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="285" y="150" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="230" width="150" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-8" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="230" width="150" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-9" value="Hamming" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="140" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-10" value="???" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="315" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Jwwj_m5XM5rFV_ZY05As-11" value="???" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="485" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
