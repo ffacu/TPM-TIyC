@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { ArrowLeft, Shield, Unlock, FileCode, CheckCircle, FileText } from 'lucide-react';
+import { ArrowLeft, Shield, Unlock, FileCode, CheckCircle, FileText, AlertCircle } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { invoke } from '@tauri-apps/api/core';
@@ -15,6 +15,14 @@ export const HammingDashboardScreen: React.FC = () => {
   const [introduceErrors, setIntroduceErrors] = useState(false);
   const [generatedFiles, setGeneratedFiles] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast(null);
+    }, 2000);
+  };
 
   // Carga inicial y refresco de archivos desde el workspace
   const refreshWorkspace = async () => {
@@ -59,7 +67,7 @@ export const HammingDashboardScreen: React.FC = () => {
       }
     } catch (error) {
       console.error("Error during protection:", error);
-      alert(`Error al proteger el archivo: ${error}`);
+      showToast(`Error al proteger el archivo: ${error}`, 'error');
     }
   };
 
@@ -76,16 +84,30 @@ export const HammingDashboardScreen: React.FC = () => {
       
       if (result.length > 0) {
         setSelectedFile(result[0]);
-        alert(`Archivo(s) desprotegido(s) con éxito:\n${result.join('\n')}`);
+        showToast(`Archivo(s) desprotegido(s) con éxito:\n${result.join('\n')}`, 'success');
       }
     } catch (error) {
       console.error("Error during unprotection:", error);
-      alert(`Error al desproteger el archivo: ${error}`);
+      showToast(`Error al desproteger el archivo: ${error}`, 'error');
     }
   };
 
   return (
-    <div className="flex flex-col w-full max-w-6xl mx-auto py-6 h-full">
+    <div className="flex flex-col w-full max-w-6xl mx-auto py-6 h-full relative">
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className={`px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 ${
+            toast.type === 'success' 
+              ? 'bg-white border-l-4 border-green-500 text-green-800' 
+              : 'bg-white border-l-4 border-red-500 text-red-800'
+          }`}>
+            {toast.type === 'success' ? <CheckCircle className="text-green-500" size={24} /> : <AlertCircle className="text-red-500" size={24} />}
+            <p className="font-medium whitespace-pre-wrap">{toast.message}</p>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
