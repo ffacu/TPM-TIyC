@@ -1,9 +1,9 @@
 -----------------------------
--- Ordenar la salida de haminización a una carpeta con path relativo al proyecto.
+-- Ordenar la salida de haminizacion a una carpeta con path relativo al proyecto.
 
--- Hacer más bonita la ui
+-- Hacer mas bonita la ui
 
--- Cambiar tamaño de inicio
+-- Cambiar tamanio de inicio
 
 -- Implementar la comparación de dos archivos
 
@@ -22,4 +22,4 @@
 =============================
 -- preguntas
 
---hace falta mostrar el archivo protegido con errores mostrando donde están los errores.
+--hace falta mostrar el archivo protegido con errores mostrando donde estan los errores.

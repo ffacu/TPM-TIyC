@@ -1,4 +1,4 @@
-use std::{io::{self, Read, Write}, process::exit};
+use std::io::{self, Read, Write};
 use rand::Rng;
 
 pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { open } from '@tauri-apps/plugin-dialog';
 import { UploadCloud, FileText } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { invoke } from '@tauri-apps/api/core';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 export const LoadFileScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -40,37 +41,49 @@ export const LoadFileScreen: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    let unlistenFn: (() => void) | undefined;
+    
+    const setupDragDrop = async () => {
+      const unlisten = await getCurrentWindow().onDragDropEvent((event) => {
+        if (event.payload.type === 'over') {
+          setIsDragging(true);
+        } else if (event.payload.type === 'drop') {
+          setIsDragging(false);
+          setError(null);
+          const paths = (event.payload as any).paths as string[];
+          if (paths && paths.length > 0) {
+            const filePath = paths[0];
+            if (filePath.toLowerCase().endsWith('.txt')) {
+              handleFileSelect(filePath);
+            } else {
+              setError('Por favor, selecciona un archivo .txt válido.');
+            }
+          }
+        } else {
+          setIsDragging(false);
+        }
+      });
+      return unlisten;
+    };
+
+    setupDragDrop().then(fn => { unlistenFn = fn; });
+
+    return () => {
+      if (unlistenFn) unlistenFn();
+    };
+  }, []);
+
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setIsDragging(true);
   };
 
   const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setIsDragging(false);
   };
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setIsDragging(false);
-    setError(null);
-    
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const file = e.dataTransfer.files[0];
-      if (file.name.endsWith('.txt')) {
-        // Tauri file drop paths might be different depending on tauri events,
-        // but since we are using standard web events, the browser file object doesn't have absolute path due to security.
-        // Usually in Tauri, you handle dropping via Tauri's Window plugin.
-        // For simplicity, we assume we can read the file or we need the path.
-        // Actually, in Tauri v2, we should use plugin-drag-drop or just let the user know to use the button if drag drop path is unavailable.
-        // Let's use standard web File object just to show interaction, but in real Tauri app we might need the path for rust backend.
-        // If file.path is available (electron/tauri extensions):
-        const filePath = (file as any).path || file.name; 
-        handleFileSelect(filePath);
-      } else {
-        setError('Por favor, selecciona un archivo .txt válido.');
-      }
-    }
   };
 
   return (
