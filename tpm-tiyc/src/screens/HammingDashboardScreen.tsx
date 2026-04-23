@@ -4,6 +4,7 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { ArrowLeft, Shield, Unlock, FileCode, CheckCircle, FileText } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { invoke } from '@tauri-apps/api/core';
 
 export const HammingDashboardScreen: React.FC = () => {
   const location = useLocation();
@@ -23,34 +24,53 @@ export const HammingDashboardScreen: React.FC = () => {
     return path.split(/[/\\]/).pop() || path;
   };
 
-  const handleProtect = () => {
-    // In a real app, we would use Tauri invoke here to call Rust backend
-    // invoke('protect_hamming', { path: filePath, block_size: parseInt(blockSize), introduce_errors: introduceErrors })
-    
-    // Simulating generated files response
-    const baseName = getFileName(filePath).split('.')[0];
-    const sizeExt = blockSize === '8' ? 'HA1' : blockSize === '1024' ? 'HA2' : 'HA3';
-    
-    const mockedFiles = [
-      `${baseName}.${sizeExt}`,
-      `${baseName}.HEX` // If errors introduced it might be different, let's just mock some
-    ];
-    
-    if (introduceErrors) {
-      mockedFiles.push(`${baseName}.DEX`);
-      mockedFiles.push(`${baseName}.DCX`);
-    }
-
-    setGeneratedFiles(mockedFiles);
-    if (mockedFiles.length > 0) {
-      setSelectedFile(mockedFiles[0]);
+  const handleProtect = async () => {
+    try {
+      const blockSizeOpt = blockSize === '8' ? 1 : blockSize === '1024' ? 2 : 3;
+      
+      const result = await invoke<string[]>('protect_file', { 
+        path: filePath, 
+        blockSizeOpt, 
+        injectErrors: introduceErrors 
+      });
+      
+      setGeneratedFiles(result);
+      if (result.length > 0) {
+        setSelectedFile(result[0]);
+      }
+    } catch (error) {
+      console.error("Error during protection:", error);
+      alert(`Error al proteger el archivo: ${error}`);
     }
   };
 
-  const handleUnprotect = () => {
+  const handleUnprotect = async () => {
     if (!selectedFile) return;
-    // invoke('unprotect_hamming', { path: selectedFile })
-    console.log("Unprotecting:", selectedFile);
+    try {
+      const parentDir = filePath.substring(0, Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\')));
+      const separator = filePath.includes('\\') ? '\\' : '/';
+      const fullPathToSelected = `${parentDir}${separator}${selectedFile}`;
+
+      const result = await invoke<string[]>('unprotect_file', { path: fullPathToSelected });
+      
+      setGeneratedFiles(prev => {
+        const newFiles = [...prev];
+        result.forEach(file => {
+          if (!newFiles.includes(file)) {
+            newFiles.push(file);
+          }
+        });
+        return newFiles;
+      });
+      
+      if (result.length > 0) {
+        setSelectedFile(result[0]);
+        alert(`Archivo(s) desprotegido(s) con éxito:\n${result.join('\n')}`);
+      }
+    } catch (error) {
+      console.error("Error during unprotection:", error);
+      alert(`Error al desproteger el archivo: ${error}`);
+    }
   };
 
   return (

@@ -115,7 +115,7 @@ pub fn hamming_encoding(block_size_bits: usize, input: &mut std::fs::File, outpu
 }
 
 
-pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()>  {
+pub fn hamming_decoding(block_size_bits: usize, with_error: bool, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()>  {
    
     // READ HEADER: Retrieve the original file size
     let mut header = [0u8; 8];
@@ -177,21 +177,23 @@ pub fn hamming_decoding(block_size_bits: usize, input: &mut std::fs::File, outpu
         }
 
         // SECDED LOGIC
-        if syndrome != 0 {
-            if overall_parity == 0 {
-                return Err(io::Error::new(
-                    io::ErrorKind::InvalidData,
-                    "Se detectaron 2 (o mas) errores. Imposible corregir. El programa termina..."
-                ));
+        if with_error {
+            if syndrome != 0 {
+                if overall_parity == 0 {
+                    return Err(io::Error::new(
+                        io::ErrorKind::InvalidData,
+                        "Se detectaron 2 (o mas) errores. Imposible corregir. El programa termina..."
+                    ));
+                } else {
+                    bits_info_internal[syndrome - 1] ^= 1; // Correct single error
+                }
             } else {
-                bits_info_internal[syndrome - 1] ^= 1; // Correct single error
-            }
-        } else {
-            if overall_parity == 1 {
-                bits_info_internal[block_size_bits - 1] ^= 1; // Parity bit itself is wrong
+                if overall_parity == 1 {
+                    bits_info_internal[block_size_bits - 1] ^= 1; // Parity bit itself is wrong
+                }
             }
         }
-
+    
         // CLEAN BIT EXTRACTION
         for idx in 0..block_size_bits {
             let pos = idx + 1;
@@ -248,10 +250,8 @@ pub fn inject_error(block_size_bits: usize, input: &mut std::fs::File, output: &
     let blocks_quantity = bits_info.len() / block_size_bits;
     for i in 0..blocks_quantity {
         if rand::thread_rng().gen_range(0.0..1.0) < 0.5 {
-            
             let index = rand::thread_rng().gen_range(0..block_size_bits);
             bits_info[index + i*block_size_bits] ^= 1;
-
         }
     }
 
@@ -323,7 +323,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(8, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(8, false, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 4. Assertion: Read the decoded file and compare it to the original
@@ -362,7 +362,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(1024, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(1024, false, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 4. Assertion
@@ -401,7 +401,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(16384, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(16384, false, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 4. Assertion
@@ -466,7 +466,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(8, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(8, false, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 4. Assertion: Read the decoded file and compare it to the original
@@ -505,7 +505,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(1024, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(1024, false, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 4. Assertion
@@ -544,7 +544,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(16384, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(16384, false, &mut encoded_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 4. Assertion
@@ -588,7 +588,7 @@ mod tests {
         {
             let mut error_file = File::open(&error_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(8, &mut error_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(8, true, &mut error_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 5. Assertion
@@ -634,7 +634,7 @@ mod tests {
         {
             let mut error_file = File::open(&error_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(1024, &mut error_file, &mut decoded_file).unwrap();
+            hamming_decoding(1024, true, &mut error_file, &mut decoded_file).unwrap();
         }
 
         // 5. Assertion
@@ -680,7 +680,7 @@ mod tests {
         {
             let mut error_file = File::open(&error_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(16384, &mut error_file, &mut decoded_file).unwrap();
+            hamming_decoding(16384, true, &mut error_file, &mut decoded_file).unwrap();
         }
 
         // 5. Assertion
@@ -719,7 +719,7 @@ mod tests {
         {
             let mut error_file = File::open(&error_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(8, &mut error_file, &mut decoded_file).expect("Decoding failed");
+            hamming_decoding(8, true, &mut error_file, &mut decoded_file).expect("Decoding failed");
         }
 
         // 5. Assertion
@@ -765,7 +765,7 @@ mod tests {
         {
             let mut error_file = File::open(&error_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(1024, &mut error_file, &mut decoded_file).unwrap();
+            hamming_decoding(1024, true, &mut error_file, &mut decoded_file).unwrap();
         }
 
         // 5. Assertion
@@ -811,7 +811,7 @@ mod tests {
         {
             let mut error_file = File::open(&error_path).unwrap();
             let mut decoded_file = File::create(&decoded_path).unwrap();
-            hamming_decoding(16384, &mut error_file, &mut decoded_file).unwrap();
+            hamming_decoding(16384, true, &mut error_file, &mut decoded_file).unwrap();
         }
 
         // 5. Assertion

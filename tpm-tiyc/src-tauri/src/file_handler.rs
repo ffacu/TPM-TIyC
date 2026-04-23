@@ -1,45 +1,119 @@
 use std::fs::File;
-use std::io::{self, Seek, SeekFrom};
+use std::path::Path;
 use crate::file_editor;
 
-#[allow(dead_code)]
-pub fn call_hamming(opt: isize,path: &str) -> io::Result<()> {
-    // Open the target text file in read-only binary mode
-    let mut input_file = File::open(path)?;
-    
-    match opt {
-        1 => {
-            // Create the destination files for the protected outputs
-            let mut out_ha1 = File::create(format!("{}.HA1", path))?;
-            // Process 8-bit blocks
-            file_editor::hamming_encoding(8, &mut input_file, &mut out_ha1)?;
-            // Rewind the input file cursor back to the beginning for the next module
-            input_file.seek(SeekFrom::Start(0))?;
-        }
-        2 => {
-            // Create the destination files for the protected outputs
-            let mut out_ha2 = File::create(format!("{}.HA2", path))?;
-            // Process 1024-bit blocks
-            file_editor::hamming_encoding(1024, &mut input_file, &mut out_ha2)?;
-            // Rewind the input file cursor back to the beginning for the next module
-            input_file.seek(SeekFrom::Start(0))?;
-        }
-        3 => {
-            // Create the destination files for the protected outputs
-            let mut out_ha3 = File::create(format!("{}.HA3", path))?;
-            // Process 16384-bit blocks
-            file_editor::hamming_encoding(16384, &mut input_file, &mut out_ha3)?;
-            // Rewind the input file cursor back to the beginning for the next module
-            input_file.seek(SeekFrom::Start(0))?;
+#[tauri::command]
+pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Result<Vec<String>, String> {
+    // block_size_opt: 1 -> 8 bits (.HA1), 2 -> 1024 bits (.HA2), 3 -> 16384 bits (.HA3)
+    let block_size_bits = match block_size_opt {
+        1 => 8,
+        2 => 1024,
+        3 => 16384,
+        _ => return Err("Invalid block size option".to_string()),
+    };
+
+    let ext = match block_size_opt {
+        1 => "HA1",
+        2 => "HA2",
+        3 => "HA3",
+        _ => unreachable!(),
+    };
+
+    let err_ext = match block_size_opt {
+        1 => "HE1",
+        2 => "HE2",
+        3 => "HE3",
+        _ => unreachable!(),
+    };
+
+    let input_path = Path::new(path);
+    let parent_dir = input_path.parent().unwrap_or(Path::new(""));
+    let file_stem = input_path.file_stem().and_then(|s| s.to_str()).unwrap_or("output");
+
+    let ha_filename = format!("{}.{}", file_stem, ext);
+    let ha_path = parent_dir.join(&ha_filename);
+
+    let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
+    let mut out_ha = File::create(&ha_path).map_err(|e| format!("Failed to create HA file: {}", e))?;
+
+    file_editor::hamming_encoding(block_size_bits, &mut input_file, &mut out_ha)
+        .map_err(|e| format!("Hamming encoding failed: {}", e))?;
+
+    let mut generated_files = vec![ha_filename.clone()];
+
+    if inject_errors {
+        let he_filename = format!("{}.{}", file_stem, err_ext);
+        let he_path = parent_dir.join(&he_filename);
+        
+        let mut ha_read = File::open(&ha_path).map_err(|e| format!("Failed to open HA file for reading: {}", e))?;
+        let mut out_he = File::create(&he_path).map_err(|e| format!("Failed to create HE file: {}", e))?;
+        
+        file_editor::inject_error(block_size_bits, &mut ha_read, &mut out_he)
+            .map_err(|e| format!("Error injection failed: {}", e))?;
             
-        }
-        _ => {
-        // The catch-all for any other number
-        println!("Invalid option selected. Please choose 1, 2, or 3.");
-        // If your function returns a Result, you might want to return an Err here instead!
-    }
+        generated_files.push(he_filename);
     }
 
-    Ok(())
+    Ok(generated_files)
+}
 
+#[tauri::command]
+pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
+    let input_path = Path::new(path);
+    let parent_dir = input_path.parent().unwrap_or(Path::new(""));
+    let file_stem = input_path.file_stem().and_then(|s| s.to_str()).unwrap_or("output");
+    let ext = input_path.extension().and_then(|s| s.to_str()).unwrap_or("");
+
+    let mut generated_files = Vec::new();
+
+    let block_size_bits = match ext {
+        "HA1" | "HE1" => 8,
+        "HA2" | "HE2" => 1024,
+        "HA3" | "HE3" => 16384,
+        _ => return Err("Invalid file extension for unprotected".to_string()),
+    };
+
+    let is_error_file = ext.starts_with("HE");
+    let block_idx = ext.chars().last().unwrap_or('1');
+
+    if is_error_file {
+        // Create .DCx (Corrected)
+        let dc_filename = format!("{}.DC{}", file_stem, block_idx);
+        let dc_path = parent_dir.join(&dc_filename);
+        let mut input_file1 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
+        let mut out_file1 = File::create(&dc_path).map_err(|e| format!("Failed to create DC file: {}", e))?;
+        
+        file_editor::hamming_decoding(block_size_bits, true, &mut input_file1, &mut out_file1)
+            .map_err(|e| format!("Hamming decoding (corrected) failed: {}", e))?;
+        generated_files.push(dc_filename);
+
+        // Create .DEx (With Errors)
+        let de_filename = format!("{}.DE{}", file_stem, block_idx);
+        let de_path = parent_dir.join(&de_filename);
+        let mut input_file2 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
+        let mut out_file2 = File::create(&de_path).map_err(|e| format!("Failed to create DE file: {}", e))?;
+        
+        file_editor::hamming_decoding(block_size_bits, false, &mut input_file2, &mut out_file2)
+            .map_err(|e| format!("Hamming decoding (with error) failed: {}", e))?;
+        generated_files.push(de_filename);
+    } else {
+        // Create .DEC (No errors originally)
+        let dec_filename = format!("{}.DEC", file_stem);
+        let dec_path = parent_dir.join(&dec_filename);
+        let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
+        let mut out_file = File::create(&dec_path).map_err(|e| format!("Failed to create DEC file: {}", e))?;
+        
+        file_editor::hamming_decoding(block_size_bits, false, &mut input_file, &mut out_file)
+            .map_err(|e| format!("Hamming decoding failed: {}", e))?;
+        generated_files.push(dec_filename);
+    }
+
+    Ok(generated_files)
+}
+
+#[tauri::command]
+pub fn read_file_content(path: &str) -> Result<String, String> {
+    std::fs::read(path)
+        .map(|bytes| String::from_utf8_lossy(&bytes).into_owned())
+        .map_err(|e| format!("Failed to read file: {}", e))
 }

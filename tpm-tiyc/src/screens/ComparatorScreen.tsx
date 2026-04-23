@@ -2,12 +2,10 @@ import React, { useState, useRef, useEffect, UIEvent } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { ArrowLeft, SplitSquareHorizontal } from 'lucide-react';
 import { Card } from '../components/ui/Card';
+import { invoke } from '@tauri-apps/api/core';
 
-// MOCK: This represents the Rust function `highlight_error` that will be implemented later.
-// It returns an array of objects indicating if a character is an error or not.
-const mockHighlightError = async (text1: string, text2: string) => {
-  // En una implementación real, esto llamaría a `invoke('highlight_error', { file1, file2 })`
-  // Para propósitos de UI, comparamos los textos crudos si estuvieran cargados
+// Compara dos textos carácter por carácter y devuelve el formato para renderizar.
+const compareFiles = (text1: string, text2: string) => {
   const result1 = [];
   const result2 = [];
   
@@ -30,8 +28,20 @@ export const ComparatorScreen: React.FC = () => {
   const navigate = useNavigate();
   const { filePath, generatedFiles = [] } = location.state || {};
 
-  const [file1, setFile1] = useState<string>(generatedFiles[0] || '');
-  const [file2, setFile2] = useState<string>(generatedFiles[1] || generatedFiles[0] || '');
+  if (!filePath) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Filtramos los archivos generados para excluir los binarios (.HAx, .HEx) ya que no son legibles en texto plano.
+  const allAvailableFiles = [filePath.split(/[/\\]/).pop(), ...generatedFiles]
+    .filter(Boolean)
+    .filter(f => {
+      const ext = f?.split('.').pop()?.toUpperCase() || '';
+      return !ext.startsWith('HA') && !ext.startsWith('HE');
+    }) as string[];
+
+  const [file1, setFile1] = useState<string>(allAvailableFiles[0] || '');
+  const [file2, setFile2] = useState<string>(allAvailableFiles[1] || allAvailableFiles[0] || '');
   
   const [content1, setContent1] = useState<{ char: string, isError: boolean }[]>([]);
   const [content2, setContent2] = useState<{ char: string, isError: boolean }[]>([]);
@@ -40,32 +50,38 @@ export const ComparatorScreen: React.FC = () => {
   const scrollRef2 = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef<'none' | 'left' | 'right'>('none');
 
-  if (!filePath) {
-    return <Navigate to="/" replace />;
-  }
-
-  const allAvailableFiles = [filePath.split(/[/\\]/).pop(), ...generatedFiles].filter(Boolean) as string[];
-
-  // Simula la carga de archivos y comparación
+  // Carga y comparación real de archivos
   useEffect(() => {
     const loadAndCompare = async () => {
-      // MOCK: En una app real, leeríamos el contenido de los archivos seleccionados usando Tauri FS.
-      // Aquí simulamos contenidos con diferencias para mostrar la UI.
-      let text1 = "Este es un archivo de prueba.\nContiene multiples lineas para probar el scroll.\nEl codigo de Hamming es genial.";
-      let text2 = "Este es un archivo de prueba.\nContiene multiqles lineas para probar el scroll.\nEl codigo de Hamming es lenial.";
-      
-      // Solo para que los mock sean un poco diferentes según el archivo elegido
-      if (file1 === file2) {
-        text2 = text1; 
+      let text1 = "";
+      let text2 = "";
+
+      const parentDir = filePath.substring(0, Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\')));
+      const separator = filePath.includes('\\') ? '\\' : '/';
+
+      try {
+        if (file1) {
+          const fullPath1 = file1 === filePath.split(/[/\\]/).pop() ? filePath : `${parentDir}${separator}${file1}`;
+          text1 = await invoke<string>('read_file_content', { path: fullPath1 });
+        }
+        
+        if (file2) {
+          const fullPath2 = file2 === filePath.split(/[/\\]/).pop() ? filePath : `${parentDir}${separator}${file2}`;
+          text2 = await invoke<string>('read_file_content', { path: fullPath2 });
+        }
+      } catch (error) {
+        console.error("Error reading files for comparison:", error);
+        text1 = file1 ? `[Error leyendo el archivo: ${error}]` : "";
+        text2 = file2 ? `[Error leyendo el archivo: ${error}]` : "";
       }
 
-      const { result1, result2 } = await mockHighlightError(text1, text2);
+      const { result1, result2 } = compareFiles(text1, text2);
       setContent1(result1);
       setContent2(result2);
     };
 
     loadAndCompare();
-  }, [file1, file2]);
+  }, [file1, file2, filePath]);
 
   const handleScroll = (e: UIEvent<HTMLDivElement>, source: 'left' | 'right') => {
     if (isScrollingRef.current !== 'none' && isScrollingRef.current !== source) {
