@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { Activity, LayoutGrid, HelpCircle, FileText } from 'lucide-react';
+import { Activity, LayoutGrid, HelpCircle, FileText, ArrowLeft } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 
 export const HomeScreen: React.FC = () => {
@@ -20,6 +20,13 @@ export const HomeScreen: React.FC = () => {
   return (
     <div className="flex flex-col w-full max-w-5xl mx-auto py-8">
       <div className="mb-12">
+        <button 
+          onClick={() => navigate('/')}
+          className="flex items-center text-text-muted hover:text-text-main transition-colors mb-6 font-medium"
+        >
+          <ArrowLeft size={18} className="mr-1" />
+          Volver a Cargar Archivo
+        </button>
         <div className="flex items-center gap-3 text-primary mb-2">
           <FileText size={24} />
           <span className="font-semibold text-lg">{getFileName(filePath)}</span>

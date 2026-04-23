@@ -4,15 +4,21 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { UploadCloud, FileText } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { invoke } from '@tauri-apps/api/core';
 
 export const LoadFileScreen: React.FC = () => {
   const navigate = useNavigate();
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleFileSelect = (filePath: string) => {
-    // Navigate to home and pass the filePath in the state
-    navigate('/home', { state: { filePath } });
+  const handleFileSelect = async (originalPath: string) => {
+    try {
+      const newPath = await invoke<string>('initialize_workspace', { path: originalPath });
+      navigate('/home', { state: { filePath: newPath } });
+    } catch (err) {
+      console.error(err);
+      setError(`Error inicializando espacio de trabajo: ${err}`);
+    }
   };
 
   const handleOpenDialog = async () => {

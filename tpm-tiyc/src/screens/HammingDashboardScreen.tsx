@@ -16,6 +16,25 @@ export const HammingDashboardScreen: React.FC = () => {
   const [generatedFiles, setGeneratedFiles] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
+  // Carga inicial y refresco de archivos desde el workspace
+  const refreshWorkspace = async () => {
+    try {
+      const files = await invoke<string[]>('list_workspace_files');
+      // Filtramos el archivo base (el original) para que no aparezca en "Generados"
+      const baseName = filePath?.split(/[/\\]/).pop();
+      const generated = files.filter(f => f !== baseName);
+      setGeneratedFiles(generated);
+      return generated;
+    } catch (err) {
+      console.error("Error al listar archivos del workspace:", err);
+      return [];
+    }
+  };
+
+  React.useEffect(() => {
+    refreshWorkspace();
+  }, []);
+
   if (!filePath) {
     return <Navigate to="/" replace />;
   }
@@ -28,15 +47,15 @@ export const HammingDashboardScreen: React.FC = () => {
     try {
       const blockSizeOpt = blockSize === '8' ? 1 : blockSize === '1024' ? 2 : 3;
       
-      const result = await invoke<string[]>('protect_file', { 
+      await invoke<string[]>('protect_file', { 
         path: filePath, 
         blockSizeOpt, 
         injectErrors: introduceErrors 
       });
       
-      setGeneratedFiles(result);
-      if (result.length > 0) {
-        setSelectedFile(result[0]);
+      const newFiles = await refreshWorkspace();
+      if (newFiles.length > 0) {
+        setSelectedFile(newFiles[newFiles.length - 1]); // Seleccionar el más reciente
       }
     } catch (error) {
       console.error("Error during protection:", error);
@@ -53,15 +72,7 @@ export const HammingDashboardScreen: React.FC = () => {
 
       const result = await invoke<string[]>('unprotect_file', { path: fullPathToSelected });
       
-      setGeneratedFiles(prev => {
-        const newFiles = [...prev];
-        result.forEach(file => {
-          if (!newFiles.includes(file)) {
-            newFiles.push(file);
-          }
-        });
-        return newFiles;
-      });
+      await refreshWorkspace();
       
       if (result.length > 0) {
         setSelectedFile(result[0]);
@@ -86,7 +97,7 @@ export const HammingDashboardScreen: React.FC = () => {
             Volver a Selección
           </button>
           <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold text-text-main tracking-tight">Hamming Dashboard</h1>
+            <h1 className="text-3xl font-bold text-text-main tracking-tight">Hamming</h1>
             <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">
               {getFileName(filePath)}
             </span>
@@ -96,7 +107,7 @@ export const HammingDashboardScreen: React.FC = () => {
         <Button 
           variant="outline" 
           className="gap-2"
-          onClick={() => navigate('/compare', { state: { filePath, generatedFiles } })}
+          onClick={() => navigate('/compare', { state: { filePath } })}
           disabled={generatedFiles.length === 0}
         >
           <FileText size={18} />

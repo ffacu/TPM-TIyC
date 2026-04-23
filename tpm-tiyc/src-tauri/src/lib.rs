@@ -11,7 +11,9 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             file_handler::protect_file,
             file_handler::unprotect_file,
-            file_handler::read_file_content
+            file_handler::read_file_content,
+            file_handler::initialize_workspace,
+            file_handler::list_workspace_files
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

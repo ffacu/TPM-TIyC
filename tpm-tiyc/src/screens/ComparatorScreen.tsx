@@ -26,22 +26,34 @@ const compareFiles = (text1: string, text2: string) => {
 export const ComparatorScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { filePath, generatedFiles = [] } = location.state || {};
+  const { filePath } = location.state || {};
 
   if (!filePath) {
     return <Navigate to="/" replace />;
   }
 
-  // Filtramos los archivos generados para excluir los binarios (.HAx, .HEx) ya que no son legibles en texto plano.
-  const allAvailableFiles = [filePath.split(/[/\\]/).pop(), ...generatedFiles]
-    .filter(Boolean)
-    .filter(f => {
-      const ext = f?.split('.').pop()?.toUpperCase() || '';
-      return !ext.startsWith('HA') && !ext.startsWith('HE');
-    }) as string[];
-
-  const [file1, setFile1] = useState<string>(allAvailableFiles[0] || '');
-  const [file2, setFile2] = useState<string>(allAvailableFiles[1] || allAvailableFiles[0] || '');
+  const [allAvailableFiles, setAllAvailableFiles] = useState<string[]>([]);
+  const [file1, setFile1] = useState<string>('');
+  const [file2, setFile2] = useState<string>('');
+  
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const files = await invoke<string[]>('list_workspace_files');
+        setAllAvailableFiles(files);
+        if (files.length > 0) {
+          // Si el archivo original está en la lista, lo ponemos como default en file1
+          const originalName = filePath.split(/[/\\]/).pop();
+          const default1 = files.includes(originalName || '') ? originalName || files[0] : files[0];
+          setFile1(default1);
+          setFile2(files.length > 1 ? files[1] : files[0]);
+        }
+      } catch (err) {
+        console.error("Error fetching workspace files:", err);
+      }
+    };
+    fetchFiles();
+  }, [filePath]);
   
   const [content1, setContent1] = useState<{ char: string, isError: boolean }[]>([]);
   const [content2, setContent2] = useState<{ char: string, isError: boolean }[]>([]);
@@ -121,7 +133,7 @@ export const ComparatorScreen: React.FC = () => {
             className="flex items-center text-text-muted hover:text-text-main transition-colors mb-2 font-medium"
           >
             <ArrowLeft size={18} className="mr-1" />
-            Volver al Dashboard
+            Volver a Hamming 
           </button>
           <div className="flex items-center gap-2">
             <SplitSquareHorizontal className="text-primary" size={28} />

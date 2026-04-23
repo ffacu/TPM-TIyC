@@ -117,3 +117,49 @@ pub fn read_file_content(path: &str) -> Result<String, String> {
         .map(|bytes| String::from_utf8_lossy(&bytes).into_owned())
         .map_err(|e| format!("Failed to read file: {}", e))
 }
+
+#[tauri::command]
+pub fn initialize_workspace(path: &str) -> Result<String, String> {
+    use std::fs;
+    
+    let input_path = Path::new(path);
+    let file_name = input_path.file_name().ok_or("Invalid file name")?;
+    
+    // Create workspace directory in the current working directory
+    let workspace_dir = Path::new("workspace");
+    if !workspace_dir.exists() {
+        fs::create_dir(workspace_dir).map_err(|e| format!("Failed to create workspace: {}", e))?;
+    } else {
+        // Clear workspace
+        let _ = fs::remove_dir_all(workspace_dir);
+        fs::create_dir(workspace_dir).map_err(|e| format!("Failed to recreate workspace: {}", e))?;
+    }
+    
+    let dest_path = workspace_dir.join(file_name);
+    fs::copy(input_path, &dest_path).map_err(|e| format!("Failed to copy file to workspace: {}", e))?;
+    
+    // Return the absolute path of the copied file
+    let abs_path = fs::canonicalize(&dest_path).map_err(|e| format!("Failed to canonicalize path: {}", e))?;
+    Ok(abs_path.to_string_lossy().into_owned())
+}
+
+#[tauri::command]
+pub fn list_workspace_files() -> Result<Vec<String>, String> {
+    use std::fs;
+    
+    let workspace_dir = Path::new("workspace");
+    if !workspace_dir.exists() {
+        return Ok(Vec::new());
+    }
+    
+    let mut files = Vec::new();
+    for entry in fs::read_dir(workspace_dir).map_err(|e| format!("Failed to read workspace: {}", e))? {
+        let entry = entry.map_err(|e| format!("Failed to read entry: {}", e))?;
+        if let Ok(name) = entry.file_name().into_string() {
+            files.push(name);
+        }
+    }
+    // Optional: Sort files alphabetically for better UI presentation
+    files.sort();
+    Ok(files)
+}
