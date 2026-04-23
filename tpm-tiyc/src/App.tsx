@@ -1,17 +1,23 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { MainLayout } from './layouts/MainLayout';
+import { LoadFileScreen } from './screens/LoadFileScreen';
+import { HomeScreen } from './screens/HomeScreen';
+import { HammingDashboardScreen } from './screens/HammingDashboardScreen';
+import { ComparatorScreen } from './screens/ComparatorScreen';
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
-
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<LoadFileScreen />} />
+          <Route path="home" element={<HomeScreen />} />
+          <Route path="hamming" element={<HammingDashboardScreen />} />
+          <Route path="compare" element={<ComparatorScreen />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App;
