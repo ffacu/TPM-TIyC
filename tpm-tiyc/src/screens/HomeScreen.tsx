@@ -48,16 +48,15 @@ export const HomeScreen: React.FC = () => {
           <p className="text-text-muted">Protección y detección de errores usando código Hamming.</p>
         </Card>
 
-        {/* Huffman Card */}
+        {/* Huffman Card (Not implemented) */}
         <Card 
-          className="p-8 cursor-pointer hover:border-blue-500 hover:shadow-md transition-all group flex flex-col items-center text-center h-72 justify-center"
-          onClick={() => { /* Not implemented yet */ }}
+          className="p-8 cursor-not-allowed opacity-60 flex flex-col items-center text-center h-72 justify-center bg-gray-50 border-transparent"
         >
-          <div className="bg-blue-50 text-blue-500 p-5 rounded-2xl mb-6 group-hover:scale-110 transition-transform">
-            <LayoutGrid size={40} strokeWidth={1.5} />
+          <div className="bg-gray-200 text-gray-500 p-5 rounded-2xl mb-6">
+            <HelpCircle size={40} strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-semibold mb-2">Huffman</h2>
-          <p className="text-text-muted">Compresión de archivos sin pérdida de información.</p>
+          <h2 className="text-2xl font-semibold mb-2">Próximamente</h2>
+          <p className="text-text-muted">Más algoritmos estarán disponibles en el futuro.</p>
         </Card>
 
         {/* Coming Soon Card */}
