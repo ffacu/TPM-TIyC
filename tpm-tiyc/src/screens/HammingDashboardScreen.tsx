@@ -202,25 +202,29 @@ export const HammingDashboardScreen: React.FC = () => {
           ) : (
             <div className="flex-1 flex flex-col">
               <div className="space-y-3 mb-6 flex-1">
-                {generatedFiles.map((file, idx) => (
+                {generatedFiles.map((file, idx) => {
+                  const isDecoded = file.includes('.DC') || file.includes('.DE');
+                  return (
                   <div 
                     key={idx}
                     onClick={() => setSelectedFile(file)}
                     className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center justify-between
-                      ${selectedFile === file ? 'border-secondary bg-secondary/5' : 'border-gray-100 hover:border-gray-200'}
+                      ${isDecoded 
+                        ? (selectedFile === file ? 'border-gray-300 bg-gray-100' : 'border-gray-100 bg-gray-50 opacity-70 hover:border-gray-200')
+                        : (selectedFile === file ? 'border-secondary bg-secondary/5' : 'border-gray-100 hover:border-gray-200')}
                     `}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg ${selectedFile === file ? 'bg-secondary/10 text-secondary' : 'bg-gray-100 text-gray-500'}`}>
+                      <div className={`p-2 rounded-lg ${isDecoded ? 'bg-gray-200 text-gray-500' : selectedFile === file ? 'bg-secondary/10 text-secondary' : 'bg-gray-100 text-gray-500'}`}>
                         <FileText size={20} />
                       </div>
-                      <span className={`font-medium ${selectedFile === file ? 'text-secondary-hover' : 'text-text-main'}`}>
+                      <span className={`font-medium ${isDecoded ? 'text-gray-500' : selectedFile === file ? 'text-secondary-hover' : 'text-text-main'}`}>
                         {file}
                       </span>
                     </div>
-                    {selectedFile === file && <CheckCircle className="text-secondary" size={20} />}
+                    {selectedFile === file && <CheckCircle className={isDecoded ? "text-gray-500" : "text-secondary"} size={20} />}
                   </div>
-                ))}
+                )})}
               </div>
 
               <div className="pt-4 border-t border-gray-100 mt-auto">
@@ -229,8 +233,8 @@ export const HammingDashboardScreen: React.FC = () => {
                   variant="secondary" 
                   fullWidth 
                   size="lg" 
-                  className="gap-2 text-lg shadow-md"
-                  disabled={!selectedFile}
+                  className={`gap-2 text-lg shadow-md ${selectedFile && (selectedFile.includes('.DC') || selectedFile.includes('.DE')) ? 'grayscale' : ''}`}
+                  disabled={!selectedFile || selectedFile.includes('.DC') || selectedFile.includes('.DE')}
                 >
                   <Unlock size={22} />
                   DESPROTEGER

@@ -97,11 +97,11 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
             .map_err(|e| format!("Hamming decoding (with error) failed: {}", e))?;
         generated_files.push(de_filename);
     } else {
-        // Create .DEC (No errors originally)
-        let dec_filename = format!("{}.DEC", file_stem);
+        // Create .DCx (No errors originally)
+        let dec_filename = format!("{}.DC{}", file_stem, block_idx);
         let dec_path = parent_dir.join(&dec_filename);
         let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
-        let mut out_file = File::create(&dec_path).map_err(|e| format!("Failed to create DEC file: {}", e))?;
+        let mut out_file = File::create(&dec_path).map_err(|e| format!("Failed to create DC file: {}", e))?;
         
         file_editor::hamming_decoding(block_size_bits, false, &mut input_file, &mut out_file)
             .map_err(|e| format!("Hamming decoding failed: {}", e))?;

@@ -5,7 +5,7 @@ import { Card } from '../components/ui/Card';
 import { invoke } from '@tauri-apps/api/core';
 
 // Compara dos textos carácter por carácter y devuelve el formato para renderizar.
-const compareFiles = (text1: string, text2: string) => {
+const compareFiles = (text1: string, text2: string, enableHighlight: boolean) => {
   const result1 = [];
   const result2 = [];
   
@@ -14,7 +14,7 @@ const compareFiles = (text1: string, text2: string) => {
   for (let i = 0; i < maxLength; i++) {
     const char1 = text1[i] || ' ';
     const char2 = text2[i] || ' ';
-    const isError = char1 !== char2;
+    const isError = enableHighlight && (char1 !== char2);
     
     if (i < text1.length) result1.push({ char: char1, isError });
     if (i < text2.length) result2.push({ char: char2, isError });
@@ -87,7 +87,13 @@ export const ComparatorScreen: React.FC = () => {
         text2 = file2 ? `[Error leyendo el archivo: ${error}]` : "";
       }
 
-      const { result1, result2 } = compareFiles(text1, text2);
+      const isHammingFile = (filename: string) => {
+        const ext = filename.split('.').pop()?.toUpperCase() || '';
+        return ext.startsWith('HA') || ext.startsWith('HE');
+      };
+
+      const enableHighlight = !isHammingFile(file1) && !isHammingFile(file2);
+      const { result1, result2 } = compareFiles(text1, text2, enableHighlight);
       setContent1(result1);
       setContent2(result2);
     };
