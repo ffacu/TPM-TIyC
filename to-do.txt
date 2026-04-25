@@ -1,17 +1,4 @@
 -----------------------------
--- Ordenar la salida de haminizacion a una carpeta con path relativo al proyecto.
-
--- Hacer mas bonita la ui
-
--- Cambiar tamanio de inicio
-
--- Implementar la comparación de dos archivos
-
--- Deshabilitar el hufman
-
--- poner el boton de cambiar el archivo
-
--- sacar drag and drop
 
 -- ENCRIPTAR ARCHIVO ENVIADO CON DIA Y HORA DE APERTURA
 
