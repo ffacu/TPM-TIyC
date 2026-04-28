@@ -14,17 +14,17 @@ export const LoadFileScreen: React.FC = () => {
 
   const handleFileSelect = async (originalPath: string) => {
     try {
-      const newPath = await invoke<string>('initialize_workspace', { path: originalPath });
+      const newPath = await invoke<string>('initialize_workspace', { path: originalPath }); //get the new path with the workspace initialized
       navigate('/home', { state: { filePath: newPath } });
     } catch (err) {
       console.error(err);
-      setError(`Error inicializando espacio de trabajo: ${err}`);
+      setError(`Error initializing workspace: ${err}`);
     }
   };
 
   const handleOpenDialog = async () => {
     try {
-      const selected = await open({
+      const selected = await open({  //open file explorer and filter only txt files
         multiple: false,
         filters: [{
           name: 'Text Files',
@@ -33,7 +33,7 @@ export const LoadFileScreen: React.FC = () => {
       });
       
       if (selected !== null) {
-        handleFileSelect(selected as string);
+        handleFileSelect(selected as string); 
       }
     } catch (err) {
       console.error(err);
@@ -41,10 +41,12 @@ export const LoadFileScreen: React.FC = () => {
     }
   };
 
+  //Handler for drag and drop mode
   useEffect(() => {
     let unlistenFn: (() => void) | undefined;
     
     const setupDragDrop = async () => {
+      //Listen to text file input in drag and drop mode
       const unlisten = await getCurrentWindow().onDragDropEvent((event) => {
         if (event.payload.type === 'over') {
           setIsDragging(true);

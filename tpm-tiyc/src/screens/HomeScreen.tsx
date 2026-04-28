@@ -8,8 +8,8 @@ export const HomeScreen: React.FC = () => {
   const navigate = useNavigate();
   const filePath = location.state?.filePath;
 
+  // Route guard.
   if (!filePath) {
-    // Navigate back to load file if there's no file in context
     return <Navigate to="/" replace />;
   }
 

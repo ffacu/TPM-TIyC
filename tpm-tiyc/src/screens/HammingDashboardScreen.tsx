@@ -17,6 +17,7 @@ export const HammingDashboardScreen: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
 
+  // Show toast notification in UI
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
     setToast({ message, type });
     setTimeout(() => {
@@ -24,17 +25,18 @@ export const HammingDashboardScreen: React.FC = () => {
     }, 2000);
   };
 
-  // Carga inicial y refresco de archivos desde el workspace
+  // Initial load and refresh of files from the workspace
   const refreshWorkspace = async () => {
     try {
-      const files = await invoke<string[]>('list_workspace_files');
-      // Filtramos el archivo base (el original) para que no aparezca en "Generados"
+      const files = await invoke<string[]>('list_workspace_files'); //invoke rust function (back-end)
+     
+      // Filter the base file (the original) so it doesn't appear in "Generated"
       const baseName = filePath?.split(/[/\\]/).pop();
       const generated = files.filter(f => f !== baseName);
       setGeneratedFiles(generated);
       return generated;
     } catch (err) {
-      console.error("Error al listar archivos del workspace:", err);
+      console.error("Error listing workspace files:", err);
       return [];
     }
   };
@@ -43,6 +45,7 @@ export const HammingDashboardScreen: React.FC = () => {
     refreshWorkspace();
   }, []);
 
+  // Route guard.
   if (!filePath) {
     return <Navigate to="/" replace />;
   }
@@ -63,7 +66,7 @@ export const HammingDashboardScreen: React.FC = () => {
       
       const newFiles = await refreshWorkspace();
       if (newFiles.length > 0) {
-        setSelectedFile(newFiles[newFiles.length - 1]); // Seleccionar el más reciente
+        setSelectedFile(newFiles[newFiles.length - 1]); // Select the most recent
       }
     } catch (error) {
       console.error("Error during protection:", error);
@@ -75,8 +78,8 @@ export const HammingDashboardScreen: React.FC = () => {
     if (!selectedFile) return;
     try {
       const parentDir = filePath.substring(0, Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\')));
-      const separator = filePath.includes('\\') ? '\\' : '/';
-      const fullPathToSelected = `${parentDir}${separator}${selectedFile}`;
+      const separator = filePath.includes('\\') ? '\\' : '/'; // Determine depending the OS the separator of files (Portability)
+      const fullPathToSelected = `${parentDir}${separator}${selectedFile}`; // Full path of the selected file
 
       const result = await invoke<string[]>('unprotect_file', { path: fullPathToSelected });
       

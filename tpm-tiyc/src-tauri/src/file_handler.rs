@@ -26,12 +26,13 @@ pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Resu
         _ => unreachable!(),
     };
 
+    // Generate new path for the protected file.
     let input_path = Path::new(path);
-    let parent_dir = input_path.parent().unwrap_or(Path::new(""));
-    let file_stem = input_path.file_stem().and_then(|s| s.to_str()).unwrap_or("output");
+    let parent_dir = input_path.parent().unwrap_or(Path::new("")); // Get the parent directory.
+    let file_stem = input_path.file_stem().and_then(|s| s.to_str()).unwrap_or("output"); // Get the file stem.
 
-    let ha_filename = format!("{}.{}", file_stem, ext);
-    let ha_path = parent_dir.join(&ha_filename);
+    let ha_filename = format!("{}.{}", file_stem, ext); //Put the extension to the file name.
+    let ha_path = parent_dir.join(&ha_filename); 
 
     let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
     let mut out_ha = File::create(&ha_path).map_err(|e| format!("Failed to create HA file: {}", e))?;
@@ -41,6 +42,7 @@ pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Resu
 
     let mut generated_files = vec![ha_filename.clone()];
 
+    // If inject errors is true, create HE file.
     if inject_errors {
         let he_filename = format!("{}.{}", file_stem, err_ext);
         let he_path = parent_dir.join(&he_filename);
@@ -77,7 +79,7 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
     let block_idx = ext.chars().last().unwrap_or('1');
 
     if is_error_file {
-        // Create .DCx (Corrected)
+        // Create both .DCx and .DEx files.
         let dc_filename = format!("{}.DC{}", file_stem, block_idx);
         let dc_path = parent_dir.join(&dc_filename);
         let mut input_file1 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
@@ -123,6 +125,7 @@ pub fn initialize_workspace(path: &str) -> Result<String, String> {
     use std::fs;
     
     let input_path = Path::new(path);
+    // Get the txt file name. 
     let file_name = input_path.file_name().ok_or("Invalid file name")?;
     
     // Create workspace directory in the current working directory
@@ -135,10 +138,11 @@ pub fn initialize_workspace(path: &str) -> Result<String, String> {
         fs::create_dir(workspace_dir).map_err(|e| format!("Failed to recreate workspace: {}", e))?;
     }
     
+    // Create a copy of the txt file in the workspace
     let dest_path = workspace_dir.join(file_name);
     fs::copy(input_path, &dest_path).map_err(|e| format!("Failed to copy file to workspace: {}", e))?;
     
-    // Return the absolute path of the copied file
+    // Return the path of the copied file
     let abs_path = fs::canonicalize(&dest_path).map_err(|e| format!("Failed to canonicalize path: {}", e))?;
     Ok(abs_path.to_string_lossy().into_owned())
 }
@@ -153,6 +157,7 @@ pub fn list_workspace_files() -> Result<Vec<String>, String> {
     }
     
     let mut files = Vec::new();
+    // Read all files in the workspace and append them to the list
     for entry in fs::read_dir(workspace_dir).map_err(|e| format!("Failed to read workspace: {}", e))? {
         let entry = entry.map_err(|e| format!("Failed to read entry: {}", e))?;
         if let Ok(name) = entry.file_name().into_string() {

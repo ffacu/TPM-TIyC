@@ -6,6 +6,7 @@ import { HomeScreen } from './screens/HomeScreen';
 import { HammingDashboardScreen } from './screens/HammingDashboardScreen';
 import { ComparatorScreen } from './screens/ComparatorScreen';
 
+//navigation app
 export default function App() {
   return (
     <BrowserRouter>

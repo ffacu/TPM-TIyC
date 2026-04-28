@@ -1,9 +1,0 @@
-/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/async_process-8f7c46943aab7474.d: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/unix.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/mod.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/wait.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/signal.rs
-
-/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/libasync_process-8f7c46943aab7474.rmeta: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/unix.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/mod.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/wait.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/signal.rs
-
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/lib.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/unix.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/mod.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/wait.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/async-process-2.5.0/src/reaper/signal.rs:

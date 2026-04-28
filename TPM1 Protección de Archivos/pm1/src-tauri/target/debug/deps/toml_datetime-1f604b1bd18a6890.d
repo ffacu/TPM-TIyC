@@ -1,8 +1,0 @@
-/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/toml_datetime-1f604b1bd18a6890.d: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/datetime.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/de.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/ser.rs
-
-/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/libtoml_datetime-1f604b1bd18a6890.rmeta: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/datetime.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/de.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/ser.rs
-
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/lib.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/datetime.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/de.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.5+spec-1.1.0/src/ser.rs:

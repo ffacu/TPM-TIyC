@@ -4,7 +4,7 @@ import { ArrowLeft, SplitSquareHorizontal } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { invoke } from '@tauri-apps/api/core';
 
-// Compara dos textos carácter por carácter y devuelve el formato para renderizar.
+// Compare original txt file with encoded file (Hamming) and highlight the differences.
 const compareFiles = (text1: string, text2: string, enableHighlight: boolean) => {
   const result1 = [];
   const result2 = [];
@@ -28,6 +28,7 @@ export const ComparatorScreen: React.FC = () => {
   const navigate = useNavigate();
   const { filePath } = location.state || {};
 
+  // Route guard.
   if (!filePath) {
     return <Navigate to="/" replace />;
   }
@@ -42,7 +43,7 @@ export const ComparatorScreen: React.FC = () => {
         const files = await invoke<string[]>('list_workspace_files');
         setAllAvailableFiles(files);
         if (files.length > 0) {
-          // Si el archivo original está en la lista, lo ponemos como default en file1
+          // Original txt file is set as default in file1
           const originalName = filePath.split(/[/\\]/).pop();
           const default1 = files.includes(originalName || '') ? originalName || files[0] : files[0];
           setFile1(default1);
@@ -62,7 +63,7 @@ export const ComparatorScreen: React.FC = () => {
   const scrollRef2 = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef<'none' | 'left' | 'right'>('none');
 
-  // Carga y comparación real de archivos
+  // Loads and compares the two files (highlights differences only if both files are decoded files).
   useEffect(() => {
     const loadAndCompare = async () => {
       let text1 = "";
@@ -72,6 +73,7 @@ export const ComparatorScreen: React.FC = () => {
       const separator = filePath.includes('\\') ? '\\' : '/';
 
       try {
+        // read both files content.
         if (file1) {
           const fullPath1 = file1 === filePath.split(/[/\\]/).pop() ? filePath : `${parentDir}${separator}${file1}`;
           text1 = await invoke<string>('read_file_content', { path: fullPath1 });
@@ -106,6 +108,7 @@ export const ComparatorScreen: React.FC = () => {
       return;
     }
     
+    // Sync scroll position between the two files (no infinite loop)
     isScrollingRef.current = source;
     
     const target = e.currentTarget;

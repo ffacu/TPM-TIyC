@@ -1,9 +1,0 @@
-/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/concurrent_queue-69de3a2ce8d455a0.d: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/bounded.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/single.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/unbounded.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/sync.rs
-
-/home/sirius/Documents/githubProyects/TPM-TIyC/TPM1 Protección de Archivos/pm1/src-tauri/target/debug/deps/libconcurrent_queue-69de3a2ce8d455a0.rmeta: /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/lib.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/bounded.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/single.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/unbounded.rs /home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/sync.rs
-
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/lib.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/bounded.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/single.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/unbounded.rs:
-/home/sirius/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0/src/sync.rs:
