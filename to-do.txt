@@ -1,10 +1,13 @@
 -----------------------------
 
+- Documentar todo
+- Modificar el cartel de introducir errores, para permitir 2 errores
+- Disenar e implementar mplementar HuffmanScreen
+-- Dark/Light mode
+
 -- ENCRIPTAR ARCHIVO ENVIADO CON DIA Y HORA DE APERTURA
 
 == (MARCAR EN ARCHIVO CON ERRORES LOS CARACTERES DONDE SE PRODUCE ERROR CON COLOR ROJO DE LETRA)
-
--- sun/moon
 
 =============================
 -- preguntas
