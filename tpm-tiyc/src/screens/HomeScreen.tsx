@@ -35,39 +35,29 @@ export const HomeScreen: React.FC = () => {
         <p className="text-text-muted text-lg">Elige el algoritmo que deseas aplicar a tu archivo.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Hamming Card */}
         <Card 
-          className="p-8 cursor-pointer hover:border-primary hover:shadow-md transition-all group flex flex-col items-center text-center h-72 justify-center"
+          className="p-10 cursor-pointer hover:border-primary hover:shadow-lg transition-all group flex flex-col items-center text-center h-[380px] justify-center"
           onClick={() => navigate('/hamming', { state: { filePath } })}
         >
-          <div className="bg-primary/10 text-primary p-5 rounded-2xl mb-6 group-hover:scale-110 transition-transform">
-            <Activity size={40} strokeWidth={1.5} />
+          <div className="bg-primary/10 text-primary p-6 rounded-3xl mb-8 group-hover:scale-110 transition-transform">
+            <Activity size={56} strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-semibold mb-2">Hamming</h2>
-          <p className="text-text-muted">Protección y detección de errores usando código Hamming.</p>
+          <h2 className="text-3xl font-semibold mb-4">Hamming</h2>
+          <p className="text-text-muted text-lg px-4">Protección y detección de errores usando código Hamming.</p>
         </Card>
 
-        {/* Huffman Card (Not implemented) */}
+        {/* Huffman Card */}
         <Card 
-          className="p-8 cursor-not-allowed opacity-60 flex flex-col items-center text-center h-72 justify-center bg-gray-50 border-transparent"
+          className="p-10 cursor-pointer hover:border-blue-500 hover:shadow-lg transition-all group flex flex-col items-center text-center h-[380px] justify-center"
+          onClick={() => navigate('/huffman', { state: { filePath } })}
         >
-          <div className="bg-gray-200 text-gray-500 p-5 rounded-2xl mb-6">
-            <HelpCircle size={40} strokeWidth={1.5} />
+          <div className="bg-blue-50 text-blue-500 p-6 rounded-3xl mb-8 group-hover:scale-110 transition-transform">
+            <LayoutGrid size={56} strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-semibold mb-2">Próximamente</h2>
-          <p className="text-text-muted">Más algoritmos estarán disponibles en el futuro.</p>
-        </Card>
-
-        {/* Coming Soon Card */}
-        <Card 
-          className="p-8 cursor-not-allowed opacity-60 flex flex-col items-center text-center h-72 justify-center bg-gray-50 border-transparent"
-        >
-          <div className="bg-gray-200 text-gray-500 p-5 rounded-2xl mb-6">
-            <HelpCircle size={40} strokeWidth={1.5} />
-          </div>
-          <h2 className="text-2xl font-semibold mb-2">Próximamente</h2>
-          <p className="text-text-muted">Más algoritmos estarán disponibles en el futuro.</p>
+          <h2 className="text-3xl font-semibold mb-4">Huffman</h2>
+          <p className="text-text-muted text-lg px-4">Compresión de archivos sin pérdida de información.</p>
         </Card>
       </div>
     </div>
