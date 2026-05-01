@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::path::Path;
-use crate::file_editor;
+use crate::file_hamming;
 
 #[tauri::command]
 pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Result<Vec<String>, String> {
@@ -37,7 +37,7 @@ pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Resu
     let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
     let mut out_ha = File::create(&ha_path).map_err(|e| format!("Failed to create HA file: {}", e))?;
 
-    file_editor::hamming_encoding(block_size_bits, &mut input_file, &mut out_ha)
+    file_hamming::hamming_encoding(block_size_bits, &mut input_file, &mut out_ha)
         .map_err(|e| format!("Hamming encoding failed: {}", e))?;
 
     let mut generated_files = vec![ha_filename.clone()];
@@ -50,7 +50,7 @@ pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Resu
         let mut ha_read = File::open(&ha_path).map_err(|e| format!("Failed to open HA file for reading: {}", e))?;
         let mut out_he = File::create(&he_path).map_err(|e| format!("Failed to create HE file: {}", e))?;
         
-        file_editor::inject_error(block_size_bits, &mut ha_read, &mut out_he)
+        file_hamming::inject_error(block_size_bits, &mut ha_read, &mut out_he)
             .map_err(|e| format!("Error injection failed: {}", e))?;
             
         generated_files.push(he_filename);
@@ -85,7 +85,7 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
         let mut input_file1 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
         let mut out_file1 = File::create(&dc_path).map_err(|e| format!("Failed to create DC file: {}", e))?;
         
-        file_editor::hamming_decoding(block_size_bits, true, &mut input_file1, &mut out_file1)
+        file_hamming::hamming_decoding(block_size_bits, true, &mut input_file1, &mut out_file1)
             .map_err(|e| format!("Hamming decoding (corrected) failed: {}", e))?;
         generated_files.push(dc_filename);
 
@@ -95,7 +95,7 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
         let mut input_file2 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
         let mut out_file2 = File::create(&de_path).map_err(|e| format!("Failed to create DE file: {}", e))?;
         
-        file_editor::hamming_decoding(block_size_bits, false, &mut input_file2, &mut out_file2)
+        file_hamming::hamming_decoding(block_size_bits, false, &mut input_file2, &mut out_file2)
             .map_err(|e| format!("Hamming decoding (with error) failed: {}", e))?;
         generated_files.push(de_filename);
     } else {
@@ -105,7 +105,7 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
         let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
         let mut out_file = File::create(&dec_path).map_err(|e| format!("Failed to create DC file: {}", e))?;
         
-        file_editor::hamming_decoding(block_size_bits, false, &mut input_file, &mut out_file)
+        file_hamming::hamming_decoding(block_size_bits, false, &mut input_file, &mut out_file)
             .map_err(|e| format!("Hamming decoding failed: {}", e))?;
         generated_files.push(dec_filename);
     }

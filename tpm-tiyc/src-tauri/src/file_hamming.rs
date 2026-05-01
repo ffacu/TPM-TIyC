@@ -282,7 +282,7 @@ mod tests {
     use std::io::{Read, Write};
     use std::path::PathBuf;
 
-    use crate::file_editor::{hamming_decoding, hamming_encoding, inject_error};
+    use crate::file_hamming::{hamming_decoding, hamming_encoding, inject_error};
 
     // --- CONFIGURATION ---
     // It will create this directory relative to where `cargo test` it's runned.
