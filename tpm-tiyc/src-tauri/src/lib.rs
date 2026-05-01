@@ -2,6 +2,7 @@
 
 mod file_handler;
 pub mod file_hamming;
+pub mod huffman;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -13,7 +14,9 @@ pub fn run() {
             file_handler::unprotect_file,
             file_handler::read_file_content,
             file_handler::initialize_workspace,
-            file_handler::list_workspace_files
+            file_handler::list_workspace_files,
+            file_handler::compress_huffman,
+            file_handler::extract_huffman
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

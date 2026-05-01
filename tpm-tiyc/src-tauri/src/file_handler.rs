@@ -1,6 +1,8 @@
 use std::fs::File;
 use std::path::Path;
 use crate::file_hamming;
+use crate::huffman::{compress_file, extract_file, Mode};
+use std::path::PathBuf;
 
 #[tauri::command]
 pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Result<Vec<String>, String> {
@@ -167,4 +169,40 @@ pub fn list_workspace_files() -> Result<Vec<String>, String> {
     // Optional: Sort files alphabetically for better UI presentation
     files.sort();
     Ok(files)
+}
+
+#[tauri::command]
+pub fn compress_huffman(path: &str, mode_str: &str) -> Result<String, String> {
+    let mode = match mode_str {
+        "words" => Mode::Words,
+        "chars" => Mode::Chars,
+        _ => return Err("Invalid mode. Use 'words' or 'chars'".to_string()),
+    };
+    
+    let input_path = PathBuf::from(path);
+    let mut output_path = input_path.clone();
+    output_path.set_extension("huffman");
+
+    compress_file(input_path, output_path.clone(), mode)
+        .map_err(|e| format!("Compression failed: {}", e))?;
+
+    Ok(output_path.to_string_lossy().into_owned())
+}
+
+#[tauri::command]
+pub fn extract_huffman(path: &str, mode_str: &str) -> Result<String, String> {
+    let mode = match mode_str {
+        "words" => Mode::Words,
+        "chars" => Mode::Chars,
+        _ => return Err("Invalid mode. Use 'words' or 'chars'".to_string()),
+    };
+    
+    let input_path = PathBuf::from(path);
+    let mut output_path = input_path.clone();
+    output_path.set_extension("extracted.txt");
+
+    extract_file(input_path, output_path.clone(), mode)
+        .map_err(|e| format!("Extraction failed: {}", e))?;
+
+    Ok(output_path.to_string_lossy().into_owned())
 }
