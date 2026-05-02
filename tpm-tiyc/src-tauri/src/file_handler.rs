@@ -5,7 +5,7 @@ use crate::huffman::{compress_file, extract_file, Mode};
 use std::path::PathBuf;
 
 #[tauri::command]
-pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Result<Vec<String>, String> {
+pub fn protect_file(path: &str, block_size_opt: u8, errors_quantity: usize) -> Result<Vec<String>, String> {
     // block_size_opt: 1 -> 8 bits (.HA1), 2 -> 1024 bits (.HA2), 3 -> 16384 bits (.HA3)
     let block_size_bits = match block_size_opt {
         1 => 8,
@@ -45,14 +45,14 @@ pub fn protect_file(path: &str, block_size_opt: u8, inject_errors: bool) -> Resu
     let mut generated_files = vec![ha_filename.clone()];
 
     // If inject errors is true, create HE file.
-    if inject_errors {
+    if errors_quantity > 0 {
         let he_filename = format!("{}.{}", file_stem, err_ext);
         let he_path = parent_dir.join(&he_filename);
         
         let mut ha_read = File::open(&ha_path).map_err(|e| format!("Failed to open HA file for reading: {}", e))?;
         let mut out_he = File::create(&he_path).map_err(|e| format!("Failed to create HE file: {}", e))?;
         
-        file_hamming::inject_error(block_size_bits, &mut ha_read, &mut out_he)
+        file_hamming::inject_error(block_size_bits, errors_quantity, &mut ha_read, &mut out_he)
             .map_err(|e| format!("Error injection failed: {}", e))?;
             
         generated_files.push(he_filename);
@@ -87,8 +87,7 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
         let mut input_file1 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
         let mut out_file1 = File::create(&dc_path).map_err(|e| format!("Failed to create DC file: {}", e))?;
         
-        file_hamming::hamming_decoding(block_size_bits, true, &mut input_file1, &mut out_file1)
-            .map_err(|e| format!("Hamming decoding (corrected) failed: {}", e))?;
+        let decode_res_1 = file_hamming::hamming_decoding(block_size_bits, true, &mut input_file1, &mut out_file1);
         generated_files.push(dc_filename);
 
         // Create .DEx (With Errors)
@@ -97,9 +96,16 @@ pub fn unprotect_file(path: &str) -> Result<Vec<String>, String> {
         let mut input_file2 = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
         let mut out_file2 = File::create(&de_path).map_err(|e| format!("Failed to create DE file: {}", e))?;
         
-        file_hamming::hamming_decoding(block_size_bits, false, &mut input_file2, &mut out_file2)
-            .map_err(|e| format!("Hamming decoding (with error) failed: {}", e))?;
+        let decode_res_2 = file_hamming::hamming_decoding(block_size_bits, false, &mut input_file2, &mut out_file2);
         generated_files.push(de_filename);
+
+        // Now return error if any of them failed
+        if let Err(e) = decode_res_1 {
+            return Err(format!("Hamming decoding (corrected) failed: {}", e));
+        }
+        if let Err(e) = decode_res_2 {
+            return Err(format!("Hamming decoding (with error) failed: {}", e));
+        }
     } else {
         // Create .DCx (No errors originally)
         let dec_filename = format!("{}.DC{}", file_stem, block_idx);

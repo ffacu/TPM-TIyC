@@ -12,13 +12,13 @@ export const HammingDashboardScreen: React.FC = () => {
   const filePath = location.state?.filePath;
 
   const [blockSize, setBlockSize] = useState('8');
-  const [introduceErrors, setIntroduceErrors] = useState(false);
+  const [errorsQuantity, setErrorsQuantity] = useState<number>(0);
   const [generatedFiles, setGeneratedFiles] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
+  const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' | 'warning' } | null>(null);
 
   // Show toast notification in UI
-  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+  const showToast = (message: string, type: 'success' | 'error' | 'warning' = 'success') => {
     setToast({ message, type });
     setTimeout(() => {
       setToast(null);
@@ -61,7 +61,7 @@ export const HammingDashboardScreen: React.FC = () => {
       await invoke<string[]>('protect_file', { 
         path: filePath, 
         blockSizeOpt, 
-        injectErrors: introduceErrors 
+        errorsQuantity 
       });
       
       const newFiles = await refreshWorkspace();
@@ -83,15 +83,15 @@ export const HammingDashboardScreen: React.FC = () => {
 
       const result = await invoke<string[]>('unprotect_file', { path: fullPathToSelected });
       
-      await refreshWorkspace();
-      
       if (result.length > 0) {
         setSelectedFile(result[0]);
         showToast(`Archivo(s) desprotegido(s) con éxito:\n${result.join('\n')}`, 'success');
       }
     } catch (error) {
       console.error("Error during unprotection:", error);
-      showToast(`Error al desproteger el archivo: ${error}`, 'error');
+      showToast(`Error al desproteger el archivo: ${error}`, 'warning');
+    } finally {
+      await refreshWorkspace();
     }
   };
 
@@ -103,9 +103,13 @@ export const HammingDashboardScreen: React.FC = () => {
           <div className={`px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 ${
             toast.type === 'success' 
               ? 'bg-white border-l-4 border-green-500 text-green-800' 
+              : toast.type === 'warning'
+              ? 'bg-white border-l-4 border-yellow-500 text-yellow-800'
               : 'bg-white border-l-4 border-red-500 text-red-800'
           }`}>
-            {toast.type === 'success' ? <CheckCircle className="text-green-500" size={24} /> : <AlertCircle className="text-red-500" size={24} />}
+            {toast.type === 'success' ? <CheckCircle className="text-green-500" size={24} /> : 
+             toast.type === 'warning' ? <AlertCircle className="text-yellow-500" size={24} /> :
+             <AlertCircle className="text-red-500" size={24} />}
             <p className="font-medium whitespace-pre-wrap">{toast.message}</p>
           </div>
         </div>
@@ -168,16 +172,14 @@ export const HammingDashboardScreen: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">¿Introducir errores en la transmisión?</label>
+              <label className="block text-sm font-medium text-gray-700 mb-3">¿Desea introducir errores? (Indique cuantos)</label>
               <div className="flex gap-4">
-                <label className={`flex-1 cursor-pointer rounded-xl border-2 p-4 flex items-center justify-center transition-all ${!introduceErrors ? 'border-primary bg-primary/5 text-primary font-semibold' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
-                  <input type="radio" name="errors" className="hidden" checked={!introduceErrors} onChange={() => setIntroduceErrors(false)} />
-                  <span className="flex items-center gap-2">{!introduceErrors && <CheckCircle size={18} />} NO</span>
-                </label>
-                <label className={`flex-1 cursor-pointer rounded-xl border-2 p-4 flex items-center justify-center transition-all ${introduceErrors ? 'border-red-500 bg-red-50 text-red-600 font-semibold' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
-                  <input type="radio" name="errors" className="hidden" checked={introduceErrors} onChange={() => setIntroduceErrors(true)} />
-                  <span className="flex items-center gap-2">{introduceErrors && <CheckCircle size={18} />} SÍ</span>
-                </label>
+                {[0, 1, 2].map((num) => (
+                  <label key={num} className={`flex-1 cursor-pointer rounded-xl border-2 p-4 flex items-center justify-center transition-all ${errorsQuantity === num ? (num === 0 ? 'border-primary bg-primary/5 text-primary font-semibold' : 'border-red-500 bg-red-50 text-red-600 font-semibold') : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+                    <input type="radio" name="errorsQuantity" className="hidden" checked={errorsQuantity === num} onChange={() => setErrorsQuantity(num)} />
+                    <span className="flex items-center gap-2">{errorsQuantity === num && <CheckCircle size={18} />} {num}</span>
+                  </label>
+                ))}
               </div>
             </div>
 

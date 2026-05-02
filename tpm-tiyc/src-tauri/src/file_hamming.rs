@@ -139,6 +139,8 @@ pub fn hamming_decoding(block_size_bits: usize, with_error: bool, input: &mut st
     let control_bits_quantity = block_size_bits.trailing_zeros() as usize;
     let mut bits_info_internal = vec![0; (block_size_bits).try_into().unwrap()];  
     
+    let mut unrecoverable_error_detected = false;
+    
     // The loop takes from the buffer the amount of the block
     for i in (0..(bits_info.len())).step_by(block_size_bits) {
 
@@ -180,10 +182,7 @@ pub fn hamming_decoding(block_size_bits: usize, with_error: bool, input: &mut st
         if with_error {
             if syndrome != 0 {
                 if overall_parity == 0 {
-                    return Err(io::Error::new(
-                        io::ErrorKind::InvalidData,
-                        "Se detectaron 2 (o mas) errores. Imposible corregir. El programa termina..."
-                    ));
+                    unrecoverable_error_detected = true;
                 } else {
                     bits_info_internal[syndrome - 1] ^= 1; // Correct single error
                 }
@@ -222,12 +221,23 @@ pub fn hamming_decoding(block_size_bits: usize, with_error: bool, input: &mut st
     output_bytes.truncate(original_byte_len);
     output.write_all(&output_bytes)?;
 
+    if unrecoverable_error_detected {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            "Se detectaron 2 (o mas) errores; el archivo esta corrupto."
+        ));
+    }
+
     Ok(())
 
 }
 
-pub fn inject_error(block_size_bits: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
+pub fn inject_error(block_size_bits: usize, errors_quantity: usize, input: &mut std::fs::File, output: &mut std::fs::File) -> io::Result<()> {
     
+    if errors_quantity == 0 {
+        return Ok(());
+    }
+
     // Pass the header through untouched so we don't corrupt the padding tracker
     let mut header = [0u8; 8];
     input.read_exact(&mut header)?;
@@ -250,8 +260,15 @@ pub fn inject_error(block_size_bits: usize, input: &mut std::fs::File, output: &
     let blocks_quantity = bits_info.len() / block_size_bits;
     for i in 0..blocks_quantity {
         if rand::thread_rng().gen_range(0.0..1.0) < 0.5 {
-            let index = rand::thread_rng().gen_range(0..block_size_bits);
-            bits_info[index + i*block_size_bits] ^= 1;
+            let mut indices = Vec::new();
+            let iteration_quantity = rand::thread_rng().gen_range(0..(errors_quantity + 1));
+            while indices.len() < iteration_quantity {
+                let index = rand::thread_rng().gen_range(0..block_size_bits);
+                if !indices.contains(&index) {
+                    indices.push(index);
+                    bits_info[index + i*block_size_bits] ^= 1;
+                }
+            }
         }
     }
 
@@ -581,7 +598,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut error_file = File::create(&error_path).unwrap();
-            inject_error(8, &mut encoded_file, &mut error_file).expect("Error injection failed");
+            inject_error(8, 1, &mut encoded_file, &mut error_file).expect("Error injection failed");
         }
 
         // 4. Decode the file that has errors!
@@ -627,7 +644,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut error_file = File::create(&error_path).unwrap();
-            inject_error(1024, &mut encoded_file, &mut error_file).unwrap();
+            inject_error(1024, 1, &mut encoded_file, &mut error_file).unwrap();
         }
 
         // 4. Decode
@@ -673,7 +690,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut error_file = File::create(&error_path).unwrap();
-            inject_error(16384, &mut encoded_file, &mut error_file).unwrap();
+            inject_error(16384, 1, &mut encoded_file, &mut error_file).unwrap();
         }
 
         // 4. Decode
@@ -712,7 +729,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut error_file = File::create(&error_path).unwrap();
-            inject_error(8, &mut encoded_file, &mut error_file).expect("Error injection failed");
+            inject_error(8, 1, &mut encoded_file, &mut error_file).expect("Error injection failed");
         }
 
         // 4. Decode the file that has errors!
@@ -758,7 +775,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut error_file = File::create(&error_path).unwrap();
-            inject_error(1024, &mut encoded_file, &mut error_file).unwrap();
+            inject_error(1024, 1, &mut encoded_file, &mut error_file).unwrap();
         }
 
         // 4. Decode
@@ -804,7 +821,7 @@ mod tests {
         {
             let mut encoded_file = File::open(&encoded_path).unwrap();
             let mut error_file = File::create(&error_path).unwrap();
-            inject_error(16384, &mut encoded_file, &mut error_file).unwrap();
+            inject_error(16384, 1, &mut encoded_file, &mut error_file).unwrap();
         }
 
         // 4. Decode
