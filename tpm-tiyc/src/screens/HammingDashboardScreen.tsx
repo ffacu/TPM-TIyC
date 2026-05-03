@@ -136,7 +136,7 @@ export const HammingDashboardScreen: React.FC = () => {
         <Button 
           variant="outline" 
           className="gap-2"
-          onClick={() => navigate('/compare', { state: { filePath } })}
+          onClick={() => navigate('/compare', { state: { filePath, sourceScreen: '/hamming' } })}
           disabled={generatedFiles.length === 0}
         >
           <FileText size={18} />

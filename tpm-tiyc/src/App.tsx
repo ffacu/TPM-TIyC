@@ -5,6 +5,7 @@ import { LoadFileScreen } from './screens/LoadFileScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { HammingDashboardScreen } from './screens/HammingDashboardScreen';
 import { ComparatorScreen } from './screens/ComparatorScreen';
+import { HuffmanScreen } from './screens/HuffmanScreen';
 
 //navigation app
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
           <Route index element={<LoadFileScreen />} />
           <Route path="home" element={<HomeScreen />} />
           <Route path="hamming" element={<HammingDashboardScreen />} />
+          <Route path="huffman" element={<HuffmanScreen />} />
           <Route path="compare" element={<ComparatorScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

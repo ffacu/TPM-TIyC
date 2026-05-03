@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, UIEvent } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { ArrowLeft, SplitSquareHorizontal } from 'lucide-react';
+import { ArrowLeft, SplitSquareHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { invoke } from '@tauri-apps/api/core';
 
@@ -26,7 +26,7 @@ const compareFiles = (text1: string, text2: string, enableHighlight: boolean) =>
 export const ComparatorScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { filePath } = location.state || {};
+  const { filePath, sourceScreen = '/hamming' } = location.state || {};
 
   // Route guard.
   if (!filePath) {
@@ -59,49 +59,71 @@ export const ComparatorScreen: React.FC = () => {
   const [content1, setContent1] = useState<{ char: string, isError: boolean }[]>([]);
   const [content2, setContent2] = useState<{ char: string, isError: boolean }[]>([]);
 
+  const [fullText1, setFullText1] = useState('');
+  const [fullText2, setFullText2] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const PAGE_SIZE = 10000;
+
   const scrollRef1 = useRef<HTMLDivElement>(null);
   const scrollRef2 = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef<'none' | 'left' | 'right'>('none');
 
-  // Loads and compares the two files (highlights differences only if both files are decoded files).
+  // Loads files into full text state
   useEffect(() => {
-    const loadAndCompare = async () => {
-      let text1 = "";
-      let text2 = "";
+    const loadFiles = async () => {
+      let t1 = "";
+      let t2 = "";
 
       const parentDir = filePath.substring(0, Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\')));
       const separator = filePath.includes('\\') ? '\\' : '/';
 
       try {
-        // read both files content.
         if (file1) {
           const fullPath1 = file1 === filePath.split(/[/\\]/).pop() ? filePath : `${parentDir}${separator}${file1}`;
-          text1 = await invoke<string>('read_file_content', { path: fullPath1 });
+          t1 = await invoke<string>('read_file_content', { path: fullPath1 });
         }
         
         if (file2) {
           const fullPath2 = file2 === filePath.split(/[/\\]/).pop() ? filePath : `${parentDir}${separator}${file2}`;
-          text2 = await invoke<string>('read_file_content', { path: fullPath2 });
+          t2 = await invoke<string>('read_file_content', { path: fullPath2 });
         }
       } catch (error) {
         console.error("Error reading files for comparison:", error);
-        text1 = file1 ? `[Error leyendo el archivo: ${error}]` : "";
-        text2 = file2 ? `[Error leyendo el archivo: ${error}]` : "";
+        t1 = file1 ? `[Error leyendo el archivo: ${error}]` : "";
+        t2 = file2 ? `[Error leyendo el archivo: ${error}]` : "";
       }
 
-      const isHammingFile = (filename: string) => {
-        const ext = filename.split('.').pop()?.toUpperCase() || '';
-        return ext.startsWith('HA') || ext.startsWith('HE');
-      };
-
-      const enableHighlight = !isHammingFile(file1) && !isHammingFile(file2);
-      const { result1, result2 } = compareFiles(text1, text2, enableHighlight);
-      setContent1(result1);
-      setContent2(result2);
+      setFullText1(t1);
+      setFullText2(t2);
+      setCurrentPage(0); // Reset page on file change
     };
 
-    loadAndCompare();
+    loadFiles();
   }, [file1, file2, filePath]);
+
+  // Slices and compares the current page
+  useEffect(() => {
+    const isHammingFile = (filename: string) => {
+      const ext = filename.split('.').pop()?.toUpperCase() || '';
+      return ext.startsWith('HA') || ext.startsWith('HE');
+    };
+
+    const enableHighlight = !isHammingFile(file1) && !isHammingFile(file2);
+    
+    const start = currentPage * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    
+    const slice1 = fullText1.slice(start, end);
+    const slice2 = fullText2.slice(start, end);
+
+    const { result1, result2 } = compareFiles(slice1, slice2, enableHighlight);
+    setContent1(result1);
+    setContent2(result2);
+    
+    // Reset scroll positions when page changes
+    if (scrollRef1.current) scrollRef1.current.scrollTop = 0;
+    if (scrollRef2.current) scrollRef2.current.scrollTop = 0;
+  }, [fullText1, fullText2, file1, file2, currentPage]);
 
   const handleScroll = (e: UIEvent<HTMLDivElement>, source: 'left' | 'right') => {
     if (isScrollingRef.current !== 'none' && isScrollingRef.current !== source) {
@@ -138,16 +160,37 @@ export const ComparatorScreen: React.FC = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <button 
-            onClick={() => navigate('/hamming', { state: { filePath } })}
+            onClick={() => navigate(sourceScreen, { state: { filePath } })}
             className="flex items-center text-text-muted hover:text-text-main transition-colors mb-2 font-medium"
           >
             <ArrowLeft size={18} className="mr-1" />
-            Volver a Hamming 
+            Volver a {sourceScreen === '/huffman' ? 'Huffman' : 'Hamming'}
           </button>
           <div className="flex items-center gap-2">
             <SplitSquareHorizontal className="text-primary" size={28} />
             <h1 className="text-2xl font-bold text-text-main tracking-tight">Comparador de Archivos</h1>
           </div>
+        </div>
+        
+        {/* Pagination Controls */}
+        <div className="flex items-center gap-4 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-100">
+          <button 
+            onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
+            disabled={currentPage === 0}
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-600 transition-colors"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <span className="text-sm font-medium text-gray-600 min-w-[100px] text-center">
+            Página {currentPage + 1} de {Math.max(1, Math.ceil(Math.max(fullText1.length, fullText2.length) / PAGE_SIZE))}
+          </span>
+          <button 
+            onClick={() => setCurrentPage(p => p + 1)}
+            disabled={(currentPage + 1) * PAGE_SIZE >= Math.max(fullText1.length, fullText2.length)}
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-600 transition-colors"
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
       </div>
 

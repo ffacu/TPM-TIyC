@@ -187,7 +187,7 @@ pub fn compress_huffman(path: &str, mode_str: &str) -> Result<String, String> {
     
     let input_path = PathBuf::from(path);
     let mut output_path = input_path.clone();
-    output_path.set_extension("huffman");
+    output_path.set_extension("huf");
 
     compress_file(input_path, output_path.clone(), mode)
         .map_err(|e| format!("Compression failed: {}", e))?;
@@ -211,4 +211,11 @@ pub fn extract_huffman(path: &str, mode_str: &str) -> Result<String, String> {
         .map_err(|e| format!("Extraction failed: {}", e))?;
 
     Ok(output_path.to_string_lossy().into_owned())
+}
+
+#[tauri::command]
+pub fn get_file_size(path: &str) -> Result<u64, String> {
+    std::fs::metadata(path)
+        .map(|m| m.len())
+        .map_err(|e| format!("Failed to get metadata: {}", e))
 }

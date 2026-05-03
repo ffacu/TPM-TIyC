@@ -16,7 +16,8 @@ pub fn run() {
             file_handler::initialize_workspace,
             file_handler::list_workspace_files,
             file_handler::compress_huffman,
-            file_handler::extract_huffman
+            file_handler::extract_huffman,
+            file_handler::get_file_size
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
