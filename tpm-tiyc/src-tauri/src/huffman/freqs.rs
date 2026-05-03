@@ -30,7 +30,7 @@ pub fn word_frequencies(lines: &Vec<String>) -> HashMap<String, u64> {
         .fold(
             || HashMap::new(),
             |mut freqs: HashMap<_, _>, line: &String| {
-                for word in line.split_ascii_whitespace() {
+                for word in line.split(' ') {
                     *freqs.entry(word.to_string()).or_insert(0) += 1;
                 }
                 freqs

@@ -18,7 +18,7 @@ pub fn compress_file(input: PathBuf, output: PathBuf, mode: Mode) -> Result<(), 
 
     let compressed = match mode {
         Mode::Words => compression::compress(&lines, freqs::word_frequencies, |line| {
-            line.split_ascii_whitespace().map(|token| token.to_string())
+            line.split(' ').map(|token| token.to_string())
         }),
         Mode::Chars => {
             compression::compress(&lines, freqs::char_frequencies, |line| line.chars())

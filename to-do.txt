@@ -1,9 +1,9 @@
 -----------------------------
 
 - Documentar todo
-- Modificar el cartel de introducir errores, para permitir 2 errores
-- Disenar e implementar mplementar HuffmanScreen
--- Dark/Light mode
+- Enviar archivo por mail
+- Agregar estadisticas de tiempo
+- Dark/Light mode
 
 -- ENCRIPTAR ARCHIVO ENVIADO CON DIA Y HORA DE APERTURA
 
