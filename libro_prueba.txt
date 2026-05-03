@@ -1,4 +1,4 @@
-Hands-On Network
+Hands-On Network
 Programming with C
 
 Learn socket programming in C and write secure and
@@ -8,7 +8,7 @@ Lewis Van Winkle
 
 BIRMINGHAM - MUMBAI
 
-Hands-On Network Programming with C
+Hands-On Network Programming with C
 Copyright © 2019 Packt Publishing
 All rights reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form
 or by any means, without the prior written permission of the publisher, except in the case of brief quotations
@@ -41,10 +41,10 @@ ISBN 978-1-78934-986-3
 
 www.packtpub.com
 
-For Doogie
+For Doogie
 – Lewis Van Winkle
 
-mapt.io
+mapt.io
 
 Mapt is an online digital library that gives you full access to over 5,000 books and videos, as
 well as industry leading tools to help you plan your personal development and advance
@@ -67,7 +67,7 @@ At www.packt.com, you can also read a collection of free technical articles, sig
 range of free newsletters, and receive exclusive discounts and offers on Packt books and
 eBooks.
 
-Contributors
+Contributors
 About the author
 Lewis Van Winkle is a software programming consultant, entrepreneur, and founder of a
 successful IoT company. He has over 20 years of programming experience after publishing
@@ -85,7 +85,7 @@ significantly as a result of his valuable feedback. I also want to acknowledge t
 and support that my friends and family have shown over the last year while I've been
 away writing.
 
-About the reviewer
+About the reviewer
 Daniele Lacamera is a software technologist and researcher with vast experience in
 software design and development on embedded systems for different industries. He is
 currently working as freelance software developer and trainer. He is a worldwide expert in
@@ -101,7 +101,7 @@ just like you, to help them share their insight with the global tech community. 
 make a general application, apply for a specific hot topic that we are recruiting an author
 for, or submit your own idea.
 
-Table of Contents
+Table of Contents
 Preface
 
 1
@@ -182,7 +182,7 @@ Header files
 51
 52
 
-Table of Contents
+Table of Contents
 
 Socket data type
 Invalid sockets
@@ -283,7 +283,7 @@ Questions
 123
 123
 
-Table of Contents
+Table of Contents
 
 Chapter 5: Hostname Resolution and DNS
 Technical requirements
@@ -382,7 +382,7 @@ Questions
 193
 193
 
-Table of Contents
+Table of Contents
 
 Further reading
 Chapter 7: Building a Simple Web Server
@@ -476,7 +476,7 @@ HTTPS overview
 255
 257
 
-Table of Contents
+Table of Contents
 
 Encryption basics
 
@@ -577,7 +577,7 @@ Questions
 324
 324
 
-Table of Contents
+Table of Contents
 
 Further reading
 
@@ -672,7 +672,7 @@ Connectivity options
 382
 382
 
-Table of Contents
+Table of Contents
 
 Wi-Fi
 Ethernet
@@ -763,7 +763,7 @@ Installing GCC
 429
 429
 
-Table of Contents
+Table of Contents
 
 Installing Git
 Installing OpenSSL
@@ -827,7 +827,7 @@ Chapter 14 – Web Programming for the Internet of Things
 442
 443
 
-Preface
+Preface
 Packt first contacted me about writing this book nearly a year ago. It's been a long journey,
 harder than I anticipated at times, and I've learned a lot. The book you hold now is the
 culmination of many long days, and I'm proud to finally present it.
@@ -860,7 +860,7 @@ planned in the system from the beginning. Therefore, in addition to teaching net
 basics, this book spends a lot of time working with secure protocols, such as TLS.
 I hope you enjoy reading this book as much as I enjoyed writing it.
 
-Preface
+Preface
 
 Who this book is for
 This book is for the C or C++ programmer who wants to add networking features to their
@@ -905,7 +905,7 @@ can send email over the internet.
 
 [2]
 
-Preface
+Preface
 Chapter 9, Loading Secure Web Pages with HTTPS and OpenSSL, explores TLS—the protocol
 
 that secures web pages. In this chapter, we develop an HTTPS client that is capable of
@@ -955,7 +955,7 @@ book's code repository.
 
 [3]
 
-Preface
+Preface
 
 To get the most out of this book
 The reader is expected to be proficient in the C programming language. This includes a
@@ -991,7 +991,7 @@ names, filenames, file extensions, pathnames, URLs, and user input. Here is an e
 
 [4]
 
-Preface
+Preface
 
 A block of code is set as follows:
 /* example program */
@@ -1026,7 +1026,7 @@ authors.packtpub.com.
 
 [5]
 
-Preface
+Preface
 
 Reviews
 Please leave a review. Once you have read and used this book, why not leave a review on
@@ -1037,7 +1037,7 @@ For more information about Packt, please visit packt.com.
 
 [6]
 
-1
+1
 Section 1 - Getting Started with
 Network Programming
 This section will get the reader up and running with the basics of networking, the relevant
@@ -1049,7 +1049,7 @@ Chapter 3, An In-Depth Overview of TCP Connections
 Chapter 4, Establishing UDP Connections
 Chapter 5, Hostname Resolution and DNS
 
-1
+1
 Introducing Networks and
 Protocols
 In this chapter, we will review the fundamentals of computer networking. We'll look at
@@ -1076,7 +1076,7 @@ Appendix B, Setting Up Your C Compiler On Windows, Appendix C, Setting Up Your C
 Compiler On Linux, and Appendix D, Setting Up Your C Compiler On macOS, for compiler
 setup.
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1117,7 +1117,7 @@ in C.
 
 [9]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1147,7 +1147,7 @@ layers:
 
 [ 10 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1187,7 +1187,7 @@ following diagram:
 
 [ 11 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1210,7 +1210,7 @@ layers instead of seven.
 
 [ 12 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1243,7 +1243,7 @@ the lower layers.
 
 [ 13 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1267,7 +1267,7 @@ this:
 
 [ 14 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1287,7 +1287,7 @@ server, but is taken care of by the operating system's TCP/IP stack:
 
 [ 15 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1304,7 +1304,7 @@ modern networking.
 
 [ 16 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1343,7 +1343,7 @@ Here are some examples of IPv4 addresses:
 
 [ 17 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1384,7 +1384,7 @@ many other uses of hexadecimal in computers.
 
 [ 18 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1431,7 +1431,7 @@ address block or the IPv6 fe80::/10 address block.
 
 [ 19 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1480,7 +1480,7 @@ OpenDNS
 
 IPv6 Addresses
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1511,7 +1511,7 @@ has reached its destination:
 
 [ 21 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1525,7 +1525,7 @@ example.com:
 
 [ 22 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1559,7 +1559,7 @@ implements NAT remembers which local address a connection is established from.
 
 [ 23 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1581,7 +1581,7 @@ wouldn't know where to send the reply to on the private network.
 
 [ 24 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1619,7 +1619,7 @@ common situation, let's consider alternative cases too.
 
 [ 25 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1656,7 +1656,7 @@ knows which application is responsible for it once it arrives at a specific syst
 
 [ 26 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1745,7 +1745,7 @@ Pages with HTTPS and OpenSSL
 Chapter 10, Implementing a Secure
 Web Server
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1784,7 +1784,7 @@ remote port (80), and protocol (TCP) are identical.
 
 [ 28 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1806,7 +1806,7 @@ address. We can tell that this computer is on a local network because the IP add
 
 [ 29 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1822,7 +1822,7 @@ The following screenshot shows using the ip addr command on Ubuntu Linux:
 
 [ 30 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1851,7 +1851,7 @@ look at how to accomplish this from C.
 
 [ 31 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1891,7 +1891,7 @@ upon success, and non-zero upon failure.
 
 [ 32 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1931,7 +1931,7 @@ linked with the executable:
 
 [ 33 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -1977,7 +1977,7 @@ return -1;
 
 [ 34 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -2019,7 +2019,7 @@ address = address->Next;
 
 [ 35 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -2059,7 +2059,7 @@ Now that we can list local IP addresses on Windows, let's consider the same task
 
 [ 36 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -2100,7 +2100,7 @@ char ap[100];
 
 [ 37 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -2135,7 +2135,7 @@ It should list each of your adapter's names and addresses.
 
 [ 38 ]
 
-Introducing Networks and Protocols
+Introducing Networks and Protocols
 
 Chapter 1
 
@@ -2173,7 +2173,7 @@ The answers are in Appendix A, Answers to Questions.
 
 [ 39 ]
 
-2
+2
 Getting to Grips with Socket
 APIs
 In this chapter, we will begin to really start working with network programming. We will
@@ -2197,7 +2197,7 @@ Up Your C Compiler On Windows, Appendix C, Setting Up Your C Compiler On Linux, 
 Appendix D, Setting Up Your C Compiler On macOS, for compiler setup.
 The code for this book can be found here: https:/​/​github.​com/​codeplea/​Hands-​OnNetwork-​Programming-​with-​C.
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2233,7 +2233,7 @@ Before we can start using sockets, we need to do a bit of setup. Let's dive righ
 
 [ 41 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2276,7 +2276,7 @@ return 1;
 
 [ 42 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2318,7 +2318,7 @@ Winsock library, ws2_32.lib.
 
 [ 43 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2359,7 +2359,7 @@ acknowledgment and can resend it.
 
 [ 44 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2394,7 +2394,7 @@ actual functions that are used in socket programming.
 
 [ 45 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2434,7 +2434,7 @@ flow next.
 
 [ 46 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2473,7 +2473,7 @@ TCP client, but later accepts connections like a TCP server.
 
 [ 47 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2504,7 +2504,7 @@ connections, and repeated calls to accept() allow the server to handle multiple 
 
 [ 48 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2512,7 +2512,7 @@ Graphically, the program flow of a TCP client and server looks like this:
 
 [ 49 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2549,7 +2549,7 @@ any new client) with recvfrom().
 
 [ 50 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2567,7 +2567,7 @@ be aware of.
 
 [ 51 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2605,7 +2605,7 @@ unsigned. I find it useful to define a macro to indicate if a socket descriptor 
 
 [ 52 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2643,7 +2643,7 @@ learn the useful details of how socket programming actually works.
 
 [ 53 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2679,7 +2679,7 @@ converts it into a string with the ctime() function.
 
 [ 54 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2723,7 +2723,7 @@ Berkeley socket and Winsock APIs:
 
 [ 55 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2764,7 +2764,7 @@ AF_INET6 to make our web server listen on an IPv6 address instead (more on this 
 
 [ 56 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2802,7 +2802,7 @@ bind_address->ai_socktype, bind_address->ai_protocol);
 
 [ 57 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2845,7 +2845,7 @@ your program to use a different port.
 
 [ 58 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2889,7 +2889,7 @@ connection. accept() also fills in address info of the client that connected.
 
 [ 59 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2933,7 +2933,7 @@ printf("Received %d bytes.\n", bytes_received);
 
 [ 60 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -2974,7 +2974,7 @@ printf("Sent %d of %d bytes.\n", bytes_sent, (int)strlen(response));
 
 [ 61 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3014,7 +3014,7 @@ CLOSESOCKET(socket_client);
 
 [ 62 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3052,7 +3052,7 @@ would default to port 80, which is the standard for HTTP connections.
 
 [ 63 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3069,7 +3069,7 @@ This modified file is included in the GitHub repository as time_server_ipv6.c.
 
 [ 64 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3087,7 +3087,7 @@ See time_server_ipv6.c for the complete program.
 
 [ 65 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3127,7 +3127,7 @@ accomplished with the hints.ai_family = AF_INET6 line in our code.
 
 [ 66 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3149,7 +3149,7 @@ See time_server_dual.c for the complete dual-stack socket server.
 
 [ 67 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3186,7 +3186,7 @@ Finally, we terminated the connection with close() (closesocket() on Windows).
 
 [ 68 ]
 
-Getting to Grips with Socket APIs
+Getting to Grips with Socket APIs
 
 Chapter 2
 
@@ -3214,7 +3214,7 @@ Answers are in Appendix A, Answers to Questions.
 
 [ 69 ]
 
-3
+3
 An In-Depth Overview of TCP
 Connections
 In Chapter 2, Getting to Grips with Socket APIs, we implemented a simple TCP server that
@@ -3235,7 +3235,7 @@ Implementing a very basic microservice
 The stream-like nature of TCP
 The blocking behavior of send()
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3277,7 +3277,7 @@ The contents of chap03.h is as follows:
 
 [ 71 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3317,7 +3317,7 @@ recv() call to return. If other clients were trying to connect, they would have 
 
 [ 72 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3357,7 +3357,7 @@ portable as each operating system provides a different API for these features.
 
 [ 73 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3397,7 +3397,7 @@ before looking at it.
 
 [ 74 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3435,7 +3435,7 @@ Berkeley sockets and Winsock.
 
 [ 75 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3479,7 +3479,7 @@ exceptions by passing it as the fourth argument to select().
 
 [ 76 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3521,7 +3521,7 @@ sockets were readable/writeable/excepted. select() returns -1 to indicate an err
 
 [ 77 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3561,7 +3561,7 @@ connection.
 
 [ 78 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3571,7 +3571,7 @@ Our basic program flow looks like this:
 
 [ 79 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3611,7 +3611,7 @@ return 1;
 
 [ 80 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3657,7 +3657,7 @@ then our remote address is in the peer_address variable.
 
 [ 81 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3703,7 +3703,7 @@ fprintf(stderr, "connect() failed. (%d)\n", GETSOCKETERRNO());
 
 [ 82 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3748,7 +3748,7 @@ if (select(socket_peer+1, &reads, 0, 0, &timeout) < 0) {
 
 [ 83 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3794,7 +3794,7 @@ if(_kbhit()) {
 
 [ 84 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3837,7 +3837,7 @@ and console input on Windows is possible, of course, but it's very complicated.
 
 [ 85 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3879,7 +3879,7 @@ Host: example.com
 
 [ 86 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3888,7 +3888,7 @@ response back. It might look something like this:
 
 [ 87 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3911,7 +3911,7 @@ connections. We again use select() to see which connections need to be serviced.
 
 [ 88 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3919,7 +3919,7 @@ Our basic program flow looks like this:
 
 [ 89 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -3958,7 +3958,7 @@ return 1;
 
 [ 90 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4004,7 +4004,7 @@ return 1;
 
 [ 91 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4047,7 +4047,7 @@ for(i = 1; i <= max_socket; ++i) {
 
 [ 92 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4092,7 +4092,7 @@ address using getnameinfo().
 
 [ 93 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4134,7 +4134,7 @@ return 0;
 
 [ 94 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4160,7 +4160,7 @@ might look like:
 
 [ 95 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4201,7 +4201,7 @@ You can compile and run this program in the same way as the previous one.
 
 [ 96 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4228,7 +4228,7 @@ other two connected clients.
 
 [ 97 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4265,7 +4265,7 @@ begin += sent;
 
 [ 98 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4305,7 +4305,7 @@ recv() calls.
 
 [ 99 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4338,7 +4338,7 @@ but it is also very different.
 
 [ 100 ]
 
-An In-Depth Overview of TCP Connections
+An In-Depth Overview of TCP Connections
 
 Chapter 3
 
@@ -4365,7 +4365,7 @@ The answers can be found in Appendix A, Answers to Questions.
 
 [ 101 ]
 
-4
+4
 Establishing UDP Connections
 In this chapter, we will look at how to send and receive User Datagram Protocol (UDP)
 packets. UDP socket programming is very similar to Transmission Control Protocol (TCP)
@@ -4385,7 +4385,7 @@ recommend MinGW on Windows and GCC on Linux and macOS. See Appendix B, Setting
 Up Your C Compiler On Windows, Appendix C, Setting Up Your C Compiler On Linux, and
 Appendix D, Setting Up Your C Compiler On macOS, for compiler setup.
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4429,7 +4429,7 @@ The content of chap04.h is shown in the following code:
 
 [ 103 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4467,7 +4467,7 @@ protocol, after all.
 
 [ 104 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4506,7 +4506,7 @@ connect(), send(), and recv(), or instead use sendto() and recvfrom().
 
 [ 105 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4526,7 +4526,7 @@ communicate with any number of peers.
 
 [ 106 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4537,7 +4537,7 @@ The program flow of a TCP Server compared to a UDP Server is as follows:
 
 [ 107 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4573,7 +4573,7 @@ return 1;
 
 [ 108 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4617,7 +4617,7 @@ if (bind(socket_listen,
 
 [ 109 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4657,7 +4657,7 @@ bytes_received, bytes_received, read);
 
 [ 110 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4700,7 +4700,7 @@ printf("Finished.\n");
 
 [ 111 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4728,7 +4728,7 @@ steps to get a working UDP client, and it uses sendto() instead of send().
 
 [ 112 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4769,7 +4769,7 @@ more detail in Chapter 5, Hostname Resolution and DNS.
 
 [ 113 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4814,7 +4814,7 @@ last parameter.
 
 [ 114 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4852,7 +4852,7 @@ gcc udp_sendto.c -o udp_sendto
 
 [ 115 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4867,7 +4867,7 @@ udp_sendto doesn't know that the packet was not delivered.
 
 [ 116 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4885,7 +4885,7 @@ The program flow looks as follows:
 
 [ 117 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4928,7 +4928,7 @@ getaddrinfo(0, "8080", &hints, &bind_address);
 
 [ 118 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -4971,7 +4971,7 @@ programs do, so we will show it that way.
 
 [ 119 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -5015,7 +5015,7 @@ read[j] = toupper(read[j]);
 
 [ 120 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -5054,7 +5054,7 @@ udp_client 127.0.0.1 8080
 
 [ 121 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -5068,7 +5068,7 @@ but manages to work just as well anyway.
 
 [ 122 ]
 
-Establishing UDP Connections
+Establishing UDP Connections
 
 Chapter 4
 
@@ -5100,7 +5100,7 @@ The answers can be found in Appendix A, Answers to Questions.
 
 [ 123 ]
 
-5
+5
 Hostname Resolution and DNS
 Hostname resolution is a vital part of network programming. It allows us to use simple
 names, such as www.example.com, instead of tedious addresses such
@@ -5124,7 +5124,7 @@ recommend MinGW on Windows and GCC on Linux and macOS. See Appendices B, C,
 and D for compiler setup.
 The code for this book can be found at https:/​/​github.​com/​codeplea/​Hands-​On-​NetworkProgramming-​with-​C.
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5168,7 +5168,7 @@ The contents of chap05.h are as follows:
 
 [ 125 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5210,7 +5210,7 @@ gmail.com in one minute, it only needs to resolve the hostname the first time. F
 
 [ 126 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5232,7 +5232,7 @@ The following diagram illustrates this visually:
 
 [ 127 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5263,7 +5263,7 @@ way, but A records return an IPv4 address, while AAAA records return an IPv6 add
 
 [ 128 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5335,7 +5335,7 @@ this chapter for more information.
 
 [ 129 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5377,7 +5377,7 @@ performed a DNS lookup beforehand is not much extra information.
 
 [ 130 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5413,7 +5413,7 @@ case, the resulting address is set to port 0.
 
 [ 131 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5461,7 +5461,7 @@ use the (flag_one | flag_two) code.
 
 [ 132 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5504,7 +5504,7 @@ return 1;
 
 [ 133 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5544,7 +5544,7 @@ addrinfo.
 
 [ 134 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5585,7 +5585,7 @@ only one hostname. In fact, reverse DNS records are not even set for many IP add
 
 [ 135 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5622,7 +5622,7 @@ IPv6, but still supports both.
 
 [ 136 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5664,7 +5664,7 @@ return 1;
 
 [ 137 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5711,7 +5711,7 @@ printf("\t%s\n", address_buffer);
 
 [ 138 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5746,7 +5746,7 @@ lookup.exe example.com
 
 [ 139 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5764,7 +5764,7 @@ transaction:
 
 [ 140 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5793,7 +5793,7 @@ response. The Header Format is illustrated graphically in the following diagram:
 
 [ 141 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5821,7 +5821,7 @@ Z is unused and should be set to 0.
 
 [ 142 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5861,7 +5861,7 @@ QCLASS. This Question Format is illustrated as follows:
 
 [ 143 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5888,7 +5888,7 @@ that next.
 
 [ 144 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5909,7 +5909,7 @@ Let's consider this now.
 
 [ 145 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5942,7 +5942,7 @@ would be sent as a UDP packet to port 53 of a DNS server.
 
 [ 146 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -5993,7 +5993,7 @@ interpreted as a pointer instead.
 
 [ 147 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6034,7 +6034,7 @@ p to print_name().
 
 [ 148 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6074,7 +6074,7 @@ void print_dns_message(const char *message, int msg_length);
 
 [ 149 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6118,7 +6118,7 @@ printf("ID = %0X %0X\n", msg[0], msg[1]);
 
 [ 150 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6163,7 +6163,7 @@ case 4: printf("not implemented\n"); break;
 
 [ 151 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6207,7 +6207,7 @@ p = print_name(msg, p, end); printf("\n");
 
 [ 152 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6250,7 +6250,7 @@ p += 2;
 
 [ 153 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6295,7 +6295,7 @@ for (j = 0; j < rdlen; j+=2) {
 
 [ 154 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6337,7 +6337,7 @@ exit(0);
 
 [ 155 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6385,7 +6385,7 @@ return 1;
 
 [ 156 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6430,7 +6430,7 @@ char query[1024] = {0xAB, 0xCD, /* ID */
 
 [ 157 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6469,7 +6469,7 @@ We then add the question type and question class to the query with the following
 
 [ 158 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6507,7 +6507,7 @@ printf("\n");
 
 [ 159 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6539,7 +6539,7 @@ type. You may find the results interesting.
 
 [ 160 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6548,7 +6548,7 @@ example.com:
 
 [ 161 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6560,7 +6560,7 @@ select() function to time out and retry.
 
 [ 162 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6599,7 +6599,7 @@ The answers are in Appendix A, Answers to Questions.
 
 [ 163 ]
 
-Hostname Resolution and DNS
+Hostname Resolution and DNS
 
 Chapter 5
 
@@ -6616,7 +6616,7 @@ html/​rfc3596)
 
 [ 164 ]
 
-2
+2
 Section 2 - An Overview of
 Application Layer Protocols
 In this section, the reader will learn about two of the most common higher-level protocols,
@@ -6626,7 +6626,7 @@ Chapter 6, Building a Simple Web Client
 Chapter 7, Building a Simple Web Server
 Chapter 8, Building a Program to Send Emails
 
-6
+6
 Building a Simple Web Client
 Hypertext Transfer Protocol (HTTP) is the application protocol that powers the World
 Wide Web (WWW). Whenever you fire up your web browser to do an internet search,
@@ -6651,7 +6651,7 @@ recommend MinGW on Windows and GCC on Linux and macOS. See appendices B, C, and
 D for compiler setup.
 The code for this book can be found at https:/​/​github.​com/​codeplea/​Hands-​On-​NetworkProgramming-​with-​C.
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6695,7 +6695,7 @@ The content of chap06.h is as follows:
 
 [ 167 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6727,7 +6727,7 @@ Visually, the transaction is illustrated in the following graphic:
 
 [ 168 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6770,7 +6770,7 @@ Many common web servers don't support OPTIONS.
 
 [ 169 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6809,7 +6809,7 @@ may tolerate other line endings. You should ensure that your clients always send
 
 [ 170 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6851,7 +6851,7 @@ Date: Fri, 14 Dec 2018 16:46:09 GMT
 
 [ 171 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6893,7 +6893,7 @@ HTML web page, it is free to use its own line-ending convention. It doesn't have
 
 [ 172 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6933,7 +6933,7 @@ communicate the length of the response body.
 
 [ 173 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -6971,7 +6971,7 @@ finished.
 
 [ 174 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7001,7 +7001,7 @@ Visually, the URL can be broken down like this:
 
 [ 175 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7042,7 +7042,7 @@ terminating null pointers as required.
 
 [ 176 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7085,7 +7085,7 @@ If protocol was set, the code then checks that it points to the text http.
 
 [ 177 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7126,7 +7126,7 @@ ignored by our HTTP client.
 
 [ 178 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7164,7 +7164,7 @@ define TIMEOUT as you like, but we give it a value of five seconds here:
 
 [ 179 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7210,7 +7210,7 @@ fprintf(stderr, "getaddrinfo() failed. (%d)\n", GETSOCKETERRNO());
 
 [ 180 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7257,7 +7257,7 @@ helpful.
 
 [ 181 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7295,7 +7295,7 @@ send_request(server, hostname, port, path);
 
 [ 182 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7338,7 +7338,7 @@ to record how many bytes are still needed to finish the HTTP body or body chunk.
 
 [ 183 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7383,7 +7383,7 @@ connection. If so, we print the HTTP body data that was received.
 
 [ 184 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7422,7 +7422,7 @@ body += 4;
 
 [ 185 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7466,7 +7466,7 @@ printf("\nReceived Body:\n");
 
 [ 186 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7511,7 +7511,7 @@ remaining = 0;
 
 [ 187 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7553,7 +7553,7 @@ web_get.exe http://example.com/
 
 [ 188 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7567,7 +7567,7 @@ now look at HTTP POST requests.
 
 [ 189 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7607,7 +7607,7 @@ Consider the following HTML for a submittable form:
 
 [ 190 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7638,7 +7638,7 @@ as %25.
 
 [ 191 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7680,7 +7680,7 @@ submitted field or uploaded file!
 
 [ 192 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7715,7 +7715,7 @@ The answers to these questions can be found in Appendix A, Answers to Questions.
 
 [ 193 ]
 
-Building a Simple Web Client
+Building a Simple Web Client
 
 Chapter 6
 
@@ -7732,7 +7732,7 @@ org/​html/​rfc3986)
 
 [ 194 ]
 
-7
+7
 Building a Simple Web Server
 This chapter builds on the previous one by looking at the HTTP protocol from the server's
 perspective. In it, we will build a simple web server. This web server will work using the
@@ -7757,7 +7757,7 @@ command:
 git clone https://github.com/codeplea/Hands-On-Network-Programming-with-C
 cd Hands-On-Network-Programming-with-C/chap07
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -7802,7 +7802,7 @@ The content of chap07.h is as follows:
 
 [ 196 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -7829,7 +7829,7 @@ requested resource, /document.htm in the preceding example.
 
 [ 197 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -7865,7 +7865,7 @@ error message to the connected client instead.
 
 [ 198 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -7896,7 +7896,7 @@ Our web server just uses the file's extension to determine the media type.
 
 [ 199 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -7956,7 +7956,7 @@ if (strcmp(last_dot, ".html") == 0) return "text/html";
 
 [ 200 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -7998,7 +7998,7 @@ getaddrinfo(host, port, &hints, &bind_address);
 
 [ 201 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8039,7 +8039,7 @@ and parsing requests from multiple clients simultaneously.
 
 [ 202 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8081,7 +8081,7 @@ the web_server2.c file.
 
 [ 203 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8121,7 +8121,7 @@ if (ci) return ci;
 
 [ 204 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8159,7 +8159,7 @@ structure, n.
 
 [ 205 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8198,7 +8198,7 @@ be called when we finish sending a client an error message.
 
 [ 206 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8241,7 +8241,7 @@ FD_ZERO(&reads);
 
 [ 207 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8284,7 +8284,7 @@ send(client->socket, c400, strlen(c400), 0);
 
 [ 208 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8322,7 +8322,7 @@ printf("serve_resource %s %s\n", get_client_address(client), path);
 
 [ 209 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8361,7 +8361,7 @@ full_path, as our earlier code ensured that path does not exceed 100 characters 
 
 [ 210 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8404,7 +8404,7 @@ return;
 
 [ 211 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8444,7 +8444,7 @@ send(client->socket, buffer, strlen(buffer), 0);
 
 [ 212 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8486,7 +8486,7 @@ easier task. We begin that next.
 
 [ 213 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8523,7 +8523,7 @@ SOCKET server = create_socket("127.0.0.1", "8080");
 
 [ 214 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8564,7 +8564,7 @@ debugging.
 
 [ 215 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8606,7 +8606,7 @@ drop_client(client);
 
 [ 216 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8650,7 +8650,7 @@ just call our serve_resource() function to fulfil the client's request.
 
 [ 217 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8691,7 +8691,7 @@ web_server.exe
 
 [ 218 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8702,7 +8702,7 @@ as the following screenshot:
 
 [ 219 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8740,7 +8740,7 @@ process a GET request.
 
 [ 220 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8782,7 +8782,7 @@ be taken to avoid memory errors.
 
 [ 221 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8823,7 +8823,7 @@ and non-intuitive ways. Be careful.
 
 [ 222 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8862,7 +8862,7 @@ and consider the primary protocol associated with email—Simple Mail Transfer P
 
 [ 223 ]
 
-Building a Simple Web Server
+Building a Simple Web Server
 
 Chapter 7
 
@@ -8887,7 +8887,7 @@ xhtml)
 
 [ 224 ]
 
-8
+8
 Making Your Program Send
 Email
 In this chapter, we will consider the protocol responsible for delivering email on the
@@ -8908,7 +8908,7 @@ recommend MinGW on Windows and GCC on Linux and macOS. See Appendix B, Setting
 Up Your C Compiler on Windows, Appendix C, Setting Up Your C Compiler on Linux, and
 Appendix D, Setting Up Your C Compiler on macOS, for compiler setup.
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -8949,7 +8949,7 @@ code for this is as follows:
 
 [ 226 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -8987,7 +8987,7 @@ server to the Yahoo! server using SMTP.
 
 [ 227 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9014,7 +9014,7 @@ submission.
 
 [ 228 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9038,7 +9038,7 @@ mail server isn't available. Other advantages are discussed later in this chapte
 
 [ 229 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9072,7 +9072,7 @@ delineated by the @ symbol.
 
 [ 230 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9093,7 +9093,7 @@ This lookup is shown in the following screenshot:
 
 [ 231 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9112,7 +9112,7 @@ an @gmail.com address.
 
 [ 232 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9133,7 +9133,7 @@ more detail.
 
 [ 233 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9176,7 +9176,7 @@ S: 221 closing connection
 
 [ 234 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9219,7 +9219,7 @@ the format of the email itself. This is covered next.
 
 [ 235 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9256,7 +9256,7 @@ simple C program to send emails.
 
 [ 236 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9296,7 +9296,7 @@ get_input() is assumed to be MAXINPUT bytes, which we defined at the top of the 
 
 [ 237 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9339,7 +9339,7 @@ following the three-digit response code.
 
 [ 238 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9379,7 +9379,7 @@ because response isn't long enough to constitute a valid SMTP response.
 
 [ 239 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9421,7 +9421,7 @@ p += bytes_received;
 
 [ 240 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9463,7 +9463,7 @@ code we've used in the previous chapters.
 
 [ 241 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9511,7 +9511,7 @@ fprintf(stderr, "connect() failed. (%d)\n", GETSOCKETERRNO());
 
 [ 242 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9549,7 +9549,7 @@ SOCKET server = connect_to_host(hostname, "25");
 
 [ 243 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9590,7 +9590,7 @@ wait_on_response(server, 250);
 
 [ 244 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9630,7 +9630,7 @@ transmitted to the SMTP server as an email header.
 
 [ 245 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9672,7 +9672,7 @@ CLOSESOCKET(server);
 
 [ 246 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9695,7 +9695,7 @@ The following screenshot shows the sending of a simple email using smtp_send.c:
 
 [ 247 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9732,7 +9732,7 @@ a Simple Web Server.
 
 [ 248 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9777,7 +9777,7 @@ Hi Bob,
 
 [ 249 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9821,7 +9821,7 @@ MIME-Version: 1.0
 
 [ 250 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9860,7 +9860,7 @@ case, you may consider renting a virtual private server to run this chapter's co
 
 [ 251 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9898,7 +9898,7 @@ potentially easier option is to use a mail sending service that operates an HTTP
 
 [ 252 ]
 
-Making Your Program Send Email
+Making Your Program Send Email
 
 Chapter 8
 
@@ -9932,7 +9932,7 @@ RFC 2822: Internet Message Format (https:/​/​tools.​ietf.​org/​html/�
 
 [ 253 ]
 
-3
+3
 Section 3 - Understanding
 Encrypted Protocols and
 OpenSSL
@@ -9943,7 +9943,7 @@ Chapter 9, Loading Secure Web Pages with HTTPS and OpenSSL
 Chapter 10, Implementing a Secure Web Server
 Chapter 11, Establishing SSH Connections
 
-9
+9
 Loading Secure Web Pages
 with HTTPS and OpenSSL
 In this chapter, we'll learn how to initiate secure connections to web servers using
@@ -9967,7 +9967,7 @@ have the OpenSSL library installed. See Appendices B, Setting Up Your C Compiler
 Windows, Appendices C, Setting Up Your C Compiler on Linux, and Appendices D, Setting Up
 Your C Compiler on macOS, for compiler setup and OpenSSL installation.
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10009,7 +10009,7 @@ code for this follows:
 
 [ 256 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10051,7 +10051,7 @@ secure, mutually supported protocol and cipher.
 
 [ 257 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10076,7 +10076,7 @@ Visually, HTTPS is encapsulated in the following manner:
 
 [ 258 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10109,7 +10109,7 @@ uses two different keys.
 
 [ 259 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10139,7 +10139,7 @@ needed in the first place?
 
 [ 260 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10167,7 +10167,7 @@ The following diagram shows an asymmetric cipher:
 
 [ 261 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10196,7 +10196,7 @@ use other simpler methods, such as passwords.
 
 [ 262 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10233,7 +10233,7 @@ the next section.
 
 [ 263 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10271,7 +10271,7 @@ GlobalSign
 
 [ 264 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10310,7 +10310,7 @@ library that implements it—OpenSSL.
 
 [ 265 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10342,7 +10342,7 @@ solution is to just upgrade to a newer OpenSSL version.
 
 [ 266 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10371,7 +10371,7 @@ SSL_load_error_strings();
 
 [ 267 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10412,7 +10412,7 @@ Overview of TCP Connections.
 
 [ 268 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10456,7 +10456,7 @@ int bytes_sent = SSL_write(ssl, data, strlen(data));
 
 [ 269 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10500,7 +10500,7 @@ X509_free(cert);
 
 [ 270 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10543,7 +10543,7 @@ ready to tackle a concrete example program.
 
 [ 271 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10582,7 +10582,7 @@ return 1;
 
 [ 272 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10626,7 +10626,7 @@ printf("%s %s\n", address_buffer, service_buffer);
 
 [ 273 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10672,7 +10672,7 @@ ERR_print_errors_fp(stderr);
 
 [ 274 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10714,7 +10714,7 @@ certificate. Refer to the Certificates section in this chapter for more informat
 
 [ 275 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10754,7 +10754,7 @@ does parse the HTTP response.
 
 [ 276 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10791,7 +10791,7 @@ first.
 
 [ 277 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10804,7 +10804,7 @@ connection.
 
 [ 278 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10841,7 +10841,7 @@ servers work.
 
 [ 279 ]
 
-Loading Secure Web Pages with HTTPS and OpenSSL
+Loading Secure Web Pages with HTTPS and OpenSSL
 
 Chapter 9
 
@@ -10863,7 +10863,7 @@ org/​html/​rfc5246)
 
 [ 280 ]
 
-10
+10
 Implementing a Secure Web
 Server
 In this chapter, we will build a simple HTTPS server program. This serves as the
@@ -10887,7 +10887,7 @@ you have the OpenSSL library installed and that you know the basics of programmi
 OpenSSL. Refer to Chapter 9, Loading Secure Web Pages with HTTPS and OpenSSL, for basic
 information about OpenSSL.
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -10928,7 +10928,7 @@ code for this is as follows:
 
 [ 282 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -10967,7 +10967,7 @@ Finally, chap10.h includes the additional headers required by this chapter's pro
 
 [ 283 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11000,7 +11000,7 @@ certificates identify to the client that they are connected to a trusted server.
 
 [ 284 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11037,7 +11037,7 @@ purposes. Let's do that now.
 
 [ 285 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11068,7 +11068,7 @@ that it owns the certificate. Keeping this key secret is imperative.
 
 [ 286 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11083,7 +11083,7 @@ openssl x509 -text -noout -in cert.pem | unix2dos
 
 [ 287 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11108,7 +11108,7 @@ from which we can create TLS/SSL connections.
 
 [ 288 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11154,7 +11154,7 @@ ERR_print_errors_fp(stderr);
 
 [ 289 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11196,7 +11196,7 @@ if (WSAStartup(MAKEWORD(2, 2), &d)) {
 
 [ 290 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11243,7 +11243,7 @@ printf("Configuring local address...\n");
 
 [ 291 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11290,7 +11290,7 @@ numbers require special privileges on some operating systems.
 
 [ 292 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11335,7 +11335,7 @@ return 1;
 
 [ 293 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11377,7 +11377,7 @@ const char *response =
 
 [ 294 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11423,7 +11423,7 @@ WSACleanup();
 
 [ 295 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11447,7 +11447,7 @@ The following screenshot shows what running tls_time_server might look like:
 
 [ 296 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11463,7 +11463,7 @@ by our tls_time_server program:
 
 [ 297 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11488,7 +11488,7 @@ directory.
 
 [ 298 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11507,7 +11507,7 @@ chapter.
 
 [ 299 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11566,7 +11566,7 @@ missing even a minor detail can compromise security entirely.
 
 [ 300 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11601,7 +11601,7 @@ another secure protocol, Secure Shell (SSH).
 
 [ 301 ]
 
-Implementing a Secure Web Server
+Implementing a Secure Web Server
 
 Chapter 10
 
@@ -11622,7 +11622,7 @@ Let's Encrypt (https:/​/​letsencrypt.​org/​)
 
 [ 302 ]
 
-11
+11
 Establishing SSH Connections
 with libssh
 This chapter is all about programming with the Secure Shell (SSH) protocol. SSH is a
@@ -11647,7 +11647,7 @@ Windows, Appendix C, Setting Up Your C Compiler on Linux, and Appendix D, Settin
 C Compiler on macOS, for compiler setup and libssh installation.
 The code for this book can be found at https:/​/​github.​com/​codeplea/​Hands-​On-​NetworkProgramming-​with-​C.
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11686,7 +11686,7 @@ port 22. SSH uses strong encryption to protect against eavesdropping.
 
 [ 304 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11727,7 +11727,7 @@ return 0;
 
 [ 305 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11759,7 +11759,7 @@ operating system's documentation for more information.
 
 [ 306 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11797,7 +11797,7 @@ programs work well with non-default port numbers.
 
 [ 307 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11840,7 +11840,7 @@ return -1;
 
 [ 308 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11873,7 +11873,7 @@ gcc ssh_connect.c -o ssh_connect -lssh
 
 [ 309 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11894,7 +11894,7 @@ impostor!
 
 [ 310 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11938,7 +11938,7 @@ if (ssh_get_publickey_hash(key, SSH_PUBLICKEY_HASH_SHA1,
 
 [ 311 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -11981,7 +11981,7 @@ default: printf("Error. Known: %d\n", known); return 1;
 
 [ 312 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12029,7 +12029,7 @@ After the client has authenticated the server, the server needs to authenticate 
 
 [ 313 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12064,7 +12064,7 @@ ssh_options_set(ssh, SSH_OPTIONS_USER, "alice");
 
 [ 314 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12101,7 +12101,7 @@ ssh_auth example.com 22 alice
 
 [ 315 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12128,7 +12128,7 @@ opened over one connection. This potentially allows an application to do multipl
 
 [ 316 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12173,7 +12173,7 @@ char output[1024];
 
 [ 317 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12212,7 +12212,7 @@ gcc ssh_command.c -o ssh_command -lssh
 
 [ 318 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12239,7 +12239,7 @@ libssh.
 
 [ 319 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12285,7 +12285,7 @@ if (ssh_scp_pull_request(scp) != SSH_SCP_REQUEST_NEWFILE) {
 
 [ 320 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12326,7 +12326,7 @@ return 1;
 
 [ 321 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12364,7 +12364,7 @@ and ssh_free() as well.
 
 [ 322 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12386,7 +12386,7 @@ securely.
 
 [ 323 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12413,7 +12413,7 @@ The answers to this questions can be found in Appendix A, Answers to Questions.
 
 [ 324 ]
 
-Establishing SSH Connections with libssh
+Establishing SSH Connections with libssh
 
 Chapter 11
 
@@ -12440,7 +12440,7 @@ RFC 4256: Generic Message Exchange Authentication for the Secure Shell Protocol
 
 [ 325 ]
 
-4
+4
 Section 4 - Odds and Ends
 In this final section, we will study network testing and review common mistakes to watch
 out for in socket application programming. We will end with an exploration of the design
@@ -12450,7 +12450,7 @@ Chapter 12, Network Monitoring and Security
 Chapter 13, Socket Programming Tips and Pitfalls
 Chapter 14, Web Programming for the Internet of Things
 
-12
+12
 Network Monitoring and
 Security
 In this chapter, we will look at common tools and techniques for network monitoring.
@@ -12472,7 +12472,7 @@ The utilities and tools used in this chapter are either built in to your operati
 available as free, open source software. We'll provide instructions for each tool as it is
 introduced.
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12509,7 +12509,7 @@ common operating systems.
 
 [ 328 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12536,7 +12536,7 @@ how packet size affects latency and reliability.
 
 [ 329 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12562,7 +12562,7 @@ to.
 
 [ 330 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12594,7 +12594,7 @@ over the network.
 
 [ 331 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12624,7 +12624,7 @@ instead.)
 
 [ 332 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12661,7 +12661,7 @@ that inform us about our own system's relationship to the network.
 
 [ 333 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12694,7 +12694,7 @@ executable names.
 
 [ 334 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12715,7 +12715,7 @@ sockets:
 
 [ 335 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12752,7 +12752,7 @@ separately, for example, -i 1 -i 2 -i 3.
 
 [ 336 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12767,7 +12767,7 @@ following screenshot shows Tshark in use:
 
 [ 337 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12792,7 +12792,7 @@ only traffic involving the IP addresses 8.8.8.8 and 8.8.4.4 you can use the host
 
 [ 338 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12811,7 +12811,7 @@ contents of a packet.
 
 [ 339 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12821,7 +12821,7 @@ The following screenshot shows this usage:
 
 [ 340 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12845,7 +12845,7 @@ GUI. Wireshark is also able to understand many standard protocols.
 
 [ 341 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12862,7 +12862,7 @@ also possible to monitor all local network traffic.
 
 [ 342 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12898,7 +12898,7 @@ traffic, let's consider the important topic of network security next.
 
 [ 343 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12934,7 +12934,7 @@ security in more detail now.
 
 [ 344 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -12974,7 +12974,7 @@ additional layer of isolation against attacks.
 
 [ 345 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -13014,7 +13014,7 @@ was also discussed.
 
 [ 346 ]
 
-Network Monitoring and Security
+Network Monitoring and Security
 
 Chapter 12
 
@@ -13041,7 +13041,7 @@ Wireshark (https:/​/​www.​wireshark.​org)
 
 [ 347 ]
 
-13
+13
 Socket Programming Tips and
 Pitfalls
 This chapter builds on all the knowledge you've obtained throughout this book.
@@ -13064,7 +13064,7 @@ recommend MinGW on Windows and GCC on Linux and macOS. See Appendix B, Setting
 Up Your C Compiler On Windows, Appendix C, Setting Up Your C Compiler On Linux, and
 Appendix D, Setting Up Your C Compiler On macOS, for compiler setup.
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13104,7 +13104,7 @@ code for that is as follows:
 
 [ 349 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13143,7 +13143,7 @@ utilities. At other times, you may need to have your program automatically try a
 
 [ 350 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13182,7 +13182,7 @@ The GETSOCKETERRNO() macro is repeated here for your convenience:
 
 [ 351 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13220,7 +13220,7 @@ that point.
 
 [ 352 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13244,7 +13244,7 @@ report errors in the same way.
 
 [ 353 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13282,7 +13282,7 @@ connection. Sometimes, that is what you want, but often it isn't.
 
 [ 354 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13304,7 +13304,7 @@ TCP connection and how it relates to a standard, blocking connect() call:
 
 [ 355 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13342,7 +13342,7 @@ client that needs to connect to several servers in parallel.
 
 [ 356 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13380,7 +13380,7 @@ used to set the O_NONBLOCK flag for the same purpose.
 
 [ 357 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13419,7 +13419,7 @@ first send() call indicates whether you have a problem.
 
 [ 358 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13456,7 +13456,7 @@ faster than a receiver can handle.
 
 [ 359 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13477,7 +13477,7 @@ receiving data. This is a deadlock state. Both parties are stuck waiting forever
 
 [ 360 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13514,7 +13514,7 @@ will need to keep track of which data is remaining to be sent for each connectio
 
 [ 361 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13552,7 +13552,7 @@ packet loss happens or the limit reaches the desired maximum.
 
 [ 362 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13574,7 +13574,7 @@ efficiency.
 
 [ 363 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13613,7 +13613,7 @@ message, thereby sidestepping the Nagle algorithm altogether.
 
 [ 364 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13655,7 +13655,7 @@ late, or out of order, are safely ignored.
 
 [ 365 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13685,7 +13685,7 @@ milliseconds is typical.
 
 [ 366 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13700,7 +13700,7 @@ This is illustrated in the following diagram:
 
 [ 367 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13732,7 +13732,7 @@ connections, it's time to move on to connection teardown.
 
 [ 368 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13765,7 +13765,7 @@ peer are ESTABLISHED, CLOSE-WAIT, LAST-ACK, and CLOSED.
 
 [ 369 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13779,7 +13779,7 @@ state transition of the Initiator. The messages sent and received are the same.
 
 [ 370 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13819,7 +13819,7 @@ side.
 
 [ 371 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13859,7 +13859,7 @@ application isn't tolerant of missed data. In that case, shutdown() is a useful 
 
 [ 372 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13891,7 +13891,7 @@ If you immediately start server_noreuse again, you will see the bind() error.
 
 [ 373 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13919,7 +13919,7 @@ An example program, server_reuse.c, is included to demonstrate this technique.
 
 [ 374 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13954,7 +13954,7 @@ an error.
 
 [ 375 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -13992,7 +13992,7 @@ EPIPE.
 
 [ 376 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -14031,7 +14031,7 @@ limitation, and how to circumvent it, next.
 
 [ 377 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -14060,7 +14060,7 @@ This works because Winsock uses FD_SETSIZE to build the fd_set type.
 
 [ 378 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -14093,7 +14093,7 @@ the Internet of Things.
 
 [ 379 ]
 
-Socket Programming Tips and Pitfalls
+Socket Programming Tips and Pitfalls
 
 Chapter 13
 
@@ -14112,7 +14112,7 @@ The answers to these questions are found in Appendix A, Answers to Questions.
 
 [ 380 ]
 
-14
+14
 Web Programming for the
 Internet of Things
 In this chapter, we turn our attention to the Internet of Things (IoT). The IoT is an exciting
@@ -14131,7 +14131,7 @@ Technical requirements
 This chapter contains no C code. Instead, it focuses on the theory, techniques, and practices
 used in the IoT domain.
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14164,7 +14164,7 @@ trade-offs.
 
 [ 382 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14204,7 +14204,7 @@ work in developing the setup application.
 
 [ 383 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14232,7 +14232,7 @@ some cases, further simplifying deployment.
 
 [ 384 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14268,7 +14268,7 @@ that requires significant bandwidth is much more costly to service.
 
 [ 385 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14303,7 +14303,7 @@ commonly deployed to allow a whole network of IoT devices to intercommunicate.
 
 [ 386 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14330,7 +14330,7 @@ The following diagram illustrates a mesh network for home automation:
 
 [ 387 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14362,7 +14362,7 @@ connectivity is also included. The Raspberry Pi Zero W currently retails for abo
 
 [ 388 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14381,7 +14381,7 @@ Asynchronous Serial.
 
 [ 389 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14415,7 +14415,7 @@ microcontrollers use the Harvard architecture.
 
 [ 390 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14445,7 +14445,7 @@ systems.
 
 [ 391 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14479,7 +14479,7 @@ any other protocol you can think of.
 
 [ 392 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14492,7 +14492,7 @@ located on the top circuit board, which plugs into a socket on the lower board.
 
 [ 393 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14520,7 +14520,7 @@ The following diagram illustrates this concept:
 
 [ 394 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14556,7 +14556,7 @@ Your device will need to download a firmware image, and then transfer that into 
 
 [ 395 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14597,7 +14597,7 @@ ownership and privacy.
 
 [ 396 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14636,7 +14636,7 @@ establish a connection to its central server.
 
 [ 397 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14672,7 +14672,7 @@ You can find more information from the OWASP Foundation at https:/​/​owasp.�
 
 [ 398 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14714,7 +14714,7 @@ Authentication Code (MAC).
 
 [ 399 ]
 
-Web Programming for the Internet of Things
+Web Programming for the Internet of Things
 
 Chapter 14
 
@@ -14745,7 +14745,7 @@ The answers to these questions can be found in Appendix A, Answers to Questions.
 
 [ 400 ]
 
-Answers to Questions
+Answers to Questions
 Chapter 1, Introducing Networks and
 Protocols
 1. What are the key differences between IPv4 and IPv6?
@@ -14771,7 +14771,7 @@ addresses?
 DNS is used to resolve domain names into IP addresses. This protocol is covered
 in detail in Chapter 5, Hostname Resolution and DNS.
 
-Answers to Questions
+Answers to Questions
 
 6. How can you find your public IP address?
 The easiest way is to visit a website that reports it for you.
@@ -14802,7 +14802,7 @@ reliability. They are also able to take advantage of IP multicasting.
 
 [ 402 ]
 
-Answers to Questions
+Answers to Questions
 
 6. What types of applications generally benefit from using the TCP protocol?
 Applications that need a reliable stream of data transfer benefit from the TCP
@@ -14833,7 +14833,7 @@ having the client send a request first and then having the server send a respons
 
 [ 403 ]
 
-Answers to Questions
+Answers to Questions
 
 Chapter 3, An In-Depth Overview of TCP
 Connections
@@ -14860,7 +14860,7 @@ recv() call was sent with one or many calls to send().
 
 [ 404 ]
 
-Answers to Questions
+Answers to Questions
 
 7. Consider this code:
 recv(socket_peer, buffer, 4096, 0);
@@ -14893,7 +14893,7 @@ for each peer.
 
 [ 405 ]
 
-Answers to Questions
+Answers to Questions
 
 5. What are the downsides to UDP when compared to TCP?
 UDP does not attempt to fix many of the errors that TCP does. For example, TCP
@@ -14927,7 +14927,7 @@ IPv6 address.
 
 [ 406 ]
 
-Answers to Questions
+Answers to Questions
 
 5. Which DNS record type stores special information about email servers?
 The MX record type is used to return email server information.
@@ -14958,7 +14958,7 @@ GET is the usual request type for a client to request a resource from the server
 
 [ 407 ]
 
-Answers to Questions
+Answers to Questions
 
 5. What HTTP request type is typically used to send data from the client to the
 server?
@@ -14992,7 +14992,7 @@ program that relies only on fopen() to check for a file's existence.
 
 [ 408 ]
 
-Answers to Questions
+Answers to Questions
 
 Chapter 8, Making Your Program Send Email
 1. What port does SMTP operate on?
@@ -15023,7 +15023,7 @@ same key.
 
 [ 409 ]
 
-Answers to Questions
+Answers to Questions
 
 3. How many keys does asymmetric encryption use?
 Asymmetric encryption use two different, but mathematically related, keys. Data
@@ -15053,7 +15053,7 @@ and server can't agree on a mutually supported protocol version and cipher suite
 
 [ 410 ]
 
-Answers to Questions
+Answers to Questions
 
 4. Can select() be used to multiplex connections for HTTPS servers?
 Yes, but be aware that select() works on the underlying TCP connection layer,
@@ -15083,7 +15083,7 @@ to replay attacks.
 
 [ 411 ]
 
-Answers to Questions
+Answers to Questions
 
 Chapter 12, Network Monitoring and
 Security
@@ -15114,7 +15114,7 @@ platforms to obtain error messages.
 
 [ 412 ]
 
-Answers to Questions
+Answers to Questions
 
 3. How long does it take for a call to connect() to complete on a TCP socket?
 A call to connect() typically blocks for at least one network time round
@@ -15142,7 +15142,7 @@ limit is around 1,024 sockets.
 
 [ 413 ]
 
-Answers to Questions
+Answers to Questions
 
 Chapter 14, Web Programming for the
 Internet of Things
@@ -15172,7 +15172,7 @@ needs.
 
 [ 414 ]
 
-Setting Up Your C Compiler on
+Setting Up Your C Compiler on
 Windows
 Microsoft Windows is one of the most popular desktop operating systems.
 Before beginning, I highly recommend that you install 7-Zip from https://www.7zip.org/. 7-Zip will allow you to extract the various compression archive formats that
@@ -15184,7 +15184,7 @@ MinGW is a port of GCC to Windows. It is the compiler we recommend for this book
 You can obtain MinGW from http:/​/​www.​mingw.​org/​. Find the download link on that page
 and download and run the MinGW Installation Manager (mingw-get).
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 The MinGW Installation Manager is a GUI tool for installing MinGW. It's shown in the
 following screenshot:
@@ -15197,14 +15197,14 @@ shown in the following screenshot:
 
 [ 416 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 You will also want to select the mingw32-libz-dev package. It is listed under the MinGW
 Libraries section. The following screenshot shows this selection:
 
 [ 417 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 The g++ and libz packages we've selected are required for building libssh later.
 When you're ready to proceed, click Installation from the menu and select Apply Changes.
@@ -15218,7 +15218,7 @@ your PATH.
 
 [ 418 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 The steps for adding MinGW to your PATH are as follows:
 1. Open the System control panel (Windows key + Pause/Break).
@@ -15226,7 +15226,7 @@ The steps for adding MinGW to your PATH are as follows:
 
 [ 419 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 3. From the System Properties window, navigate to the Advanced tab and click
 the Environment Variables... button:
@@ -15238,7 +15238,7 @@ following screenshot:
 
 [ 420 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 6. Click OK to save your changes.
 Once MinGW has been added to your PATH, you can open a new command window and
@@ -15247,7 +15247,7 @@ following screenshot:
 
 [ 421 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 Installing Git
 You will need to have the git version control software installed to download this book's
@@ -15262,7 +15262,7 @@ entering git --version:
 
 [ 422 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 Installing OpenSSL
 The OpenSSL library can be tricky to get going on Windows.
@@ -15281,7 +15281,7 @@ openssl.exe and the two DLL files need to be placed in c:\mingw\bin\:
 
 [ 423 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 You can try building openssl_version.c from Chapter 9, Loading Secure Web Pages with
 HTTPS and OpenSSL, to test that everything is installed correctly. It should look like the
@@ -15299,7 +15299,7 @@ installation:
 
 [ 424 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 Once you have the CMake tool and the OpenSSL libraries installed, navigate to the libssh
 website to download the libssh source code. At the time of writing, Version 0.8.7 is the
@@ -15316,7 +15316,7 @@ Start CMake 3.14.3 (cmake-gui) from the start menu or desktop shortcut.
 
 [ 425 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 You need to set the source code and build locations using the Browse Source... and Browse
 Build... buttons. This is shown in the following screenshot:
@@ -15326,7 +15326,7 @@ On the next screen, select MinGW Makefiles as the generator for this project. Cl
 
 [ 426 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 It may take a moment to process.
 From the configuration options, make the following changes:
@@ -15348,7 +15348,7 @@ libssh, to test that everything is installed correctly. It should look like the 
 
 [ 427 ]
 
-Setting Up Your C Compiler on Windows
+Setting Up Your C Compiler on Windows
 
 Alternatives
 In this book, we recommend free software whenever possible. This is important for user
@@ -15363,7 +15363,7 @@ for both Microsoft Visual Studio 2015 and Microsoft Visual Studio 2017.
 
 [ 428 ]
 
-Setting Up Your C Compiler on
+Setting Up Your C Compiler on
 Linux
 Linux is an excellent choice for C programming. It has arguably the easiest setup and the
 best support for C programming out of the three operating systems covered in this book.
@@ -15390,7 +15390,7 @@ Once the install command completes, you should be able to run the following comm
 to find the version of gcc that was installed:
 gcc --version
 
-Setting Up Your C Compiler on Linux
+Setting Up Your C Compiler on Linux
 
 Installing Git
 You will need to have the Git version control software installed to download this book's
@@ -15424,7 +15424,7 @@ proficient in installing C libraries, feel free to give it a go. Otherwise, read
 
 [ 430 ]
 
-Setting Up Your C Compiler on Linux
+Setting Up Your C Compiler on Linux
 
 Before beginning, be sure that you've first installed the OpenSSL libraries successfully.
 These are required by the libssh library.
@@ -15461,7 +15461,7 @@ sudo make install
 
 [ 431 ]
 
-Setting Up Your C Compiler on
+Setting Up Your C Compiler on
 macOS
 macOS can be a good development environment for a C programmer. Let's get started.
 
@@ -15471,7 +15471,7 @@ The Homebrew package manager makes installing a C compiler and development libra
 much easier than it would otherwise be.
 To install Homebrew, navigate your web browser to https:/​/​brew.​sh/​:
 
-Setting Up Your C Compiler on macOS
+Setting Up Your C Compiler on macOS
 
 The website gives the command to install Homebrew. You will need to open a new
 Terminal window and paste in the command:
@@ -15483,7 +15483,7 @@ you'll have a C compiler ready to go. Test that you have a working C compiler wi
 
 [ 433 ]
 
-Setting Up Your C Compiler on macOS
+Setting Up Your C Compiler on macOS
 
 Note that macOS installs the Clang compiler, but aliases it as GCC. In any case, it will work
 fine for our purposes.
@@ -15500,7 +15500,7 @@ use the openssl@1.1 package instead.
 
 [ 434 ]
 
-Setting Up Your C Compiler on macOS
+Setting Up Your C Compiler on macOS
 
 The following screenshot shows Homebrew installing the openssl@1.1 package:
 
@@ -15512,7 +15512,7 @@ compiler can find them automatically. Whether you want to do this or not is up t
 
 [ 435 ]
 
-Setting Up Your C Compiler on macOS
+Setting Up Your C Compiler on macOS
 
 If you want to create symlinks so the compiler can find OpenSSL, try the following
 commands:
@@ -15535,7 +15535,7 @@ brew install libssh
 
 [ 436 ]
 
-Setting Up Your C Compiler on macOS
+Setting Up Your C Compiler on macOS
 
 This is shown in the following screenshot:
 
@@ -15548,7 +15548,7 @@ That concludes the setup for macOS.
 
 [ 437 ]
 
-Example Programs
+Example Programs
 This book's code repository, located at https:/​/​github.​com/​codeplea/​hands-​on-​networkprogramming-​with-​c, includes 44 example programs. These programs are explained in
 detail throughout the book.
 
@@ -15572,7 +15572,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
-Example Programs
+Example Programs
 
 Code included with this book
 The following is a list of the 44 example programs included with this book, by chapter.
@@ -15605,7 +15605,7 @@ using select(). Echoes received data back to the client all in uppercase.
 
 [ 439 ]
 
-Example Programs
+Example Programs
 tcp_serve_toupper_fork.c: The same as the preceding code but
 uses fork() instead of select(). (Linux and macOS only.)
 tcp_serve_chat.c: A TCP server that relays received data to every other
@@ -15638,7 +15638,7 @@ URL
 
 [ 440 ]
 
-Example Programs
+Example Programs
 
 Chapter 7 – Building a Simple Web Server
 This chapter includes the following example programs:
@@ -15673,7 +15673,7 @@ modified to use HTTPS
 
 [ 441 ]
 
-Example Programs
+Example Programs
 
 Chapter 11 – Establishing SSH Connections with
 libssh
@@ -15707,7 +15707,7 @@ setsize.c: Shows the maximum number of sockets select() can handle.
 
 [ 442 ]
 
-Example Programs
+Example Programs
 
 Chapter 14 – Web Programming for the Internet of
 Things
@@ -15715,7 +15715,7 @@ This chapter doesn't include any example programs.
 
 [ 443 ]
 
-Other Book You May Enjoy
+Other Book You May Enjoy
 If you enjoyed this book, you may be interested in another book by Packt:
 
 C Programming Cookbook
@@ -15730,7 +15730,7 @@ Establish communication between two or more processes using different
 techniques
 Store simple text in files and store data in a database
 
-Other Book You May Enjoy
+Other Book You May Enjoy
 
 Leave a review - let other readers know what
 you think
@@ -15744,7 +15744,7 @@ valuable to other potential customers, our authors, and Packt. Thank you!
 
 [ 445 ]
 
-Index
+Index
 A
 ad hoc mode 383
 address 29, 30
@@ -15820,7 +15820,7 @@ data link layer 11
 datagram 12
 Datagram Transport Layer Security (DTLS) 279
 
-deadlock
+deadlock
 avoiding 359, 361
 decryption 259
 deep packet inspection 340, 341, 342
@@ -15914,7 +15914,7 @@ Hayes command set 394
 
 [ 447 ]
 
-hostname resolution
+hostname resolution
 working 126, 127, 128
 HTTP POST requests
 about 190
@@ -16003,7 +16003,7 @@ working with 64, 65
 
 [ 448 ]
 
-K
+K
 key exchange algorithm 263
 
 L
@@ -16095,7 +16095,7 @@ Open Web Application Security Project (OWASP)
 
 [ 449 ]
 
-OpenSSL
+OpenSSL
 about 266, 267, 284
 alternatives 300
 certificates 270, 271
@@ -16190,7 +16190,7 @@ recv() 46
 
 [ 450 ]
 
-recvfrom() 46
+recvfrom() 46
 select() 46
 send() 46
 sendto() 46
@@ -16284,7 +16284,7 @@ Wireshark 336
 
 [ 451 ]
 
-traceroute
+traceroute
 working 331
 tracert 331
 tracker 47
@@ -16335,4 +16335,3 @@ Wireless Personal Area Networks (WPAN) 386
 Wireshark 341
 wolfSSL 399
 
-

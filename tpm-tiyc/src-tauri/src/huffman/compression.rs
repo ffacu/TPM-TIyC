@@ -138,5 +138,12 @@ mod tests {
         .unwrap();
         let res_lines = extract(&data, |x: Vec<String>| x.join(" ")).unwrap();
         assert_eq!(&lines, &res_lines);
+
+        let lines_rare = vec![
+            "Hello \x0C Form Feed \r\n Windows \t Tab □ box!".to_string(),
+        ];
+        let data_rare = compress(&lines_rare, freqs::char_frequencies, |line| line.chars()).unwrap();
+        let res_lines_rare = extract(&data_rare, |x: Vec<char>| x.into_iter().collect()).unwrap();
+        assert_eq!(&lines_rare, &res_lines_rare);
     }
 }

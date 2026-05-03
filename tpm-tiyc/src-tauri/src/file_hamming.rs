@@ -261,7 +261,7 @@ pub fn inject_error(block_size_bits: usize, errors_quantity: usize, input: &mut 
     for i in 0..blocks_quantity {
         if rand::thread_rng().gen_range(0.0..1.0) < 0.5 {
             let mut indices = Vec::new();
-            let iteration_quantity = rand::thread_rng().gen_range(0..(errors_quantity + 1));
+            let iteration_quantity = rand::thread_rng().gen_range(1..(errors_quantity + 1));
             while indices.len() < iteration_quantity {
                 let index = rand::thread_rng().gen_range(0..block_size_bits);
                 if !indices.contains(&index) {
