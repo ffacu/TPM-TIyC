@@ -2,6 +2,7 @@ use rayon::prelude::*;
 use std::collections::HashMap;
 
 pub fn char_frequencies(lines: &Vec<String>) -> HashMap<char, u64> {
+    // Use Rayon to parallelize the frequency counting across lines. Each line is processed in parallel, and the results are combined at the end.
     lines
         .par_iter()
         .fold(
@@ -22,6 +23,7 @@ pub fn char_frequencies(lines: &Vec<String>) -> HashMap<char, u64> {
                 freqs1
             },
         )
+        //returns a HashMap with the frequency of each character in the input lines
 }
 
 pub fn word_frequencies(lines: &Vec<String>) -> HashMap<String, u64> {
@@ -45,4 +47,5 @@ pub fn word_frequencies(lines: &Vec<String>) -> HashMap<String, u64> {
                 freqs1
             },
         )
+        //returns a HashMap with the frequency of each word in the input lines
 }

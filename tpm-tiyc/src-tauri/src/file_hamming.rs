@@ -256,11 +256,12 @@ pub fn inject_error(block_size_bits: usize, errors_quantity: usize, input: &mut 
 
     // Index position selected by a random value
     
-    // Introuce error
+    // Introduce error
     let blocks_quantity = bits_info.len() / block_size_bits;
     for i in 0..blocks_quantity {
         if rand::thread_rng().gen_range(0.0..1.0) < 0.5 {
-            let mut indices = Vec::new();
+            let mut indices = Vec::new(); // aux vector to avoid duplicate indices in the same block
+            // if errors_quantity is 2, it can inject 1 or 2 errors per block, with equal probability
             let iteration_quantity = rand::thread_rng().gen_range(1..(errors_quantity + 1));
             while indices.len() < iteration_quantity {
                 let index = rand::thread_rng().gen_range(0..block_size_bits);

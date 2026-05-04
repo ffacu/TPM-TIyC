@@ -4,6 +4,10 @@ use std::{
 };
 use Tree::*;
 
+// Debug: adds {:?} for debugging and inspection
+// Clone  adds .clone() method
+// PartialEq and Eq: adds == and != operators
+// Eq: allows to compare two trees for equality (used in tests)
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Tree<T> {
     Leaf {
@@ -17,6 +21,7 @@ pub enum Tree<T> {
     },
 }
 
+// Suppress warnings for unused functions.
 #[allow(dead_code)]
 impl<T: Clone> Tree<T> {
     pub fn freq(&self) -> u64 {
@@ -61,12 +66,13 @@ impl<T: Clone + Eq> PartialOrd for Tree<T> {
 }
 
 pub fn huffman_tree<T: Eq + Clone>(freqs: &HashMap<T, u64>) -> Tree<T> {
-    let mut heap = BinaryHeap::new();
+    let mut heap = BinaryHeap::new();   // Create a min binary heap to store the trees, ordered by frequency and enabling applying Huffman's algorithm.
     for (token, freq) in freqs {
         let (freq, token) = (*freq, token.clone());
         heap.push(Reverse(Leaf { freq, token }))
     }
 
+    //Huffman's algorithm (creates a tree)
     while heap.len() > 1 {
         let node1 = heap.pop().unwrap().0;
         let node2 = heap.pop().unwrap().0;
@@ -79,7 +85,7 @@ pub fn huffman_tree<T: Eq + Clone>(freqs: &HashMap<T, u64>) -> Tree<T> {
         heap.push(Reverse(merged_node));
     }
 
-    heap.pop().unwrap().0
+    heap.pop().unwrap().0 // Returns the Huffman's tree 
 }
 
 #[cfg(test)]

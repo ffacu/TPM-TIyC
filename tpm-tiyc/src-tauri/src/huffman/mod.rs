@@ -6,6 +6,11 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::PathBuf;
 
+// Debug: adds {:?} for debugging and inspection
+// Clone  adds .clone() method
+// Copy adds .copy() method (for simple types like enums)
+// PartialEq and Eq: adds == and != operators
+// Eq: allows to compare two trees for equality (used in tests)
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Mode {
     Words,
@@ -16,6 +21,7 @@ pub fn compress_file(input: PathBuf, output: PathBuf, mode: Mode) -> Result<(), 
     let text = fs::read_to_string(&input)?;
     let lines: Vec<_> = text.split('\n').map(|x| x.to_string()).collect();
 
+    // Match by the mode enumeration.
     let compressed = match mode {
         Mode::Words => compression::compress(&lines, freqs::word_frequencies, |line| {
             line.split(' ').map(|token| token.to_string())

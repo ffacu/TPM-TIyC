@@ -7,6 +7,8 @@ use std::{collections::HashMap, hash::Hash};
 use crate::huffman::huffman::{self, Tree};
 use Tree::*;
 
+/*  Serialize and Deserialize the compressed data, which consists of the encoder (the huffman codes for each token) 
+ and the data (the concatenation of the huffman codes of the tokens in the file). */
 #[derive(Serialize, Deserialize)]
 struct CompressedData<T: Eq + Hash> {
     encoder: HashMap<T, BitVec>,
@@ -19,15 +21,16 @@ pub fn compress<'a, T, FreqsF, TokenExtractor, TokensIter>(
     line_to_tokens: TokenExtractor,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>>
 where
-    T: Clone + Eq + Hash + Send + Sync + Serialize,
-    FreqsF: Fn(&'a Vec<String>) -> HashMap<T, u64>,
+    T: Clone + Eq + Hash + Send + Sync + Serialize,     // T can be cloned, compared, hashed, sent and synchronized across threads, and serialized
+    FreqsF: Fn(&'a Vec<String>) -> HashMap<T, u64>,    // Defines a freqsF function 
     TokenExtractor: Fn(&'a str) -> TokensIter + Send + Sync,
-    TokensIter: Iterator<Item = T>,
+    TokensIter: Iterator<Item = T>, // TokensIter is an iterator that yields items of type T
 {
     let freqs = get_freqs(lines);
     let tree = huffman::huffman_tree(&freqs);
-    let encoder = tree.to_encoder();
+    let encoder = tree.to_encoder(); // Create huffman codification for the tokens.
 
+    // Collects the file data into a single vector of concatenations of the huffman codes of the tokens.
     let data = lines
         .par_iter()
         .map(|line| {
@@ -40,8 +43,8 @@ where
         })
         .collect();
 
-    let compressed_data = CompressedData { encoder, data };
-    rmp_serde::encode::to_vec(&compressed_data).map_err(|err| err.into())
+    let compressed_data = CompressedData { encoder, data }; 
+    rmp_serde::encode::to_vec(&compressed_data).map_err(|err| err.into()) // Serialize the compressed data. Where the first part is the encoder (the huffman codes for each token) and the second part is the data (the concatenation of the huffman codes of the tokens in the file).
 }
 
 pub fn extract<'a, T, F>(
@@ -52,9 +55,10 @@ where
     T: Clone + Eq + Hash + Send + Sync + Deserialize<'a>,
     F: Fn(Vec<T>) -> String + Send + Sync,
 {
-    let CompressedData { encoder, data }: CompressedData<T> = rmp_serde::decode::from_slice(data)?;
+    let CompressedData { encoder, data }: CompressedData<T> = rmp_serde::decode::from_slice(data)?; //deserialize to get the encoder and the data
 
     let decoder = encoder_to_decoder(&encoder);
+    //Decode the data into lines.
     let lines = data
         .par_iter()
         .map(|line| {
@@ -64,6 +68,7 @@ where
             for bit in line {
                 candidate.push(bit);
 
+                //If the stream of bits matches a huffman code, get the token
                 match decoder.get(&candidate) {
                     Some(token) => {
                         tokens.push(token.clone());
@@ -82,6 +87,7 @@ where
 
 fn encoder_to_decoder<T: Clone>(encoder: &HashMap<T, BitVec>) -> HashMap<BitVec, T> {
     let mut decoder = HashMap::new();
+    //Swap prefix to key to the hasmap
     for (token, prefix) in encoder.clone() {
         decoder.insert(prefix, token);
     }
@@ -92,6 +98,7 @@ impl<T: Eq + Clone + Hash> Tree<T> {
     pub fn to_encoder(&self) -> HashMap<T, BitVec> {
         let mut encoder = HashMap::new();
 
+        // Deep-First Search to transverse the tree and build the encoder.
         let mut stack = vec![(self, BitVec::new())];
         while !stack.is_empty() {
             let (node, path) = stack.pop().unwrap();

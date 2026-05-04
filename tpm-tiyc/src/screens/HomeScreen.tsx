@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { Activity, LayoutGrid, HelpCircle, FileText, ArrowLeft } from 'lucide-react';
+import { Activity, LayoutGrid, FileText, ArrowLeft } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 
 export const HomeScreen: React.FC = () => {
