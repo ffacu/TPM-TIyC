@@ -38,14 +38,13 @@ export const HomeScreen: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Hamming Card */}
         <Card 
-          className="p-10 cursor-pointer hover:border-primary hover:shadow-lg transition-all group flex flex-col items-center text-center h-[380px] justify-center"
-          onClick={() => navigate('/hamming', { state: { filePath } })}
+          className="p-10 cursor-not-allowed bg-gray-50 border-gray-200 flex flex-col items-center text-center h-[380px] justify-center opacity-70"
         >
-          <div className="bg-primary/10 text-primary p-6 rounded-3xl mb-8 group-hover:scale-110 transition-transform">
+          <div className="bg-gray-200 text-gray-500 p-6 rounded-3xl mb-8">
             <Activity size={56} strokeWidth={1.5} />
           </div>
-          <h2 className="text-3xl font-semibold mb-4">Hamming</h2>
-          <p className="text-text-muted text-lg px-4">Protección y detección de errores usando código Hamming.</p>
+          <h2 className="text-3xl font-semibold mb-4 text-gray-500">Hamming</h2>
+          <p className="text-gray-400 text-lg px-4">Protección y detección de errores usando código Hamming.</p>
         </Card>
 
         {/* Huffman Card */}
