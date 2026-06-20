@@ -233,7 +233,7 @@ export const HuffmanScreen: React.FC = () => {
           <div className="space-y-6 flex-1 flex flex-col">
             <div className="flex-1">
               <label className="block text-sm font-normal text-gray-700 mb-3">Seleccione el archivo a compactar</label>
-              <div className="flex flex-col gap-2 max-h-[180px] overflow-y-auto pr-2">
+              <div className="flex flex-col gap-2 max-h-[180px] overflow-y-auto pr-2 antialiased">
                 {filesToCompress.map((f, idx) => (
                   <div 
                     key={idx}
@@ -247,7 +247,7 @@ export const HuffmanScreen: React.FC = () => {
                         <FileText size={20} />
                       </div>
                       <div className="flex flex-col">
-                        <span className={fileToProcess === f.name ? 'text-blue-600' : 'text-text-main'}>
+                        <span className={`font-normal ${fileToProcess === f.name ? 'text-blue-600' : 'text-gray-700'}`}>
                           {f.name}
                         </span>
                         <span className="text-xs text-gray-500">{formatBytes(f.size)}</span>
@@ -299,7 +299,7 @@ export const HuffmanScreen: React.FC = () => {
             </div>
           ) : (
             <div className="flex-1 flex flex-col">
-              <div className="space-y-3 mb-6 flex-1 max-h-[300px] overflow-y-auto pr-2">
+              <div className="space-y-3 mb-6 flex-1 max-h-[300px] overflow-y-auto pr-2 antialiased">
                 {filesToDecompress.map((fileObj, idx) => {
                   const file = fileObj.name;
                   return (
@@ -315,7 +315,7 @@ export const HuffmanScreen: React.FC = () => {
                         <FileText size={20} />
                       </div>
                       <div className="flex flex-col">
-                        <span className={selectedFile === file ? 'text-blue-600' : 'text-text-main'}>
+                        <span className={`font-normal ${selectedFile === file ? 'text-blue-600' : 'text-gray-700'}`}>
                           {file}
                         </span>
                         <span className="text-xs text-gray-500">{formatBytes(fileObj.size)}</span>

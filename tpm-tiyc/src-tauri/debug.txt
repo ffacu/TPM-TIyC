@@ -1,1 +1,1 @@
-close_workspace called! original path: /home/ffacu/Documents/Facultad/TIyC/TPM-TIyC/.txt-files/to-do.txt, parent: "/home/ffacu/Documents/Facultad/TIyC/TPM-TIyC/.txt-files", cufa_path: "/home/ffacu/Documents/Facultad/TIyC/TPM-TIyC/.txt-files/to-do.cufa"
+close_workspace called but pending was None

@@ -3,6 +3,7 @@ import { Lock, Calendar, CheckSquare, Square } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Card } from './ui/Card';
 import { invoke } from '@tauri-apps/api/core';
+import { CustomCalendar } from './ui/CustomCalendar';
 
 interface EncryptDropdownProps {
   originalFilePath: string;
@@ -26,7 +27,6 @@ export const EncryptDropdown: React.FC<EncryptDropdownProps> = ({ originalFilePa
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const today = new Date().toISOString().split('T')[0];
 
   const handleEncrypt = async () => {
     if (!selectedDate) return;
@@ -94,13 +94,13 @@ export const EncryptDropdown: React.FC<EncryptDropdownProps> = ({ originalFilePa
                   <Calendar size={16} className="text-primary" />
                   Fecha de apertura
                 </label>
-                <input
-                  type="date"
-                  min={today}
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-text-main text-sm"
-                />
+                <div className="flex justify-center w-full my-2">
+                  <CustomCalendar 
+                    selectedDate={selectedDate} 
+                    onSelectDate={setSelectedDate} 
+                    isExact={isExact} 
+                  />
+                </div>
               </div>
 
               <button
