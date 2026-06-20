@@ -9,6 +9,7 @@ export const HuffmanScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const filePath = location.state?.filePath;
+  const originalPath = location.state?.originalPath;
 
   const [compactMode, setCompactMode] = useState<'words' | 'chars'>('words');
   const [workspaceFiles, setWorkspaceFiles] = useState<{name: string, size: number}[]>([]);
@@ -178,7 +179,7 @@ export const HuffmanScreen: React.FC = () => {
       <div className="flex items-center justify-between mb-8">
         <div>
           <button 
-            onClick={() => navigate('/home', { state: { filePath } })}
+            onClick={() => navigate('/home', { state: { filePath, originalPath } })}
             className="flex items-center text-text-muted hover:text-text-main transition-colors mb-2 font-medium"
           >
             <ArrowLeft size={18} className="mr-1" />
@@ -212,7 +213,7 @@ export const HuffmanScreen: React.FC = () => {
           <Button 
             variant="outline" 
             className="gap-2"
-            onClick={() => navigate('/compare', { state: { filePath, sourceScreen: '/huffman' } })}
+            onClick={() => navigate('/compare', { state: { filePath, originalPath, sourceScreen: '/huffman' } })}
             disabled={workspaceFiles.length <= 1}
           >
             <FileText size={18} />

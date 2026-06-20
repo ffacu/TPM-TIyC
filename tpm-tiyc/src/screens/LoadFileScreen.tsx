@@ -14,21 +14,26 @@ export const LoadFileScreen: React.FC = () => {
 
   const handleFileSelect = async (originalPath: string) => {
     try {
-      const newPath = await invoke<string>('initialize_workspace', { path: originalPath }); //get the new path with the workspace initialized
-      navigate('/home', { state: { filePath: newPath } });
+      if (originalPath.toLowerCase().endsWith('.cufa')) {
+        const newPath = await invoke<string>('load_encrypted_workspace', { path: originalPath });
+        navigate('/home', { state: { filePath: newPath, originalPath: originalPath } });
+      } else {
+        const newPath = await invoke<string>('initialize_workspace', { path: originalPath });
+        navigate('/home', { state: { filePath: newPath, originalPath: originalPath } });
+      }
     } catch (err) {
       console.error(err);
-      setError(`Error initializing workspace: ${err}`);
+      setError(`${err}`);
     }
   };
 
   const handleOpenDialog = async () => {
     try {
-      const selected = await open({  //open file explorer and filter only txt files
+      const selected = await open({
         multiple: false,
         filters: [{
-          name: 'Text Files',
-          extensions: ['txt']
+          name: 'Archivos Soportados',
+          extensions: ['txt', 'cufa']
         }]
       });
       
@@ -56,10 +61,11 @@ export const LoadFileScreen: React.FC = () => {
           const paths = (event.payload as any).paths as string[];
           if (paths && paths.length > 0) {
             const filePath = paths[0];
-            if (filePath.toLowerCase().endsWith('.txt')) {
+            const lowerPath = filePath.toLowerCase();
+            if (lowerPath.endsWith('.txt') || lowerPath.endsWith('.cufa')) {
               handleFileSelect(filePath);
             } else {
-              setError('Por favor, selecciona un archivo .txt válido.');
+              setError('Por favor, selecciona un archivo .txt o .cufa válido.');
             }
           }
         } else {
@@ -107,7 +113,7 @@ export const LoadFileScreen: React.FC = () => {
           <UploadCloud size={48} strokeWidth={1.5} />
         </div>
         
-        <h3 className="text-xl font-semibold mb-2 text-text-main">Arrastra y suelta tu archivo .txt aquí</h3>
+        <h3 className="text-xl font-semibold mb-2 text-text-main">Arrastra y suelta tu archivo .txt o .cufa aquí</h3>
         <p className="text-text-muted mb-8 text-center max-w-md">
           El archivo será procesado localmente. No se subirá a ningún servidor externo.
         </p>

@@ -9,6 +9,7 @@ export const HammingDashboardScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const filePath = location.state?.filePath;
+  const originalPath = location.state?.originalPath;
 
   const [blockSize, setBlockSize] = useState('8');
   const [errorsQuantity, setErrorsQuantity] = useState<number>(0);
@@ -179,7 +180,7 @@ export const HammingDashboardScreen: React.FC = () => {
       <div className="flex items-center justify-between mb-8">
         <div>
           <button 
-            onClick={() => navigate('/home', { state: { filePath } })}
+            onClick={() => navigate('/home', { state: { filePath, originalPath } })}
             className="flex items-center text-text-muted hover:text-text-main transition-colors mb-2 font-medium"
           >
             <ArrowLeft size={18} className="mr-1" />
@@ -213,7 +214,7 @@ export const HammingDashboardScreen: React.FC = () => {
           <Button 
             variant="outline" 
             className="gap-2"
-            onClick={() => navigate('/compare', { state: { filePath, sourceScreen: '/hamming' } })}
+            onClick={() => navigate('/compare', { state: { filePath, originalPath, sourceScreen: '/hamming' } })}
             disabled={workspaceFiles.length <= 1}
           >
             <FileText size={18} />

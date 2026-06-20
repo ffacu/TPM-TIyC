@@ -2,11 +2,16 @@ import React from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { Activity, LayoutGrid, FileText, ArrowLeft } from 'lucide-react';
 import { Card } from '../components/ui/Card';
+import { EncryptDropdown } from '../components/EncryptDropdown';
+import { invoke } from '@tauri-apps/api/core';
 
 export const HomeScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const filePath = location.state?.filePath;
+  const originalPath = location.state?.originalPath || filePath;
+  console.log("HomeScreen received filePath:", filePath);
+  console.log("HomeScreen received originalPath:", originalPath);
 
   // Route guard.
   if (!filePath) {
@@ -17,16 +22,28 @@ export const HomeScreen: React.FC = () => {
     return path.split(/[/\\]/).pop() || path;
   };
 
+  const handleReturn = async () => {
+    try {
+      await invoke('close_workspace');
+    } catch (e) {
+      console.error("Error closing workspace", e);
+    }
+    navigate('/');
+  };
+
   return (
     <div className="flex flex-col w-full max-w-5xl mx-auto py-8">
       <div className="mb-12">
-        <button 
-          onClick={() => navigate('/')}
-          className="flex items-center text-text-muted hover:text-text-main transition-colors mb-6 font-medium"
-        >
-          <ArrowLeft size={18} className="mr-1" />
-          Volver a Cargar Archivo
-        </button>
+        <div className="flex items-center gap-4 mb-6">
+          <button 
+            onClick={handleReturn}
+            className="flex items-center text-text-muted hover:text-text-main transition-colors font-medium"
+          >
+            <ArrowLeft size={18} className="mr-1" />
+            Volver a Cargar Archivo
+          </button>
+          <EncryptDropdown originalFilePath={originalPath} />
+        </div>
         <div className="flex items-center gap-3 text-primary mb-2">
           <FileText size={24} />
           <span className="font-semibold text-lg">{getFileName(filePath)}</span>
@@ -39,7 +56,7 @@ export const HomeScreen: React.FC = () => {
         {/* Hamming Card */}
         <Card 
           className="p-10 cursor-pointer hover:border-primary hover:shadow-lg transition-all group flex flex-col items-center text-center h-[380px] justify-center"
-          onClick={() => navigate('/hamming', { state: { filePath } })}
+          onClick={() => navigate('/hamming', { state: { filePath, originalPath } })}
         >
           <div className="bg-primary/10 text-primary p-6 rounded-3xl mb-8 group-hover:scale-110 transition-transform">
             <Activity size={56} strokeWidth={1.5} />
@@ -51,7 +68,7 @@ export const HomeScreen: React.FC = () => {
         {/* Huffman Card */}
         <Card 
           className="p-10 cursor-pointer hover:border-blue-500 hover:shadow-lg transition-all group flex flex-col items-center text-center h-[380px] justify-center"
-          onClick={() => navigate('/huffman', { state: { filePath } })}
+          onClick={() => navigate('/huffman', { state: { filePath, originalPath } })}
         >
           <div className="bg-blue-50 text-blue-500 p-6 rounded-3xl mb-8 group-hover:scale-110 transition-transform">
             <LayoutGrid size={56} strokeWidth={1.5} />

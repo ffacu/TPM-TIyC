@@ -26,7 +26,9 @@ const compareFiles = (text1: string, text2: string, enableHighlight: boolean) =>
 export const ComparatorScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { filePath, sourceScreen = '/hamming' } = location.state || {};
+  const filePath = location.state?.filePath;
+  const originalPath = location.state?.originalPath;
+  const sourceScreen = location.state?.sourceScreen || '/home';
 
   // Route guard.
   if (!filePath) {
@@ -160,7 +162,7 @@ export const ComparatorScreen: React.FC = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <button 
-            onClick={() => navigate(sourceScreen, { state: { filePath } })}
+            onClick={() => navigate(sourceScreen, { state: { filePath, originalPath } })}
             className="flex items-center text-text-muted hover:text-text-main transition-colors mb-2 font-medium"
           >
             <ArrowLeft size={18} className="mr-1" />
