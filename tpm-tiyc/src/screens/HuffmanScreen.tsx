@@ -226,12 +226,12 @@ export const HuffmanScreen: React.FC = () => {
         <Card className="p-6 lg:col-span-6 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-6 border-b pb-4">
             <LayoutGrid className="text-blue-500" size={24} />
-            <h2 className="text-xl font-semibold">Configuración de Compresión</h2>
+            <h2 className="text-xl font-normal">Configuración de Compresión</h2>
           </div>
 
           <div className="space-y-6 flex-1 flex flex-col">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-3">Seleccione el archivo a compactar</label>
+              <label className="block text-sm font-normal text-gray-700 mb-3">Seleccione el archivo a compactar</label>
               <div className="flex flex-col gap-2 max-h-[180px] overflow-y-auto pr-2">
                 {filesToCompress.map((f, idx) => (
                   <div 
@@ -242,9 +242,11 @@ export const HuffmanScreen: React.FC = () => {
                     `}
                   >
                     <div className="flex items-center gap-3">
-                      <FileText size={18} className={fileToProcess === f.name ? 'text-blue-600' : 'text-gray-400'} />
+                      <div className={`p-2 rounded-lg ${fileToProcess === f.name ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'}`}>
+                        <FileText size={20} />
+                      </div>
                       <div className="flex flex-col">
-                        <span className={`text-sm font-medium ${fileToProcess === f.name ? 'text-blue-800' : 'text-text-main'}`}>
+                        <span className={fileToProcess === f.name ? 'text-blue-600' : 'text-text-main'}>
                           {f.name}
                         </span>
                         <span className="text-xs text-gray-500">{formatBytes(f.size)}</span>
@@ -262,7 +264,7 @@ export const HuffmanScreen: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3 mt-2">Modo de Compresión</label>
+              <label className="block text-sm font-normal text-gray-700 mb-3 mt-2">Modo de Compresión</label>
               <div className="flex gap-4">
                 {['words', 'chars'].map((mode) => (
                   <label key={mode} className={`flex-1 cursor-pointer rounded-xl border-2 p-3 flex flex-col items-center justify-center transition-all ${compactMode === mode ? 'border-blue-500 bg-blue-50 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
@@ -286,7 +288,7 @@ export const HuffmanScreen: React.FC = () => {
         <Card className="p-6 lg:col-span-6 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-6 border-b pb-4">
             <FileCode className="text-blue-500" size={24} />
-            <h2 className="text-xl font-semibold">Archivos a Descompactar</h2>
+            <h2 className="text-xl font-normal">Archivos a Descompactar</h2>
           </div>
 
           {filesToDecompress.length === 0 ? (
@@ -312,12 +314,10 @@ export const HuffmanScreen: React.FC = () => {
                         <FileText size={20} />
                       </div>
                       <div className="flex flex-col">
-                        <span className={`text-sm font-medium ${selectedFile === file ? 'text-blue-800' : 'text-text-main'}`}>
+                        <span className={selectedFile === file ? 'text-blue-600' : 'text-text-main'}>
                           {file}
                         </span>
-                        <span className="text-xs text-gray-500">
-                          {formatBytes(fileObj.size)}
-                        </span>
+                        <span className="text-xs text-gray-500">{formatBytes(fileObj.size)}</span>
                       </div>
                     </div>
                     {selectedFile === file && <CheckCircle className="text-blue-500" size={20} />}

@@ -87,6 +87,64 @@ where
     Ok((lines, original_extension))
 }
 
+pub fn compress_bytes(
+    data: &[u8],
+    original_extension: String,
+) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let mut freqs = HashMap::new();
+    for &b in data {
+        *freqs.entry(b).or_insert(0) += 1;
+    }
+
+    let tree = huffman::huffman_tree(&freqs);
+    let encoder = tree.to_encoder();
+
+    let bits: BitVec = data
+        .iter()
+        .flat_map(|b| encoder.get(b).unwrap().clone())
+        .collect();
+
+    let compressed_data = CompressedData {
+        encoder,
+        data: vec![bits],
+        original_extension,
+    };
+    
+    rmp_serde::encode::to_vec(&compressed_data).map_err(|err| err.into())
+}
+
+pub fn extract_bytes(
+    data: &[u8],
+) -> Result<(Vec<u8>, String), Box<dyn std::error::Error>> {
+    let CompressedData { encoder, data: compressed_bits, original_extension }: CompressedData<u8> =
+        rmp_serde::decode::from_slice(data)?;
+
+    let decoder = encoder_to_decoder(&encoder);
+    
+    let extracted_data = compressed_bits
+        .par_iter()
+        .flat_map(|bits| {
+            let mut tokens = Vec::new();
+            let mut candidate = BitVec::new();
+
+            for bit in bits {
+                candidate.push(bit);
+
+                match decoder.get(&candidate) {
+                    Some(&token) => {
+                        tokens.push(token);
+                        candidate = BitVec::new();
+                    }
+                    None => (),
+                }
+            }
+            tokens
+        })
+        .collect();
+
+    Ok((extracted_data, original_extension))
+}
+
 fn encoder_to_decoder<T: Clone>(encoder: &HashMap<T, BitVec>) -> HashMap<BitVec, T> {
     let mut decoder = HashMap::new();
     //Swap prefix to key to the hasmap

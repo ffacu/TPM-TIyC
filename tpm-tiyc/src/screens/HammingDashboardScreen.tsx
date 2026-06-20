@@ -227,12 +227,12 @@ export const HammingDashboardScreen: React.FC = () => {
         <Card className="p-6 lg:col-span-6 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-6 border-b pb-4">
             <Shield className="text-primary" size={24} />
-            <h2 className="text-xl font-semibold">Configuración de Protección</h2>
+            <h2 className="text-xl font-normal">Configuración de Protección</h2>
           </div>
 
           <div className="space-y-6 flex-1 flex flex-col">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-3">Seleccione el archivo a proteger</label>
+              <label className="block text-sm font-normal text-gray-700 mb-3">Seleccione el archivo a proteger</label>
               <div className="flex flex-col gap-2 max-h-[150px] overflow-y-auto pr-2">
                 {filesToProtect.map((f, idx) => (
                   <div 
@@ -243,9 +243,11 @@ export const HammingDashboardScreen: React.FC = () => {
                     `}
                   >
                     <div className="flex items-center gap-3">
-                      <FileText size={18} className={fileToProcess === f.name ? 'text-primary' : 'text-gray-400'} />
+                      <div className={`p-2 rounded-lg ${fileToProcess === f.name ? 'bg-primary/10 text-primary' : 'bg-gray-100 text-gray-500'}`}>
+                        <FileText size={20} />
+                      </div>
                       <div className="flex flex-col">
-                        <span className={`text-sm font-medium ${fileToProcess === f.name ? 'text-primary-hover' : 'text-text-main'}`}>
+                        <span className={fileToProcess === f.name ? 'text-primary' : 'text-text-main'}>
                           {f.name}
                         </span>
                         <span className="text-xs text-gray-500">{formatBytes(f.size)}</span>
@@ -263,7 +265,7 @@ export const HammingDashboardScreen: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tamaño de Bloque</label>
+              <label className="block text-sm font-normal text-gray-700 mb-2 mt-2">Tamaño de Bloque</label>
               <div className="relative">
                 <select 
                   className="w-full appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
@@ -281,10 +283,10 @@ export const HammingDashboardScreen: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">¿Desea introducir errores? (Indique cuantos)</label>
+              <label className="block text-sm font-normal text-gray-700 mb-2">¿Desea introducir errores? (Indique cuantos)</label>
               <div className="flex gap-4">
                 {[0, 1, 2].map((num) => (
-                  <label key={num} className={`flex-1 cursor-pointer rounded-xl border-2 p-3 flex items-center justify-center transition-all ${errorsQuantity === num ? (num === 0 ? 'border-primary bg-primary/5 text-primary font-semibold' : 'border-red-500 bg-red-50 text-red-600 font-semibold') : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+                  <label key={num} className={`flex-1 cursor-pointer rounded-xl border-2 p-3 flex items-center justify-center transition-all ${errorsQuantity === num ? (num === 0 ? 'border-primary bg-primary/5 text-primary font-normal' : 'border-red-500 bg-red-50 text-red-600 font-normal') : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
                     <input type="radio" name="errorsQuantity" className="hidden" checked={errorsQuantity === num} onChange={() => setErrorsQuantity(num)} />
                     <span className="flex items-center gap-2 text-sm">{errorsQuantity === num && <CheckCircle size={16} />} {num}</span>
                   </label>
@@ -305,7 +307,7 @@ export const HammingDashboardScreen: React.FC = () => {
         <Card className="p-6 lg:col-span-6 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-6 border-b pb-4">
             <FileCode className="text-secondary" size={24} />
-            <h2 className="text-xl font-semibold">Archivos a Desproteger</h2>
+            <h2 className="text-xl font-normal">Archivos a Desproteger</h2>
           </div>
 
           {filesToUnprotect.length === 0 ? (
@@ -331,7 +333,7 @@ export const HammingDashboardScreen: React.FC = () => {
                         <FileText size={20} />
                       </div>
                       <div className="flex flex-col">
-                        <span className={`text-sm font-medium ${selectedFile === file ? 'text-secondary-hover' : 'text-text-main'}`}>
+                        <span className={selectedFile === file ? 'text-secondary' : 'text-text-main'}>
                           {file}
                         </span>
                         <span className="text-xs text-gray-500">{formatBytes(fileObj.size)}</span>

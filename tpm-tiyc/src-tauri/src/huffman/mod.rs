@@ -33,36 +33,39 @@ pub fn get_base_stem(file_name: &str) -> &str {
 }
 
 pub fn compress_file(input: PathBuf, output: PathBuf, mode: Mode) -> Result<(), Box<dyn std::error::Error>> {
-    let text = fs::read_to_string(&input)?;
-    let lines: Vec<_> = text.split('\n').map(|x| x.to_string()).collect();
-
     let original_extension = input.extension()
         .and_then(|ext| ext.to_str())
         .unwrap_or("txt")
         .to_string();
 
-    // Match by the mode enumeration.
     let compressed = match mode {
-        Mode::Words => compression::compress(&lines, freqs::word_frequencies, |line| {
-            line.split(' ').map(|token| token.to_string())
-        }, original_extension),
+        Mode::Words => {
+            let text = fs::read_to_string(&input).map_err(|_| "El archivo no es texto válido y no se puede compactar por palabras. Por favor, usa 'Por Caracteres' para archivos binarios o protegidos.")?;
+            let lines: Vec<_> = text.split('\n').map(|x| x.to_string()).collect();
+            compression::compress(&lines, freqs::word_frequencies, |line| {
+                line.split(' ').map(|token| token.to_string())
+            }, original_extension)
+        },
         Mode::Chars => {
-            compression::compress(&lines, freqs::char_frequencies, |line| line.chars(), original_extension)
+            let data = fs::read(&input)?;
+            compression::compress_bytes(&data, original_extension)
         }
     }?;
 
-    let mut out_f = File::create(&output)?;
-    out_f.write_all(&compressed)?;
+    fs::write(&output, compressed)?;
     Ok(())
 }
 
 pub fn extract_file(input: PathBuf, mode: Mode) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let data = fs::read(&input)?;
 
-    let (content, original_extension) = match mode {
-        Mode::Words => compression::extract(&data, |tokens: Vec<String>| tokens.join(" "))?,
+    let (content_bytes, original_extension) = match mode {
+        Mode::Words => {
+            let (lines, ext) = compression::extract(&data, |tokens: Vec<String>| tokens.join(" "))?;
+            (lines.join("\n").into_bytes(), ext)
+        },
         Mode::Chars => {
-            compression::extract(&data, |tokens: Vec<char>| tokens.into_iter().collect())?
+            compression::extract_bytes(&data)?
         }
     };
 
@@ -73,6 +76,6 @@ pub fn extract_file(input: PathBuf, mode: Mode) -> Result<PathBuf, Box<dyn std::
     let output_filename = format!("{}_huf.{}", base_stem, original_extension);
     let output_path = parent_dir.join(output_filename);
 
-    fs::write(&output_path, content.join("\n"))?;
+    fs::write(&output_path, content_bytes)?;
     Ok(output_path)
 }
