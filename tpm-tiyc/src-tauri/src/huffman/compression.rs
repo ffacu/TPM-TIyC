@@ -13,12 +13,14 @@ use Tree::*;
 struct CompressedData<T: Eq + Hash> {
     encoder: HashMap<T, BitVec>,
     data: Vec<BitVec>,
+    original_extension: String,
 }
 
 pub fn compress<'a, T, FreqsF, TokenExtractor, TokensIter>(
     lines: &'a Vec<String>,
     get_freqs: FreqsF,
     line_to_tokens: TokenExtractor,
+    original_extension: String,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>>
 where
     T: Clone + Eq + Hash + Send + Sync + Serialize,     // T can be cloned, compared, hashed, sent and synchronized across threads, and serialized
@@ -43,19 +45,19 @@ where
         })
         .collect();
 
-    let compressed_data = CompressedData { encoder, data }; 
+    let compressed_data = CompressedData { encoder, data, original_extension }; 
     rmp_serde::encode::to_vec(&compressed_data).map_err(|err| err.into()) // Serialize the compressed data. Where the first part is the encoder (the huffman codes for each token) and the second part is the data (the concatenation of the huffman codes of the tokens in the file).
 }
 
 pub fn extract<'a, T, F>(
     data: &'a Vec<u8>,
     tokens_to_line: F,
-) -> Result<Vec<String>, Box<dyn std::error::Error>>
+) -> Result<(Vec<String>, String), Box<dyn std::error::Error>>
 where
     T: Clone + Eq + Hash + Send + Sync + Deserialize<'a>,
     F: Fn(Vec<T>) -> String + Send + Sync,
 {
-    let CompressedData { encoder, data }: CompressedData<T> = rmp_serde::decode::from_slice(data)?; //deserialize to get the encoder and the data
+    let CompressedData { encoder, data, original_extension }: CompressedData<T> = rmp_serde::decode::from_slice(data)?; //deserialize to get the encoder and the data
 
     let decoder = encoder_to_decoder(&encoder);
     //Decode the data into lines.
@@ -82,7 +84,7 @@ where
         })
         .collect();
 
-    Ok(lines)
+    Ok((lines, original_extension))
 }
 
 fn encoder_to_decoder<T: Clone>(encoder: &HashMap<T, BitVec>) -> HashMap<BitVec, T> {
@@ -135,15 +137,17 @@ mod tests {
                 .to_string(),
         ];
 
-        let data = compress(&lines, freqs::char_frequencies, |line| line.chars()).unwrap();
-        let res_lines = extract(&data, |x: Vec<char>| x.into_iter().collect()).unwrap();
+        let data = compress(&lines, freqs::char_frequencies, |line| line.chars(), "txt".to_string()).unwrap();
+        let (res_lines, ext) = extract(&data, |x: Vec<char>| x.into_iter().collect()).unwrap();
         assert_eq!(&lines, &res_lines);
+        assert_eq!(ext, "txt");
 
         let data = compress(&lines, freqs::word_frequencies, |line| {
             line.split(' ').map(|token| token.to_string())
-        })
+        }, "txt".to_string())
         .unwrap();
-        let res_lines = extract(&data, |x: Vec<String>| x.join(" ")).unwrap();
+        let (res_lines, ext) = extract(&data, |x: Vec<String>| x.join(" ")).unwrap();
         assert_eq!(&lines, &res_lines);
+        assert_eq!(ext, "txt");
     }
 }

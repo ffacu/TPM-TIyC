@@ -1,7 +1,6 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { ArrowLeft, Shield, Unlock, FileCode, CheckCircle, FileText, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Shield, Unlock, FileCode, CheckCircle, FileText, AlertCircle, Trash2 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { invoke } from '@tauri-apps/api/core';
@@ -13,9 +12,11 @@ export const HammingDashboardScreen: React.FC = () => {
 
   const [blockSize, setBlockSize] = useState('8');
   const [errorsQuantity, setErrorsQuantity] = useState<number>(0);
-  const [generatedFiles, setGeneratedFiles] = useState<string[]>([]);
+  const [workspaceFiles, setWorkspaceFiles] = useState<{name: string, size: number}[]>([]);
+  const [fileToProcess, setFileToProcess] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' | 'warning' } | null>(null);
+  const [originalSize, setOriginalSize] = useState<number | null>(null);
 
   // Show toast notification in UI
   const showToast = (message: string, type: 'success' | 'error' | 'warning' = 'success') => {
@@ -25,25 +26,58 @@ export const HammingDashboardScreen: React.FC = () => {
     }, 2000);
   };
 
+  // Helper to format bytes to human-readable size
+  const formatBytes = (bytes: number, decimals = 2) => {
+    if (!+bytes) return '0 Bytes'
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+  }
+
   // Initial load and refresh of files from the workspace
   const refreshWorkspace = async () => {
     try {
       const files = await invoke<string[]>('list_workspace_files'); //invoke rust function (back-end)
-     
-      // Filter the base file (the original) so it doesn't appear in "Generated"
+      
+      const parentDir = filePath.substring(0, Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\')));
+      const separator = filePath.includes('\\') ? '\\' : '/';
+
+      const filesWithSize = await Promise.all(files.map(async (fileName) => {
+        const fullPath = `${parentDir}${separator}${fileName}`;
+        try {
+          const size = await invoke<number>('get_file_size', { path: fullPath });
+          return { name: fileName, size };
+        } catch (e) {
+          console.error(`Error getting size for ${fileName}:`, e);
+          return { name: fileName, size: 0 };
+        }
+      }));
+
+      setWorkspaceFiles(filesWithSize);
+      
+      // Auto-select the base file for protection if it's available and nothing is selected
       const baseName = filePath?.split(/[/\\]/).pop();
-      const generated = files.filter(f => f !== baseName);
-      setGeneratedFiles(generated);
-      return generated;
+      if (baseName && !fileToProcess) {
+          setFileToProcess(baseName);
+      }
+      
+      return filesWithSize;
     } catch (err) {
       console.error("Error listing workspace files:", err);
       return [];
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     refreshWorkspace();
-  }, []);
+    if (filePath) {
+      invoke<number>('get_file_size', { path: filePath })
+        .then(size => setOriginalSize(size))
+        .catch(e => console.error("Error getting original file size", e));
+    }
+  }, [filePath]);
 
   // Route guard.
   if (!filePath) {
@@ -54,20 +88,30 @@ export const HammingDashboardScreen: React.FC = () => {
     return path.split(/[/\\]/).pop() || path;
   };
 
+  // Determine eligible files based on constraints
+  const filesToProtect = workspaceFiles.filter(f => !f.name.includes('.HA') && !f.name.includes('.HE') && !f.name.includes('.DC') && !f.name.includes('.DE'));
+  const filesToUnprotect = workspaceFiles.filter(f => f.name.includes('.HA') || f.name.includes('.HE'));
+
   const handleProtect = async () => {
+    if (!fileToProcess) return;
     try {
       const blockSizeOpt = blockSize === '8' ? 1 : blockSize === '1024' ? 2 : 3;
+      const parentDir = filePath.substring(0, Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\')));
+      const separator = filePath.includes('\\') ? '\\' : '/';
+      const fullPathToProcess = `${parentDir}${separator}${fileToProcess}`;
       
-      await invoke<string[]>('protect_file', { 
-        path: filePath, 
+      const generatedFiles = await invoke<string[]>('protect_file', { 
+        path: fullPathToProcess, 
         blockSizeOpt, 
         errorsQuantity 
       });
       
-      const newFiles = await refreshWorkspace();
-      if (newFiles.length > 0) {
-        setSelectedFile(newFiles[newFiles.length - 1]); // Select the most recent
+      await refreshWorkspace();
+      if (generatedFiles.length > 0) {
+        setSelectedFile(generatedFiles[generatedFiles.length - 1]); // Select the most recent generated file
+        setFileToProcess(null); // Reset protect selection
       }
+      showToast("Archivo protegido con éxito.", "success");
     } catch (error) {
       console.error("Error during protection:", error);
       showToast(`Error al proteger el archivo: ${error}`, 'error');
@@ -83,15 +127,31 @@ export const HammingDashboardScreen: React.FC = () => {
 
       const result = await invoke<string[]>('unprotect_file', { path: fullPathToSelected });
       
+      showToast(`Archivo(s) desprotegido(s) con éxito:\n${result.join('\n')}`, 'success');
+      
+      await refreshWorkspace();
       if (result.length > 0) {
-        setSelectedFile(result[0]);
-        showToast(`Archivo(s) desprotegido(s) con éxito:\n${result.join('\n')}`, 'success');
+        setFileToProcess(result[result.length - 1]); // Select the decompressed file for next operations
+        setSelectedFile(null); // Reset unprotect selection
       }
     } catch (error) {
       console.error("Error during unprotection:", error);
       showToast(`Error al desproteger el archivo: ${error}`, 'warning');
-    } finally {
+    }
+  };
+
+  const handleCleanFiles = async () => {
+    try {
+      const baseName = filePath?.split(/[/\\]/).pop();
+      if (!baseName) return;
+      await invoke('clean_generated_files', { baseFileName: baseName });
       await refreshWorkspace();
+      setSelectedFile(null);
+      setFileToProcess(baseName);
+      showToast('Archivos generados limpiados con éxito.', 'success');
+    } catch (error) {
+      console.error("Error cleaning files:", error);
+      showToast(`Error al limpiar archivos: ${error}`, 'error');
     }
   };
 
@@ -127,32 +187,81 @@ export const HammingDashboardScreen: React.FC = () => {
           </button>
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-bold text-text-main tracking-tight">Hamming</h1>
-            <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">
+            <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full flex items-center gap-2">
               {getFileName(filePath)}
+              {originalSize !== null && (
+                <span className="opacity-70 font-normal">({formatBytes(originalSize)})</span>
+              )}
             </span>
           </div>
         </div>
         
-        <Button 
-          variant="outline" 
-          className="gap-2"
-          onClick={() => navigate('/compare', { state: { filePath, sourceScreen: '/hamming' } })}
-          disabled={generatedFiles.length === 0}
-        >
-          <FileText size={18} />
-          Comparar Archivos
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            className="gap-2 border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600"
+            onClick={() => {
+              if (window.confirm("¿Estás seguro de que quieres limpiar todos los archivos generados?")) {
+                handleCleanFiles();
+              }
+            }}
+            disabled={workspaceFiles.length <= 1}
+          >
+            <Trash2 size={18} />
+            Limpiar Archivos
+          </Button>
+          <Button 
+            variant="outline" 
+            className="gap-2"
+            onClick={() => navigate('/compare', { state: { filePath, sourceScreen: '/hamming' } })}
+            disabled={workspaceFiles.length <= 1}
+          >
+            <FileText size={18} />
+            Comparar Archivos
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column - Configuration */}
-        <Card className="p-6 lg:col-span-5">
+        <Card className="p-6 lg:col-span-6 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-6 border-b pb-4">
             <Shield className="text-primary" size={24} />
             <h2 className="text-xl font-semibold">Configuración de Protección</h2>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 flex-1 flex flex-col">
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 mb-3">Seleccione el archivo a proteger</label>
+              <div className="flex flex-col gap-2 max-h-[150px] overflow-y-auto pr-2">
+                {filesToProtect.map((f, idx) => (
+                  <div 
+                    key={idx}
+                    onClick={() => setFileToProcess(f.name)}
+                    className={`p-3 rounded-xl border-2 cursor-pointer transition-all flex items-center justify-between
+                      ${fileToProcess === f.name ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-gray-200'}
+                    `}
+                  >
+                    <div className="flex items-center gap-3">
+                      <FileText size={18} className={fileToProcess === f.name ? 'text-primary' : 'text-gray-400'} />
+                      <div className="flex flex-col">
+                        <span className={`text-sm font-medium ${fileToProcess === f.name ? 'text-primary-hover' : 'text-text-main'}`}>
+                          {f.name}
+                        </span>
+                        <span className="text-xs text-gray-500">{formatBytes(f.size)}</span>
+                      </div>
+                    </div>
+                    {fileToProcess === f.name && <CheckCircle className="text-primary" size={18} />}
+                  </div>
+                ))}
+                {filesToProtect.length === 0 && (
+                  <div className="text-center p-6 text-sm text-gray-500 border-2 border-dashed border-gray-200 rounded-xl">
+                    No hay archivos válidos para proteger en este momento.
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Tamaño de Bloque</label>
               <div className="relative">
@@ -175,16 +284,16 @@ export const HammingDashboardScreen: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-3">¿Desea introducir errores? (Indique cuantos)</label>
               <div className="flex gap-4">
                 {[0, 1, 2].map((num) => (
-                  <label key={num} className={`flex-1 cursor-pointer rounded-xl border-2 p-4 flex items-center justify-center transition-all ${errorsQuantity === num ? (num === 0 ? 'border-primary bg-primary/5 text-primary font-semibold' : 'border-red-500 bg-red-50 text-red-600 font-semibold') : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+                  <label key={num} className={`flex-1 cursor-pointer rounded-xl border-2 p-3 flex items-center justify-center transition-all ${errorsQuantity === num ? (num === 0 ? 'border-primary bg-primary/5 text-primary font-semibold' : 'border-red-500 bg-red-50 text-red-600 font-semibold') : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
                     <input type="radio" name="errorsQuantity" className="hidden" checked={errorsQuantity === num} onChange={() => setErrorsQuantity(num)} />
-                    <span className="flex items-center gap-2">{errorsQuantity === num && <CheckCircle size={18} />} {num}</span>
+                    <span className="flex items-center gap-2 text-sm">{errorsQuantity === num && <CheckCircle size={16} />} {num}</span>
                   </label>
                 ))}
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-gray-100">
-              <Button onClick={handleProtect} fullWidth size="lg" className="gap-2 text-lg shadow-md">
+            <div className="pt-4 mt-2 border-t border-gray-100">
+              <Button onClick={handleProtect} fullWidth size="lg" className="gap-2 text-lg shadow-md" disabled={!fileToProcess}>
                 <Shield size={22} />
                 PROTEGER
               </Button>
@@ -193,41 +302,42 @@ export const HammingDashboardScreen: React.FC = () => {
         </Card>
 
         {/* Right Column - Generated Files */}
-        <Card className="p-6 lg:col-span-7 h-full flex flex-col">
+        <Card className="p-6 lg:col-span-6 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-6 border-b pb-4">
             <FileCode className="text-secondary" size={24} />
-            <h2 className="text-xl font-semibold">Archivos Generados</h2>
+            <h2 className="text-xl font-semibold">Archivos a Desproteger</h2>
           </div>
 
-          {generatedFiles.length === 0 ? (
-            <div className="flex-1 flex flex-col items-center justify-center text-gray-400 py-12">
+          {filesToUnprotect.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center text-gray-400 py-12 border-2 border-dashed border-gray-100 rounded-xl">
               <FileCode size={48} className="mb-4 opacity-20" />
-              <p>Configura y protege tu archivo para ver los resultados aquí.</p>
+              <p className="text-center px-4">No hay archivos protegidos disponibles para desproteger.</p>
             </div>
           ) : (
             <div className="flex-1 flex flex-col">
-              <div className="space-y-3 mb-6 flex-1">
-                {generatedFiles.map((file, idx) => {
-                  const isDecoded = file.includes('.DC') || file.includes('.DE');
+              <div className="space-y-3 mb-6 flex-1 max-h-[350px] overflow-y-auto pr-2">
+                {filesToUnprotect.map((fileObj, idx) => {
+                  const file = fileObj.name;
                   return (
                   <div 
                     key={idx}
                     onClick={() => setSelectedFile(file)}
-                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center justify-between
-                      ${isDecoded 
-                        ? (selectedFile === file ? 'border-gray-300 bg-gray-100' : 'border-gray-100 bg-gray-50 opacity-70 hover:border-gray-200')
-                        : (selectedFile === file ? 'border-secondary bg-secondary/5' : 'border-gray-100 hover:border-gray-200')}
+                    className={`p-3 rounded-xl border-2 cursor-pointer transition-all flex items-center justify-between
+                      ${selectedFile === file ? 'border-secondary bg-secondary/5' : 'border-gray-100 hover:border-gray-200'}
                     `}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg ${isDecoded ? 'bg-gray-200 text-gray-500' : selectedFile === file ? 'bg-secondary/10 text-secondary' : 'bg-gray-100 text-gray-500'}`}>
+                      <div className={`p-2 rounded-lg ${selectedFile === file ? 'bg-secondary/10 text-secondary' : 'bg-gray-100 text-gray-500'}`}>
                         <FileText size={20} />
                       </div>
-                      <span className={`font-medium ${isDecoded ? 'text-gray-500' : selectedFile === file ? 'text-secondary-hover' : 'text-text-main'}`}>
-                        {file}
-                      </span>
+                      <div className="flex flex-col">
+                        <span className={`text-sm font-medium ${selectedFile === file ? 'text-secondary-hover' : 'text-text-main'}`}>
+                          {file}
+                        </span>
+                        <span className="text-xs text-gray-500">{formatBytes(fileObj.size)}</span>
+                      </div>
                     </div>
-                    {selectedFile === file && <CheckCircle className={isDecoded ? "text-gray-500" : "text-secondary"} size={20} />}
+                    {selectedFile === file && <CheckCircle className="text-secondary" size={20} />}
                   </div>
                 )})}
               </div>
@@ -238,15 +348,12 @@ export const HammingDashboardScreen: React.FC = () => {
                   variant="secondary" 
                   fullWidth 
                   size="lg" 
-                  className={`gap-2 text-lg shadow-md ${selectedFile && (selectedFile.includes('.DC') || selectedFile.includes('.DE')) ? 'grayscale' : ''}`}
-                  disabled={!selectedFile || selectedFile.includes('.DC') || selectedFile.includes('.DE')}
+                  className="gap-2 text-lg shadow-md"
+                  disabled={!selectedFile}
                 >
                   <Unlock size={22} />
                   DESPROTEGER
                 </Button>
-                <p className="text-xs text-center text-gray-400 mt-3">
-                  La desprotección se aplicará sobre el archivo seleccionado en la lista.
-                </p>
               </div>
             </div>
           )}

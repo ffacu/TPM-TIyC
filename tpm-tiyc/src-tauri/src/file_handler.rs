@@ -30,10 +30,16 @@ pub fn protect_file(path: &str, block_size_opt: u8, errors_quantity: usize) -> R
 
     // Generate new path for the protected file.
     let input_path = Path::new(path);
-    let parent_dir = input_path.parent().unwrap_or(Path::new("")); // Get the parent directory.
-    let file_stem = input_path.file_stem().and_then(|s| s.to_str()).unwrap_or("output"); // Get the file stem.
+    let parent_dir = input_path.parent().unwrap_or(Path::new(""));
+    let file_name = input_path.file_name().and_then(|s| s.to_str()).unwrap_or("output");
 
-    let ha_filename = format!("{}.{}", file_stem, ext); //Put the extension to the file name.
+    let base_name = if file_name.ends_with(".txt") {
+        &file_name[..file_name.len() - 4]
+    } else {
+        file_name
+    };
+
+    let ha_filename = format!("{}.{}", base_name, ext);
     let ha_path = parent_dir.join(&ha_filename); 
 
     let mut input_file = File::open(path).map_err(|e| format!("Failed to open input file: {}", e))?;
@@ -46,7 +52,7 @@ pub fn protect_file(path: &str, block_size_opt: u8, errors_quantity: usize) -> R
 
     // If inject errors is true, create HE file.
     if errors_quantity > 0 {
-        let he_filename = format!("{}.{}", file_stem, err_ext);
+        let he_filename = format!("{}.{}", base_name, err_ext);
         let he_path = parent_dir.join(&he_filename);
         
         let mut ha_read = File::open(&ha_path).map_err(|e| format!("Failed to open HA file for reading: {}", e))?;
@@ -186,8 +192,16 @@ pub fn compress_huffman(path: &str, mode_str: &str) -> Result<String, String> {
     };
     
     let input_path = PathBuf::from(path);
-    let mut output_path = input_path.clone();
-    output_path.set_extension("huf");
+    let parent_dir = input_path.parent().unwrap_or(Path::new(""));
+    let file_name = input_path.file_name().and_then(|s| s.to_str()).unwrap_or("output");
+    
+    let output_filename = if file_name.ends_with(".txt") {
+        format!("{}.huf", &file_name[..file_name.len() - 4])
+    } else {
+        format!("{}.huf", file_name)
+    };
+    
+    let output_path = parent_dir.join(output_filename);
 
     compress_file(input_path, output_path.clone(), mode)
         .map_err(|e| format!("Compression failed: {}", e))?;
@@ -204,10 +218,8 @@ pub fn extract_huffman(path: &str, mode_str: &str) -> Result<String, String> {
     };
     
     let input_path = PathBuf::from(path);
-    let mut output_path = input_path.clone();
-    output_path.set_extension("extracted.txt");
 
-    extract_file(input_path, output_path.clone(), mode)
+    let output_path = extract_file(input_path, mode)
         .map_err(|e| format!("Extraction failed: {}", e))?;
 
     Ok(output_path.to_string_lossy().into_owned())
@@ -218,4 +230,25 @@ pub fn get_file_size(path: &str) -> Result<u64, String> {
     std::fs::metadata(path)
         .map(|m| m.len())
         .map_err(|e| format!("Failed to get metadata: {}", e))
+}
+
+#[tauri::command]
+pub fn clean_generated_files(base_file_name: &str) -> Result<(), String> {
+    use std::fs;
+    
+    let workspace_dir = Path::new("workspace");
+    if !workspace_dir.exists() {
+        return Ok(());
+    }
+    
+    for entry in fs::read_dir(workspace_dir).map_err(|e| format!("Failed to read workspace: {}", e))? {
+        let entry = entry.map_err(|e| format!("Failed to read entry: {}", e))?;
+        if let Ok(name) = entry.file_name().into_string() {
+            if name != base_file_name {
+                let _ = fs::remove_file(entry.path());
+            }
+        }
+    }
+    
+    Ok(())
 }
