@@ -59,13 +59,14 @@ pub fn compress_file(input: PathBuf, output: PathBuf, mode: Mode) -> Result<(), 
 pub fn extract_file(input: PathBuf, mode: Mode) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let data = fs::read(&input)?;
 
-    let (content_bytes, original_extension) = match mode {
-        Mode::Words => {
-            let (lines, ext) = compression::extract(&data, |tokens: Vec<String>| tokens.join(" "))?;
-            (lines.join("\n").into_bytes(), ext)
-        },
-        Mode::Chars => {
-            compression::extract_bytes(&data)?
+    let (content_bytes, original_extension) = match compression::extract_bytes(&data) {
+        Ok(res) => res,
+        Err(_) => {
+            // If extracting as bytes fails, try extracting as words
+            match compression::extract(&data, |tokens: Vec<String>| tokens.join(" ")) {
+                Ok((lines, ext)) => (lines.join("\n").into_bytes(), ext),
+                Err(e) => return Err(format!("Extraction failed. Make sure the file is a valid .huf file. Details: {}", e).into()),
+            }
         }
     };
 

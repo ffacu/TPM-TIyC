@@ -196,7 +196,8 @@ pub fn load_encrypted_workspace(path: &str) -> Result<String, String> {
     file.read_exact(&mut files_count_buf).map_err(|_| "Failed to read files count")?;
     let files_count = u32::from_le_bytes(files_count_buf);
     
-    let mut txt_file_path = None;
+    let mut main_file_path = None;
+    let mut backup_file_path = None;
     
     for _ in 0..files_count {
         // Read name
@@ -218,16 +219,26 @@ pub fn load_encrypted_workspace(path: &str) -> Result<String, String> {
         let mut out_file = File::create(&out_path).map_err(|e| format!("Failed to write file {}: {}", file_name, e))?;
         out_file.write_all(&content).map_err(|e| format!("Failed to write content to {}: {}", file_name, e))?;
         
-        if file_name.ends_with(".txt") && txt_file_path.is_none() {
-            if let Ok(abs_path) = fs::canonicalize(&out_path) {
-                txt_file_path = Some(abs_path.to_string_lossy().into_owned());
+        if let Ok(abs_path) = fs::canonicalize(&out_path) {
+            let path_str = abs_path.to_string_lossy().into_owned();
+            let is_generated = file_name.ends_with(".huf") 
+                || file_name.contains(".HA") || file_name.contains(".HE") 
+                || file_name.contains(".DC") || file_name.contains(".DE");
+                
+            if backup_file_path.is_none() {
+                backup_file_path = Some(path_str.clone());
+            }
+            if !is_generated && main_file_path.is_none() {
+                main_file_path = Some(path_str);
             }
         }
     }
     
-    // Return path to the main .txt file (or whatever was loaded). If no .txt, just return workspace dir.
-    if let Some(txt_path) = txt_file_path {
-        Ok(txt_path)
+    let selected_path = main_file_path.or(backup_file_path);
+    
+    // Return path to the main file (or whatever was loaded).
+    if let Some(path) = selected_path {
+        Ok(path)
     } else {
         if let Ok(abs_path) = fs::canonicalize(workspace_dir) {
             Ok(abs_path.to_string_lossy().into_owned())

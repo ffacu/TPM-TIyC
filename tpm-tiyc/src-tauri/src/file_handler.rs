@@ -33,11 +33,7 @@ pub fn protect_file(path: &str, block_size_opt: u8, errors_quantity: usize) -> R
     let parent_dir = input_path.parent().unwrap_or(Path::new(""));
     let file_name = input_path.file_name().and_then(|s| s.to_str()).unwrap_or("output");
 
-    let base_name = if file_name.ends_with(".txt") {
-        &file_name[..file_name.len() - 4]
-    } else {
-        file_name
-    };
+    let base_name = file_name;
 
     let ha_filename = format!("{}.{}", base_name, ext);
     let ha_path = parent_dir.join(&ha_filename); 
@@ -195,11 +191,7 @@ pub fn compress_huffman(path: &str, mode_str: &str) -> Result<String, String> {
     let parent_dir = input_path.parent().unwrap_or(Path::new(""));
     let file_name = input_path.file_name().and_then(|s| s.to_str()).unwrap_or("output");
     
-    let output_filename = if file_name.ends_with(".txt") {
-        format!("{}.huf", &file_name[..file_name.len() - 4])
-    } else {
-        format!("{}.huf", file_name)
-    };
+    let output_filename = format!("{}.huf", file_name);
     
     let output_path = parent_dir.join(output_filename);
 

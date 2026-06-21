@@ -31,10 +31,7 @@ export const LoadFileScreen: React.FC = () => {
     try {
       const selected = await open({
         multiple: false,
-        filters: [{
-          name: 'Archivos Soportados',
-          extensions: ['txt', 'cufa']
-        }]
+        // Removed filters to allow any file type as requested
       });
       
       if (selected !== null) {
@@ -61,12 +58,7 @@ export const LoadFileScreen: React.FC = () => {
           const paths = (event.payload as any).paths as string[];
           if (paths && paths.length > 0) {
             const filePath = paths[0];
-            const lowerPath = filePath.toLowerCase();
-            if (lowerPath.endsWith('.txt') || lowerPath.endsWith('.cufa')) {
-              handleFileSelect(filePath);
-            } else {
-              setError('Por favor, selecciona un archivo .txt o .cufa válido.');
-            }
+            handleFileSelect(filePath);
           }
         } else {
           setIsDragging(false);
@@ -98,7 +90,7 @@ export const LoadFileScreen: React.FC = () => {
     <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto min-h-[70vh]">
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-text-main mb-3 tracking-tight">Cargar Archivo</h1>
-        <p className="text-text-muted text-lg">Arrastra tu archivo de texto o búscalo en tu equipo para comenzar.</p>
+        <p className="text-text-muted text-lg">Arrastra tu archivo o búscalo en tu equipo para comenzar.</p>
       </div>
 
       <Card 
@@ -113,7 +105,7 @@ export const LoadFileScreen: React.FC = () => {
           <UploadCloud size={48} strokeWidth={1.5} />
         </div>
         
-        <h3 className="text-xl font-semibold mb-2 text-text-main">Arrastra y suelta tu archivo .txt o .cufa aquí</h3>
+        <h3 className="text-xl font-semibold mb-2 text-text-main">Arrastra y suelta tu archivo aquí</h3>
         <p className="text-text-muted mb-8 text-center max-w-md">
           El archivo será procesado localmente. No se subirá a ningún servidor externo.
         </p>
