@@ -1,0 +1,148 @@
+\chapter*{Manual de Usuario}
+\addcontentsline{toc}{chapter}{Manual de Usuario}
+
+\noindent
+A continuación se describen los pasos necesarios para ejecutar el programa y las funcionalidades disponibles en la interfaz.
+
+%--------------------------------------------------------------------
+\section*{Requisitos previos}
+\addcontentsline{toc}{section}{Requisitos previos}
+
+\noindent
+Para compilar y ejecutar el proyecto, es necesario tener instaladas las siguientes herramientas:
+\begin{itemize}
+    \item \textbf{Node.js} (versión 18 o superior).
+    \item \textbf{pnpm}: gestor de paquetes (\texttt{npm install -g pnpm}).
+    \item \textbf{Rust y Cargo}: el toolchain oficial de Rust.
+    \item \textbf{Dependencias de Tauri}: según el sistema operativo, Tauri requiere librerías adicionales del sistema (ver la guía oficial de prerrequisitos de Tauri).
+\end{itemize}
+
+\noindent
+Desde la carpeta raíz del proyecto (\texttt{tpm-tiyc}), se ejecutan los siguientes comandos:
+\begin{verbatim}
+pnpm install       // Instala las dependencias
+pnpm tauri dev     // Ejecuta el programa
+\end{verbatim}
+
+
+%--------------------------------------------------------------------
+\section*{Menú de opciones}
+\addcontentsline{toc}{section}{Menú de opciones}
+
+% TODO: agregar screenshots como \begin{figure}[H] ... \end{figure}
+
+\subsection*{Cargar archivo de texto}
+\addcontentsline{toc}{subsection}{Cargar archivo de texto}
+
+\noindent
+Para comenzar, se selecciona el archivo que se desea procesar. Actualmente el sistema soporta archivos \texttt{.txt}.
+
+% Placeholder para captura de pantalla
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_cargar.png}
+    \caption{Pantalla de carga de archivo.}
+    \label{fig:screenshot_cargar}
+\end{figure}
+
+
+\subsection*{Compactar archivo}
+\addcontentsline{toc}{subsection}{Compactar archivo}
+
+\noindent
+Una vez cargado el archivo, se utiliza esta opción para comprimirlo. El sistema aplica el método de Huffman y genera un nuevo archivo con la extensión \texttt{.huf}. El usuario puede elegir entre compactar \textbf{por caracteres} o \textbf{por palabras}.
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_compactar.png}
+    \caption{Pantalla de compactación de archivo.}
+    \label{fig:screenshot_compactar}
+\end{figure}
+
+
+\subsection*{Descompactar archivo}
+\addcontentsline{toc}{subsection}{Descompactar archivo}
+
+\noindent
+Si se tiene un archivo previamente compactado (con extensión \texttt{.huf}), se puede seleccionarlo y descompactarlo. El sistema devuelve un archivo recuperado con la extensión \texttt{.dhu}, que contiene exactamente la misma información que el original.
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_descompactar.png}
+    \caption{Pantalla de descompactación de archivo.}
+    \label{fig:screenshot_descompactar}
+\end{figure}
+
+
+\subsection*{Proteger archivo (Hamming)}
+\addcontentsline{toc}{subsection}{Proteger archivo (Hamming)}
+
+\noindent
+Permite proteger un archivo (ya sea el texto original o el archivo compactado) aplicando el código de Hamming con bloques de 8, 1024 o 16384~bits, generando archivos con extensiones \texttt{.HA1}, \texttt{.HA2} o \texttt{.HA3}, respectivamente.
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_proteger.png}
+    \caption{Pantalla de protección de archivo.}
+    \label{fig:screenshot_proteger}
+\end{figure}
+
+
+\subsection*{Introducir errores}
+\addcontentsline{toc}{subsection}{Introducir errores}
+
+\noindent
+Se puede inyectar errores aleatorios sobre un archivo protegido. Para cada bloque, con una probabilidad del 50\%, se introducen 1 o 2 errores en posiciones aleatorias, generando archivos con extensión \texttt{.HEx}.
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_errores.png}
+    \caption{Pantalla de inyección de errores.}
+    \label{fig:screenshot_errores}
+\end{figure}
+
+
+\subsection*{Desproteger archivo}
+\addcontentsline{toc}{subsection}{Desproteger archivo}
+
+\noindent
+Ofrece dos modos de desprotección:
+\begin{itemize}
+    \item \textbf{Sin corregir:} decodifica el archivo protegido sin aplicar corrección de errores, generando \texttt{.DEx}. Esto permite visualizar los errores introducidos.
+    \item \textbf{Corrigiendo:} aplica la corrección de Hamming y genera \texttt{.DCx}, recuperando la información original (siempre que haya como máximo un error por bloque).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_desproteger.png}
+    \caption{Pantalla de desprotección de archivo.}
+    \label{fig:screenshot_desproteger}
+\end{figure}
+
+
+\subsection*{Ver archivos en pantalla}
+\addcontentsline{toc}{subsection}{Ver archivos en pantalla}
+
+\noindent
+El programa cuenta con un visor que permite visualizar el archivo original y el archivo obtenido en la misma pantalla. Es posible hacer \textit{scrolling} en ambos paneles para comparar y verificar que la información se haya mantenido intacta tras el proceso.
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_visor.png}
+    \caption{Visor de archivos con comparación lado a lado.}
+    \label{fig:screenshot_visor}
+\end{figure}
+
+
+\subsection*{Ver estadísticas}
+\addcontentsline{toc}{subsection}{Ver estadísticas}
+
+\noindent
+Esta sección ofrece una muestra estadística donde se pueden ver y comparar los tamaños y pesos de los archivos: el original, el compactado y el descompactado. Esto permite evaluar la eficiencia real de la compresión.
+
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_estadisticas.png}
+    \caption{Pantalla de estadísticas de compresión.}
+    \label{fig:screenshot_estadisticas}
+\end{figure}

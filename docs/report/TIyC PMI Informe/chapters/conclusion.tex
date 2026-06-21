@@ -1,5 +1,15 @@
 \chapter*{Conclusión}
 \addcontentsline{toc}{chapter}{Conclusión}
 
-El desarrollo del sistema...
+\noindent
+El desarrollo de este proyecto integrador nos permitió comprender en profundidad la aplicación práctica de dos pilares fundamentales de la Teoría de la Información: la compresión sin pérdida mediante el algoritmo de Huffman y la protección contra errores mediante el código de Hamming. Los principales aprendizajes se sintetizan a continuación.
 
+\begin{itemize}
+    \item La elección de \textbf{Rust como lenguaje de backend} resultó acertada, ya que nos permitió trabajar cómodamente a nivel de bits con un rendimiento nativo, al mismo tiempo que nos ofrecía abstracciones de alto nivel (iteradores, pattern matching, genéricos) que simplificaron la escritura de los algoritmos. El framework de testing integrado de Rust fue clave para validar la corrección de las codificaciones antes de integrarlas con la interfaz.
+
+    \item La implementación de \textbf{Hamming con SECDED} demostró ser eficaz para la corrección de errores simples y la detección de errores dobles. El uso de operaciones bitwise para el cálculo del síndrome hace que la protección y desprotección de archivos sea computacionalmente despreciable, y el overhead de espacio disminuye drásticamente al aumentar el tamaño de bloque.
+
+    \item Respecto de \textbf{Huffman}, comprobamos empíricamente que la compresión por palabras supera significativamente a la compresión por caracteres en archivos extensos, mientras que para archivos pequeños conviene la compresión por caracteres. También confirmamos la existencia de un umbral por debajo del cual la metadata del encoder supera al ahorro de compresión.
+
+    \item La integración de ambos algoritmos en una \textbf{interfaz gráfica moderna} con Tauri y React le otorgó al proyecto una capa de usabilidad que facilita la experimentación y la visualización de resultados, permitiendo que cualquier usuario pueda operar el sistema sin conocimientos técnicos previos.
+\end{itemize}

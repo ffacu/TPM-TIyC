@@ -1,0 +1,28 @@
+\chapter*{Definición de Huffman}
+\addcontentsline{toc}{chapter}{Definición de Huffman}
+
+\noindent
+El algoritmo de Huffman es un método de \textbf{compresión sin pérdida} que asigna códigos binarios de longitud variable a los símbolos de una fuente, otorgando códigos más cortos a los símbolos más frecuentes y códigos más largos a los menos frecuentes. El resultado es un \textbf{código prefijo}: ningún código es prefijo de otro, lo que garantiza una decodificación unívoca sin necesidad de delimitadores.
+
+\section*{Procedimiento del algoritmo}
+\addcontentsline{toc}{section}{Procedimiento del algoritmo}
+
+\noindent
+El algoritmo opera de la siguiente manera:
+\begin{enumerate}
+    \item Se calcula la frecuencia de aparición de cada símbolo en el archivo.
+    \item Se construye un \textit{min-heap} (cola de prioridad) donde cada símbolo es un nodo hoja con su frecuencia asociada.
+    \item Repetidamente, se extraen los dos nodos con menor frecuencia, se combinan en un nuevo nodo padre cuya frecuencia es la suma de ambos, y se reinserta en el heap.
+    \item El proceso se repite hasta que queda un único nodo raíz: el \textbf{árbol de Huffman}.
+    \item Se recorre el árbol asignando ``0'' a cada rama izquierda y ``1'' a cada rama derecha, generando así el código binario de cada símbolo.
+\end{enumerate}
+
+\section*{Longitud promedio de palabra código}
+\addcontentsline{toc}{section}{Longitud promedio de palabra código}
+
+\noindent
+La eficiencia de la compresión se mide mediante la longitud promedio de palabra código:
+\begin{equation}
+L_{av} = \sum_{i=1}^{q} p_i \cdot l_i
+\end{equation}
+donde $p_i$ es la probabilidad del símbolo $i$ y $l_i$ la longitud de su palabra código. Huffman produce la asignación óptima que minimiza $L_{av}$, alcanzando valores cercanos a la entropía de la fuente.

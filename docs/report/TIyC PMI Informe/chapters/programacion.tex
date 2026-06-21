@@ -1,0 +1,84 @@
+\chapter*{Programación: Stack Tecnológico, Algoritmos e Ideas}
+\addcontentsline{toc}{chapter}{Programación: Stack Tecnológico, Algoritmos e Ideas}
+
+%--------------------------------------------------------------------
+\section*{Stack tecnológico}
+\addcontentsline{toc}{section}{Stack tecnológico}
+
+\noindent
+Para la implementación del proyecto se eligió el framework \textbf{Tauri}, que combina un \textit{frontend} web con un \textit{backend} nativo. El frontend se desarrolló con \textbf{React} (TypeScript) y el backend con \textbf{Rust}.
+
+\subsection*{¿Por qué Rust?}
+\addcontentsline{toc}{subsection}{¿Por qué Rust?}
+
+\noindent
+Rust fue seleccionado por reunir las ventajas de los lenguajes de bajo nivel (como C) con las de los lenguajes de alto nivel (como Python o Java). Dado que el proyecto requiere leer archivos a nivel de bits y realizar operaciones bitwise extensivas, la necesidad de un lenguaje con control directo sobre la memoria y la representación binaria era fundamental. A su vez, Rust nos ofrece beneficios típicos de lenguajes de alto nivel: un framework de testing integrado (\texttt{cargo test}), un sistema de tipos expresivo, y una amplia colección de funciones y \textit{traits} de alto nivel que simplifican enormemente la escritura de algoritmos complejos.
+
+En particular, las siguientes funciones y construcciones de Rust ---análogas a las que encontraríamos en Python--- fueron ampliamente utilizadas a lo largo del proyecto:
+
+\begin{itemize}
+    \item \texttt{.iter()}, \texttt{.par\_iter()}: Iteradores sobre colecciones, equivalentes a \texttt{for x in list} en Python, con la variante paralela provista por la librería \texttt{rayon}.
+    \item \texttt{.map()}: Transformación elemento a elemento, equivalente a la función \texttt{map()} de Python.
+    \item \texttt{.fold()} y \texttt{.reduce()}: Acumulación progresiva de resultados, equivalentes a \texttt{functools.reduce()} en Python.
+    \item \texttt{.collect()}: Materialización de un iterador en una colección concreta (\texttt{Vec}, \texttt{HashMap}), similar a \texttt{list()} o \texttt{dict()} en Python.
+    \item \texttt{.flat\_map()}: Mapeo con aplanamiento, equivalente a una \textit{list comprehension} anidada en Python.
+    \item \texttt{.chunks()}: División de un arreglo en sub-segmentos de tamaño fijo, similar a la receta de agrupación en Python.
+    \item \texttt{.enumerate()}: Iteración con índice, idéntica a \texttt{enumerate()} en Python.
+    \item \texttt{.push()}, \texttt{.append()}: Inserción en vectores dinámicos, equivalentes a \texttt{list.append()} y \texttt{list.extend()} en Python.
+    \item \texttt{.entry().or\_insert()}: Patrón para insertar valores por defecto en un \texttt{HashMap}, equivalente a \texttt{dict.setdefault()} o \texttt{collections.defaultdict} en Python.
+    \item \texttt{.step\_by()}: Iteración con paso, equivalente al tercer argumento de \texttt{range(start, stop, step)} en Python.
+    \item \texttt{.truncate()}: Recorte de un vector a una longitud dada, similar al \textit{slicing} \texttt{lista[:n]} en Python.
+    \item \texttt{.is\_power\_of\_two()}: Verificación directa sobre enteros, que en Python requeriría una expresión manual como \texttt{n \& (n-1) == 0}.
+    \item \texttt{.trailing\_zeros()}: Conteo de ceros finales en la representación binaria, equivalente a \texttt{bin(n)[::-1].index('1')} en Python.
+\end{itemize}
+
+\noindent
+Estas funciones nos brindaron una enorme ventaja y simplificación al momento de implementar los algoritmos de Huffman y Hamming, ahorrando tiempo valioso de desarrollo.
+
+\subsection*{¿Por qué React?}
+\addcontentsline{toc}{subsection}{¿Por qué React?}
+
+\noindent
+React fue elegido por ser el framework de frontend más utilizado en la industria, lo que se traduce en una cantidad masiva de librerías de componentes, tutoriales y documentación disponible. Esto hizo que la implementación de la interfaz gráfica resultara considerablemente más sencilla y rápida en comparación con alternativas como Java Swing.
+
+
+%--------------------------------------------------------------------
+\section*{Implementación de Hamming}
+\addcontentsline{toc}{section}{Implementación de Hamming}
+
+\noindent
+La implementación del código de Hamming es de nuestra autoría completa. El módulo \texttt{file\_hamming.rs} contiene tres funciones principales:
+
+\begin{itemize}
+    \item \textbf{\texttt{hamming\_encoding}:} Recibe el tamaño de bloque en bits (8, 1024 o 16384) y el archivo de entrada. Lee el archivo completo, lo convierte a un vector de bits, calcula la cantidad de bits de control ($m = \log_2(\textit{block\_size})$ mediante \texttt{trailing\_zeros()}), y para cada bloque coloca los bits de información en las posiciones no potencia de~2, calcula el valor de cada bit de control mediante XOR, y añade el bit de paridad general (SECDED). El resultado se empaqueta en bytes y se escribe al archivo de salida, precedido por un encabezado con el tamaño original del archivo para eliminar el padding durante la decodificación.
+
+    \item \textbf{\texttt{hamming\_decoding}:} Lee el encabezado, extrae los bits, recalcula el síndrome de cada bloque mediante operaciones XOR sobre las posiciones de control, y evalúa la paridad general. Si el síndrome es distinto de cero y la paridad general falla, se corrige el bit en la posición indicada por el síndrome (error simple). Si el síndrome es distinto de cero pero la paridad general es correcta, se detecta un error doble irrecuperable.
+
+    \item \textbf{\texttt{inject\_error}:} Introduce errores aleatorios en los bloques codificados. Para cada bloque, con probabilidad del 50\%, se inyectan 1 o 2 errores (dependiendo de la configuración) en posiciones aleatorias dentro del bloque, invirtiendo los bits correspondientes mediante XOR.
+\end{itemize}
+
+\noindent
+El módulo cuenta con una batería completa de tests unitarios (\texttt{\#[cfg(test)]}) que verifican la codificación y decodificación sin pérdida para los tres tamaños de bloque, así como la corrección de errores simples inyectados.
+
+
+%--------------------------------------------------------------------
+\section*{Implementación de Huffman}
+\addcontentsline{toc}{section}{Implementación de Huffman}
+
+\noindent
+En primer lugar, desarrollamos la lógica de Huffman en pseudocódigo y comenzamos a codificarla en Rust. Sin embargo, casi por casualidad, encontramos que otra persona ya había realizado esta misma implementación en Rust, explicada en el video de YouTube~\citep{huffman_video} y disponible en su repositorio~\citep{huffman_repo}. Dado que esta implementación era más rica, aprovechando características idiomáticas de Rust (como el uso de cláusulas \texttt{where} en funciones genéricas, pattern matching sobre enums, y traits derivados automáticamente), y que la lógica base resultaba idéntica a nuestro pseudocódigo, decidimos adoptar este enfoque con algunas modificaciones propias.
+
+El módulo de Huffman se compone de cuatro archivos:
+
+\begin{itemize}
+    \item \textbf{\texttt{huffman.rs}:} Define el árbol de Huffman como un \texttt{enum} genérico con variantes \texttt{Leaf} y \texttt{Node}. Implementa la función \texttt{huffman\_tree} que construye el árbol a partir de un \texttt{HashMap} de frecuencias, utilizando un \texttt{BinaryHeap} (min-heap mediante \texttt{Reverse}) para extraer iterativamente los dos nodos de menor frecuencia y combinarlos.
+
+    \item \textbf{\texttt{compression.rs}:} Contiene las funciones \texttt{compress} y \texttt{extract} (genéricas sobre el tipo de token), así como las variantes \texttt{compress\_bytes} y \texttt{extract\_bytes} para compresión a nivel de bytes. Utiliza la librería \texttt{bit-vec} para la manipulación eficiente de vectores de bits, \texttt{rayon} para el procesamiento paralelo de líneas, y \texttt{rmp-serde} para la serialización binaria compacta (MessagePack) del encoder y los datos comprimidos.
+
+    \item \textbf{\texttt{freqs.rs}:} Implementa las funciones \texttt{char\_frequencies} y \texttt{word\_frequencies}, que calculan las frecuencias de caracteres o palabras del archivo de entrada utilizando \texttt{rayon} para paralelizar el conteo mediante un patrón \texttt{fold}/\texttt{reduce} sobre las líneas.
+
+    \item \textbf{\texttt{mod.rs}:} Módulo orquestador que expone las funciones de alto nivel \texttt{compress\_file} y \texttt{extract\_file}, encargándose de la lectura/escritura de archivos, la selección del modo de compresión (por caracteres o por palabras), y la gestión de extensiones de archivo.
+\end{itemize}
+
+\noindent
+Las modificaciones menores que realizamos sobre el código original pueden encontrarse, por ejemplo, en los archivos \texttt{compression.rs}, \texttt{freqs.rs} y \texttt{mod.rs}, y fueron orientadas al flujo de la interfaz de usuario (manejo de extensiones, modos de compresión, funciones de compresión/extracción a nivel de bytes para archivos binarios). El detalle completo de estas modificaciones se puede consultar en el repositorio del proyecto~\citep{proyecto_repo}.

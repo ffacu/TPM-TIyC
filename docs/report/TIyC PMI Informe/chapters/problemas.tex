@@ -1,0 +1,23 @@
+\chapter*{Problemas Encontrados}
+\addcontentsline{toc}{chapter}{Problemas Encontrados}
+
+\noindent
+A lo largo del desarrollo del proyecto nos enfrentamos a diversos obstáculos que requirieron replanteos y decisiones de diseño. A continuación se describen los más significativos y cómo fueron subsanados.
+
+%--------------------------------------------------------------------
+\section*{Diseño de la interfaz y flujo de navegación}
+\addcontentsline{toc}{section}{Diseño de la interfaz y flujo de navegación}
+
+\noindent
+El primer gran desafío fue definir la arquitectura de la interfaz gráfica y el flujo de navegación del usuario. El proyecto involucra múltiples operaciones que pueden encadenarse en distintos órdenes (cargar, compactar, proteger, inyectar errores, desproteger, descompactar), y necesitábamos que el usuario pudiera ejecutar cualquiera de estas acciones de forma intuitiva, sin perderse entre pantallas ni realizar pasos innecesarios.
+
+La solución adoptada fue organizar la interfaz en torno a un \textbf{espacio de trabajo} (\textit{workspace}) que centraliza todas las operaciones sobre un directorio dado, mostrando en todo momento los archivos generados y habilitando las acciones correspondientes según el contexto. De esta manera, el usuario tiene siempre visibilidad sobre el estado actual del procesamiento y puede operar de forma lineal o selectiva según lo necesite.
+
+%--------------------------------------------------------------------
+\section*{Enfoque algorítmico eficiente}
+\addcontentsline{toc}{section}{Enfoque algorítmico eficiente}
+
+\noindent
+Encontrar el enfoque más eficiente para la codificación de Hamming y Huffman representó otro desafío importante. En el caso de Hamming, la decisión crítica fue trabajar \textbf{enteramente a nivel de bits}, utilizando operaciones bitwise (\texttt{XOR}, \texttt{AND}, \textit{shifts}) tanto para el cálculo de los bits de control como para el cálculo del síndrome durante la decodificación. Si bien esto implicó una complejidad mayor en la implementación (convertir bytes a vectores de bits, empaquetar bits de vuelta a bytes, gestionar el padding), el resultado es una codificación que respeta fielmente la teoría y produce archivos protegidos con el overhead mínimo esperado.
+
+En el caso de Huffman, la búsqueda de un enfoque eficiente nos llevó a adoptar una implementación existente en Rust (detallada en el capítulo de Programación), que utiliza estructuras de datos idiomáticas del lenguaje (enums genéricos, \texttt{BinaryHeap}, pattern matching) y además aprovecha la paralelización mediante la librería \texttt{rayon} para procesar múltiples líneas de forma concurrente.

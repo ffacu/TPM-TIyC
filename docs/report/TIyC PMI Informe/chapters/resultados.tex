@@ -1,0 +1,63 @@
+\chapter*{Resultados Estadísticos}
+\addcontentsline{toc}{chapter}{Resultados Estadísticos}
+
+\noindent
+En este capítulo se presentan los resultados obtenidos tras someter al sistema a múltiples ejecuciones con archivos de distintos tamaños y contenidos, evaluando tanto el rendimiento de la compresión de Huffman como la eficiencia de la protección de Hamming.
+
+%--------------------------------------------------------------------
+\section*{Rendimiento de la protección (Hamming)}
+\addcontentsline{toc}{section}{Rendimiento de la protección (Hamming)}
+
+\noindent
+La implementación de Hamming utiliza operaciones bitwise (\texttt{XOR}, \texttt{AND}, \textit{bit shifts}) tanto para el cálculo de los bits de control durante la codificación como para el cálculo del síndrome durante la decodificación. Estas operaciones son ejecutadas directamente por la ALU del procesador en un único ciclo de reloj, por lo que el costo computacional de la protección y desprotección es \textbf{despreciable} comparado con las operaciones de lectura/escritura de archivos.
+
+El overhead de espacio introducido por Hamming depende del tamaño de bloque seleccionado. Para un bloque de $n$~bits totales, la cantidad de bits de control es $m = \log_2(n)$ más el bit de paridad general, por lo que la proporción de redundancia es:
+
+\begin{equation}
+\text{Overhead} = \frac{m + 1}{n} \times 100\%
+\end{equation}
+
+\noindent
+A continuación, se detallan los valores para cada tamaño de bloque:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Bloque (bits)} & \textbf{Bits de control} & \textbf{Bits de info} & \textbf{Overhead (\%)} \\
+\hline
+8     & 4  & 4     & 50,00\% \\
+1024  & 11 & 1013  & 1,07\%  \\
+16384 & 15 & 16369 & 0,09\%  \\
+\hline
+\end{tabular}
+\caption{Overhead de espacio para cada tamaño de bloque de Hamming.}
+\label{tab:hamming_overhead}
+\end{table}
+
+\noindent
+Como se observa, a medida que crece el tamaño de bloque, el overhead de redundancia se reduce drásticamente. Sin embargo, bloques más grandes implican que un único error doble (no corregible) afecta a una porción mayor de datos.
+
+
+%--------------------------------------------------------------------
+\section*{Rendimiento de la compresión (Huffman)}
+\addcontentsline{toc}{section}{Rendimiento de la compresión (Huffman)}
+
+\noindent
+El algoritmo de Huffman ofrece al usuario la posibilidad de seleccionar entre dos modos de compactación: \textbf{por caracteres} o \textbf{por palabras}. A partir de las distintas ejecuciones y pruebas realizadas, se obtuvieron las siguientes observaciones:
+
+\begin{itemize}
+    \item \textbf{Archivos grandes:} El programa tiene un mejor rendimiento (mayor porcentaje de compresión) cuando se compactan archivos pesados y se selecciona la compresión \textbf{por palabras}. Dado que las palabras tienden a repetirse con frecuencia en textos extensos, el árbol de Huffman logra optimizar mucho mejor el espacio, asignando códigos más cortos a palabras enteras que se repiten a lo largo del documento.
+
+    \item \textbf{Archivos livianos:} Cuando se trabaja con archivos de menor tamaño, conviene utilizar la compresión \textbf{por caracteres}, ya que el alfabeto de caracteres es finito y reducido (a lo sumo 256 para ASCII), lo que produce una tabla de frecuencias compacta.
+
+    \item \textbf{Punto de inflexión (archivos muy pequeños):} Existe un peso mínimo por debajo del cual el archivo compactado puede terminar siendo \textbf{más grande} que el original. Esto ocurre porque el archivo \texttt{.huf} debe almacenar internamente la tabla de frecuencias (o el encoder de Huffman) necesaria para la posterior descompresión. En archivos muy chicos, el peso de esta metadata supera el ahorro obtenido por la compresión del texto en sí.
+\end{itemize}
+
+% Placeholder para tabla o gráfico de resultados
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.85\textwidth]{../resources/resultados_huffman.png}
+    \caption{Comparación de tamaños de archivo original vs. compactado para distintas configuraciones.}
+    \label{fig:resultados_huffman}
+\end{figure}
