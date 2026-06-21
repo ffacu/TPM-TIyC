@@ -1,30 +1,30 @@
 \chapter*{Definición de Hamming}
 \addcontentsline{toc}{chapter}{Definición de Hamming}
 
-\noindent
+
 El código de Hamming es una técnica algebraica de codificación de canal que añade redundancia controlada a un mensaje, permitiendo al receptor \textbf{detectar y corregir errores simples} (un bit corrupto por bloque). Su principio fundamental consiste en insertar bits de control en posiciones estratégicas del bloque (las potencias de~2: posiciones 1, 2, 4, 8, \ldots), de modo que cada bit de control supervise la paridad de un subconjunto específico de bits, determinado por la representación binaria de las posiciones.
 
 \section*{Procedimiento de codificación}
 \addcontentsline{toc}{section}{Procedimiento de codificación}
 
-\noindent
+
 Dado un bloque de $k$ bits de información, la cantidad de bits de control $m$ se obtiene de la desigualdad $2^m \ge k + m + 1$, donde $n = k + m$ es la longitud total del bloque codificado. El valor de cada bit de control se calcula mediante la operación XOR de todos los bits cuyas posiciones, expresadas en binario, contienen un~1 en la columna correspondiente a dicho bit de control.
 
 \section*{Decodificación y corrección: el síndrome}
 \addcontentsline{toc}{section}{Decodificación y corrección: el síndrome}
 
-\noindent
+
 Al recibir el bloque, se recalculan las paridades de los mismos subconjuntos. Si todas resultan pares (XOR $= 0$), no hay errores. En caso contrario, los resultados forman un número binario denominado \textbf{síndrome}, cuyo valor decimal señala la posición exacta del bit corrupto, el cual se invierte para corregirlo.
 
 \section*{Hamming extendido (SECDED)}
 \addcontentsline{toc}{section}{Hamming extendido (SECDED)}
 
-\noindent
+
 Se añade un bit de paridad general que verifica la paridad de \textbf{todos} los bits del bloque. Con esta extensión:
 \begin{itemize}
     \item \textbf{1 error:} El síndrome indica la posición y la paridad general falla $\Rightarrow$ se corrige el bit.
     \item \textbf{2 errores:} El síndrome acusa error, pero la paridad general es correcta $\Rightarrow$ se \textbf{detecta} la doble corrupción (no corregible, pero sí detectable).
 \end{itemize}
 
-\noindent
+
 Esta variante SECDED (\textit{Single Error Correction, Double Error Detection}) es la implementada en el proyecto, garantizando la corrección de un error por bloque y la detección de dos errores.

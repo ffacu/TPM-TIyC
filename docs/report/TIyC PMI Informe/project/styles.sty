@@ -11,22 +11,21 @@
 
 
 %%-------------------------------------
-%% Page margin settings - % half inch margin all sides (recommended)
+%% Page margin settings - 1 inch margin all sides (APA Norm)
 %%-------------------------------------
-\usepackage[margin=1.2in]{geometry} 
+\usepackage[margin=1in]{geometry} 
 
 %%-------------------------------------
-%% Font settings - % Sans-serif font (recommended)
+%% Font settings - Serif/Times Roman font (APA Norm)
 %%-------------------------------------
-% Switch the following section off to revert back to defult LaTex font (NOT recomended)
-% DISABLE final line to permit small caps with a warning; default for algorithm function name
-\usepackage[T1]{fontenc}  % Set up font encoding to T1, which is suitable for European languages and provides better hyphenation and character support
-\usepackage{lmodern}      % Load the Latin Modern font family, which is an enhanced version of Computer Modern with more characters and font shapes
-\renewcommand*\familydefault{\sfdefault}  % Change the default font family to sans-serif (lmss), so the entire document uses a sans-serif font by default
-\usepackage{slantsc}  % Adjusts the appearance of small caps and slanted fonts
-\usepackage{relsize}  % Enables relative font size changes, useful for adjusting the size of fonts in commands
-\usefont{T1}{lmss}{m}{n}\selectfont  % Force LaTeX to load the lmss font family for next line
-\DeclareFontShape{T1}{lmss}{m}{sc}{<->ssub*lmss/m/n}{}  % Declare a new font shape for small caps in the 'lmss' font family; This tells LaTeX that when small caps (sc) are requested in the medium weight (m) of 'lmss', it should substitute it with the normal (n) shape
+\usepackage[T1]{fontenc}  % Set up font encoding to T1
+\usepackage{mathptmx}     % Standard Times Roman clone for body text and math
+
+%%-------------------------------------
+%% Line spacing - Double spacing (APA Norm)
+%%-------------------------------------
+\usepackage{setspace}
+\doublespacing
 
 
 
@@ -35,8 +34,6 @@
 %%-------------------------------------
 %% Math/Definition/Theorem/Algorithm packages settings 
 %%-------------------------------------
-\usepackage{sansmath}
-\sansmath
 \usepackage[cmex10]{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -86,6 +83,30 @@
 \usepackage{adjustbox}
 \usepackage{subfigure}
 \usepackage{caption}
+\captionsetup{
+    labelfont=bf,
+    textfont=it,
+    labelsep=newline,
+    justification=justified,
+    singlelinecheck=false
+}
+
+%%-------------------------------------
+%% Page header settings (APA Norm: Page number top-right)
+%%-------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15pt}
+
+% Redefining plain style for chapter pages to also have header page number
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \rhead{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
 \usepackage{lipsum}
 \usepackage{pdflscape}
 \usepackage{float}
@@ -124,18 +145,17 @@
             }
 
 %%-------------------------------------
-%% Bibliography/References settings   - Harvard Style was used in this report
+%% Bibliography/References settings - APA Style
 %%-------------------------------------
-% Harvard, Name Style 
 \usepackage[semicolon,authoryear]{natbib}
-\bibliographystyle{agsm}
+\bibliographystyle{apalike}
 
 % IEEE, Numbered Style
 % \usepackage[numbers]{natbib}
 % \bibliographystyle{IEEEtran}
     
 %\usepackage[nottoc]{tocbibind}  % ensure references are included in TOC
-%\renewcommand{\bibname}{References} % DO NOT remove or switch off
+\addto\captionsspanish{\renewcommand{\bibname}{Referencias}}
 
 %%-------------------------------------
 %% Appendix settings     
