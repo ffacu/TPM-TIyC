@@ -40,7 +40,7 @@ Para comenzar, se selecciona el archivo que se desea procesar. Actualmente el si
 % Placeholder para captura de pantalla
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_cargar.png}
+    \includegraphics[width=0.8\textwidth]{../resources/cargarArchivo.png}
     \caption{Pantalla de carga de archivo.}
     \label{fig:screenshot_cargar}
 \end{figure}
@@ -54,7 +54,7 @@ Una vez cargado el archivo, se utiliza esta opción para comprimirlo. El sistema
 
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_compactar.png}
+    \includegraphics[width=0.8\textwidth]{../resources/huffmanPage.png}
     \caption{Pantalla de compactación de archivo.}
     \label{fig:screenshot_compactar}
 \end{figure}
@@ -68,7 +68,7 @@ Si se tiene un archivo previamente compactado (con extensión \texttt{.huf}), se
 
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_descompactar.png}
+    \includegraphics[width=0.8\textwidth]{../resources/huffmanDescomp.png}
     \caption{Pantalla de descompactación de archivo.}
     \label{fig:screenshot_descompactar}
 \end{figure}
@@ -82,7 +82,7 @@ Permite proteger un archivo (ya sea el texto original o el archivo compactado) a
 
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_proteger.png}
+    \includegraphics[width=0.8\textwidth]{../resources/hammingPage.png}
     \caption{Pantalla de protección de archivo.}
     \label{fig:screenshot_proteger}
 \end{figure}
@@ -96,7 +96,7 @@ Se puede inyectar errores aleatorios sobre un archivo protegido. Para cada bloqu
 
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_errores.png}
+    \includegraphics[width=0.8\textwidth]{../resources/hammingProte.png}
     \caption{Pantalla de inyección de errores.}
     \label{fig:screenshot_errores}
 \end{figure}
@@ -114,7 +114,7 @@ Ofrece dos modos de desprotección:
 
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_desproteger.png}
+    \includegraphics[width=0.8\textwidth]{../resources/errorInjection.png}
     \caption{Pantalla de desprotección de archivo.}
     \label{fig:screenshot_desproteger}
 \end{figure}
@@ -128,21 +128,31 @@ El programa cuenta con un visor que permite visualizar el archivo original y el 
 
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_visor.png}
+    \includegraphics[width=0.8\textwidth]{../resources/comparator.png}
     \caption{Visor de archivos con comparación lado a lado.}
     \label{fig:screenshot_visor}
 \end{figure}
 
 
-\subsection*{Ver estadísticas}
-\addcontentsline{toc}{subsection}{Ver estadísticas}
-
-
-Las pantallas de Huffman y Hamming ofrecen una muestra estadística, debajo del nombre de los archivos, donde se pueden ver y comparar los tamaños y pesos de los archivos: el original, el compactado y el descompactado. Esto permite evaluar la eficiencia real de la compresión.
-
 \begin{figure}[H]
     \centering
-    %\includegraphics[width=0.8\textwidth]{../resources/screenshot_estadisticas.png}
-    \caption{Pantalla de estadísticas de compresión.}
-    \label{fig:screenshot_estadisticas}
+    \includegraphics[width=0.8\textwidth]{../resources/comparatorError.png}
+    \caption{Visor de archivos con comparación lado a lado con un archivo con error.}
+    \label{fig:screenshot_visor_error}
 \end{figure}
+
+
+\subsection*{Encriptación del espacio de trabajo (.cufa)}
+\addcontentsline{toc}{subsection}{Encriptación del espacio de trabajo (.cufa)}
+
+
+El programa incluye una funcionalidad para proteger y restringir temporalmente el acceso a todo el espacio de trabajo (\textit{workspace}), empaquetando todos los archivos generados en un único archivo encriptado con extensión \texttt{.cufa}.
+
+El flujo de uso de esta herramienta consiste en los siguientes pasos:
+\begin{enumerate}
+    \item \textbf{Carga inicial:} Tras abrir un archivo de texto original en la pantalla de carga, el usuario accede al espacio de trabajo. En este espacio, además de poder manipular el archivo mediante algoritmos de Huffman y Hamming, dispone de un panel de configuración para la encriptación.
+    \item \textbf{Configuración de fecha:} Para activar la protección, el usuario debe seleccionar una fecha objetivo en el calendario. Opcionalmente, puede marcar la casilla de verificación correspondiente para indicar que el espacio de trabajo \textbf{solo} pueda ser abierto el día exacto seleccionado (restricción estricta). Si la casilla no se marca, el archivo podrá abrirse a partir de ese día en adelante.
+    \item \textbf{Flujo de trabajo continuo:} Después de configurar la fecha y el tipo de restricción, el usuario puede continuar trabajando con normalidad, realizando compactaciones o protecciones adicionales dentro del espacio de trabajo.
+    \item \textbf{Encriptación automática:} Al cerrar la aplicación o volver a la pantalla de carga de archivos, el sistema detecta la configuración y realiza el empaquetado del \textit{workspace} de manera automática. El archivo resultante con extensión \texttt{.cufa} se guarda en la misma carpeta donde se encontraba el archivo original subido.
+    \item \textbf{Carga y verificación:} Cuando el usuario inicia el programa y sube un archivo con extensión .cufa, el sistema verifica que la fecha de encriptación coincida con la del sistema, o posterior si así fue seleccionado. Entonces, el workspace encriptado se abrirá únicamente si esto se valida. En caso contrario, el programa mostrará un mensaje informando que el archivo se encuentra bloqueado hasta la fecha indicada.
+\end{enumerate}

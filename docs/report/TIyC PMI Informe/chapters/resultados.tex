@@ -27,10 +27,24 @@ El algoritmo de Huffman ofrece al usuario la posibilidad de seleccionar entre do
     \item \textbf{Punto de inflexión (archivos muy pequeños):} Existe un peso mínimo por debajo del cual el archivo compactado puede terminar siendo \textbf{más grande} que el original. Esto ocurre porque el archivo \texttt{.huf} debe almacenar internamente la tabla de frecuencias (o el encoder de Huffman) necesaria para la posterior descompresión. En archivos muy chicos, el peso de esta metadata supera el ahorro obtenido por la compresión del texto en sí.
 \end{itemize}
 
-% Placeholder para tabla o gráfico de resultados
-\begin{figure}[H]
-    \centering
-    %\includegraphics[width=0.85\textwidth]{../resources/resultados_huffman.png}
-    \caption{Comparación de tamaños de archivo original vs. compactado para distintas configuraciones.}
-    \label{fig:resultados_huffman}
-\end{figure}
+Se presenta la siguiente tabla para comparar resultados con distintas configuraciones:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Tamaño (B)} & \textbf{Huf Chars\%} & \textbf{Huf Words\%} & \textbf{Ham 8\%} & \textbf{Ham 1024\%} & \textbf{Ham 16384\%} \\ \hline
+100                 & 219.00\%             & 189.00\%             & 208.00\%         & 136.00\%          & 2056.00\%            \\ \hline
+500                 & 134.00\%             & 165.60\%             & 201.60\%         & 104.00\%          & 411.20\%             \\ \hline
+1000                & 102.70\%             & 143.70\%             & 200.80\%         & 103.20\%          & 205.60\%             \\ \hline
+5000                & 82.44\%              & 141.56\%             & 200.16\%         & 102.56\%          & 123.04\%             \\ \hline
+20000               & 80.23\%              & 130.74\%             & 200.04\%         & 101.16\%          & 102.44\%             \\ \hline
+100000              & \textcolor{blue}{76.76\%} & 87.71\%              & 200.01\%         & 101.13\%          & 100.36\%             \\ \hline
+500000              & \textcolor{blue}{77.23\%} & \textcolor{blue}{64.12\%} & 200.00\%         & 101.10\%          & 100.35\%             \\ \hline
+\end{tabular}
+
+\vspace{0.2cm}
+\small{\textit{* Los valores menores al 100\% indican una compresión efectiva (reducción de tamaño).}}
+\end{table}
+
+En conclusión, se puede observar que mientras más grande es el tamaño del archivo, la codificación por palabras es mejor que la de caracteres, debido a que la entropía se beneficia de la aleatoriedad de las palabras, lo cual beneficia la codificación.

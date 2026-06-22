@@ -63,3 +63,44 @@ El módulo de Huffman se compone de cuatro archivos:
 
 
 Las modificaciones menores que realizamos sobre el código original pueden encontrarse, por ejemplo, en los archivos \texttt{compression.rs}, \texttt{freqs.rs} y \texttt{mod.rs}, y fueron orientadas al flujo de navegación de la UI. El detalle completo de estas modificaciones se puede consultar en el repositorio del proyecto~\citep{proyecto_repo}.
+
+%--------------------------------------------------------------------
+\section*{Implementación de la encriptación}
+\addcontentsline{toc}{section}{Implementación de la encriptación}
+
+Para resguardar el espacio de trabajo y controlar el acceso a los archivos encriptados, se desarrolló un sistema de encriptado bajo el formato \texttt{.cufa}. Esta lógica se encuentra implementada en el módulo de Rust \texttt{encryption.rs} del backend de Tauri.
+
+\subsection*{Estructura de datos y estado compartido}
+\addcontentsline{toc}{subsection}{Estructura de datos y estado compartido}
+
+Se define la estructura \texttt{EncryptionConfig} y el contenedor de estado \texttt{EncryptionState}:
+
+\begin{verbatim}
+pub struct EncryptionConfig {
+    pub original_file_path: String,
+    pub target_date: String,
+    pub strict_date: bool,
+}
+
+pub struct EncryptionState {
+    pub pending: Mutex<Option<EncryptionConfig>>,
+}
+\end{verbatim}
+
+A través de comandos de Tauri (\texttt{set\_encryption\_settings} y \texttt{clear\_encryption\_settings}), se registran los parametros necesarios para la encriptación(fecha de destino y el flag de validación estricta) antes de que finalice la sesión o se cargue otro archivo.
+
+\subsection*{Desencriptación y Validación de Fecha}
+\addcontentsline{toc}{subsection}{Desencriptación y Validación de Fecha}
+
+Al cargar un archivo \texttt{.cufa} mediante el comando \texttt{load\_encrypted\_workspace}, el sistema realiza los siguientes pasos de validación:
+\begin{itemize}
+    \item Lee y valida la firma inicial \texttt{``CUFA''}.
+    \item Recupera la fecha de encriptación y si es de fecha estricta o no (\texttt{strict\_date}).
+    \item Utilizando la librería \texttt{chrono}, se compara la fecha actual del sistema (\texttt{Local::now().date\_naive()}) con la almacenada:
+    \begin{itemize}
+        \item Si \texttt{strict\_date} es verdadero, exige coincidencia exacta (\texttt{current\_date == target\_date}).
+        \item Si es falso, exige que la fecha actual sea igual o posterior (\texttt{current\_date >= target\_date}).
+    \end{itemize}
+\end{itemize}
+
+Si las validaciones de fecha fallan, se retorna un mensaje de error detallado que bloquea la carga. Si la validación es exitosa, el backend vacía la carpeta \texttt{workspace} local, reconstruye cada archivo en su interior partiendo de los datos binarios del archivo \texttt{.cufa}, y finalmente retorna al frontend la ruta del archivo de texto original para restaurar la interfaz al estado exacto en que se encontraba. 
