@@ -19,6 +19,9 @@ El programa cuenta con un visor que te permite visualizar el archivo original y 
 ### 5. Ver Estadísticas
 Esta sección te ofrece una muestra estadística, en la que vas a poder ver y comparar los tamaños y pesos de los archivos: el original, el compactado y el descompactado. Esto te permitirá evaluar la eficiencia real de la compresión.
 
+### 6. Encriptar
+Para encriptar, simplementes clickeas el botón "Encriptar", seleccionas fecha de encriptación, es decir, la fecha en la cual el workspace se puede abrir, con la opción de indicar si se encripta solo para el día seleccionado, o para el día seleccionado y los subsiguientes.
+
 ---
 
 ## Análisis y Recomendaciones de Uso
